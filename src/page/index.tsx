@@ -1,4 +1,5 @@
 import SideBar from './side-bar'
+
 const MainPage = () => {
   return (
     <div>
