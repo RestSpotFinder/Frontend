@@ -8,7 +8,16 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'react-refresh'],
+  plugins: ['@typescript-eslint', 'prettier', 'react-refresh', 'import'],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', '@types'],
+      },
+      typescript: {},
+    },
+  },
   rules: {
     'prettier/prettier': [
       'error',
