@@ -1,5 +1,7 @@
+import MainPage from './page'
+
 function App() {
-  return <div>하이루</div>
+  return <MainPage />
 }
 
 export default App
