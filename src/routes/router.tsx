@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Page from '../page'
+import { NaverPage } from '../pages'
 import { PATH } from './constants'
 import Layout from './Layout'
 
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: PATH.MAIN,
-        element: <Page />,
+        element: <NaverPage />,
       },
     ],
   },
