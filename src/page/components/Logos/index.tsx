@@ -1,4 +1,4 @@
-import naver_logo from '../../assets/naver_logo.png'
+import naver_logo from '../../../assets/naver_logo.png'
 
 const Logos = () => {
   return (

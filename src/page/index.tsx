@@ -1,4 +1,4 @@
-import Logos from './Logos'
+import Logos from './components/Logos'
 
 const Page = () => {
   return <Logos />
