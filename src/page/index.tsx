@@ -1,11 +1,7 @@
-import SideBar from './side-bar'
+import Logos from './Logos'
 
-const MainPage = () => {
-  return (
-    <div>
-      <SideBar />
-    </div>
-  )
+const Page = () => {
+  return <Logos />
 }
 
-export default MainPage
+export default Page
