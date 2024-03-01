@@ -1,6 +1,6 @@
-import Logos from '../components/Logos'
+import Logos from "./components/Logos"
 
-const NaverPage =  (  )  => {
+const NaverPage = () => {
   return <Logos />
 }
 
