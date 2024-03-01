@@ -1,8 +1,5 @@
-import { RouterProvider } from 'react-router-dom'
-import { router } from './routes'
-
 function App() {
-  return <RouterProvider router={router} />
+  return <div>하이루</div>
 }
 
 export default App
