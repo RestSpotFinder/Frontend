@@ -1,7 +1,13 @@
-import Logos from "./components/Logos"
+import Logos from './components/Logos'
+import { NaverMap } from '@/components'
 
 const NaverPage = () => {
-  return <Logos />
+  return (
+    <div className="flex h-full">
+      <Logos />
+      <NaverMap />
+    </div>
+  )
 }
 
 export default NaverPage
