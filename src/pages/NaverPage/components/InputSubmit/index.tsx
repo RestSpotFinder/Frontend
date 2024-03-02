@@ -35,7 +35,7 @@ const InputSubmit = () => {
   }
 
   return (
-    <div className="w-96 h-96 relative left-16 bg-white p-12">
+    <div className="w-96 h-96 relative bg-white p-12">
       <input
         type="text"
         className="w-80 h-10 border border-black border-t border-l border-r border-b-gray-300"

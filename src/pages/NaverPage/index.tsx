@@ -3,7 +3,7 @@ import InputSubmit from "./components/InputSubmit"
 
 const NaverPage = () => {
   return (
-    <div>
+    <div className="flex h-full">
       <Logos />
       <InputSubmit />
     </div>
