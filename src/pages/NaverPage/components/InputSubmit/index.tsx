@@ -4,6 +4,7 @@ const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
     useState("출발지 입력")
   const [endPointPlaceholder, setEndPointPlaceholder] = useState("도착지 입력")
+
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [search, setSearch] = useState({
     startSearchTerm: "",
@@ -17,6 +18,7 @@ const InputSubmit = () => {
   const handleEndPlaceholderClick = () => {
     setEndPointPlaceholder("도착지를 입력하세요")
   }
+
   const handleStartPlaceholderBlur = () => {
     setStartPointPlaceholder("출발지 입력")
   }
@@ -43,7 +45,7 @@ const InputSubmit = () => {
     console.log(wayPoints.length)
     if (wayPoints.length === 4) setIsMax(true)
   }
-  const handleSearchChange = e => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch({
       ...search,
       [e.target.name]: e.target.value,
