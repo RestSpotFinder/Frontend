@@ -1,4 +1,7 @@
 import { useState } from "react"
+import restart_icon from "../../../../assets/restart.svg"
+import plus_icon from "../../../../assets/plus.svg"
+import right_icon from "../../../../assets/right.svg"
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -10,6 +13,7 @@ const InputSubmit = () => {
     startSearchTerm: "",
     endSearchTerm: "",
   })
+
   const [isMax, setIsMax] = useState(false)
 
   const handleStartPlaceholderClick = () => {
@@ -92,23 +96,26 @@ const InputSubmit = () => {
       />
       <div className="w-80 h-10 bg-white flex justify-between mt-3">
         <button
-          className="border rounded border-gray-400 p-2"
+          className="flex items-center border rounded border-gray-400 p-2"
           onClick={handleResetClick}
         >
-          다시 입력
+          <img src={restart_icon} alt="restart_icon" />
+          <span>다시 입력</span>
         </button>
         <button
           className={
             isMax
-              ? `border hidden rounded border-gray-400 ml-2 p-2`
-              : `border rounded border-gray-400 ml-2 p-2`
+              ? `flex items-center border hidden rounded border-gray-400 ml-2 p-2`
+              : `flex items-center border rounded border-gray-400 ml-2 p-2`
           }
           onClick={handleWaypointClick}
         >
-          경유지
+          <img src={plus_icon} alt="plus_icon" />
+          <span>경유지</span>
         </button>
-        <button className="border rounded border-gray-400 p-2 ml-auto text-blue-600">
-          길찾기
+        <button className="flex items-center border rounded border-gray-400 p-2 ml-auto text-blue-600">
+          <span>길찾기</span>
+          <img src={right_icon} alt="right_icon" className="fill-blue-600" />
         </button>
       </div>
     </div>
