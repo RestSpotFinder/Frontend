@@ -100,7 +100,7 @@ const InputSubmit = () => {
           onClick={handleResetClick}
         >
           <img src={restart_icon} alt="restart_icon" />
-          <span>다시 입력</span>
+          <span className="mr-2">다시 입력</span>
         </button>
         <button
           className={
@@ -110,11 +110,11 @@ const InputSubmit = () => {
           }
           onClick={handleWaypointClick}
         >
-          <img src={plus_icon} alt="plus_icon" />
-          <span>경유지</span>
+          <img src={plus_icon} alt="plus_icon" className="mr-1" />
+          <span className="mr-2">경유지</span>
         </button>
-        <button className="flex items-center border rounded border-gray-400 p-2 ml-auto text-blue-600">
-          <span>길찾기</span>
+        <button className="flex items-center bg-blue-600 border rounded border-gray-400 p-2 ml-auto text-white">
+          <span className="ml-1">길찾기</span>
           <img src={right_icon} alt="right_icon" className="fill-blue-600" />
         </button>
       </div>
