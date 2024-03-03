@@ -1,1 +1,1 @@
-export { default as NaverPage } from "./NaverPage"
+export { default as NaverPage } from './NaverPage'
