@@ -113,9 +113,9 @@ const InputSubmit = () => {
           <img src={plus_icon} alt="plus_icon" className="mr-1" />
           <span className="mr-2">경유지</span>
         </button>
-        <button className="flex items-center bg-blue-600 border rounded border-gray-400 p-2 ml-auto text-white">
+        <button className="flex items-center bg-green-600 border rounded border-gray-400 p-2 ml-auto text-white">
           <span className="ml-1">길찾기</span>
-          <img src={right_icon} alt="right_icon" className="fill-blue-600" />
+          <img src={right_icon} alt="right_icon" />
         </button>
       </div>
     </div>
