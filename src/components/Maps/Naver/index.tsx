@@ -1,38 +1,39 @@
-import { Container as MapDiv, NaverMap, useNavermaps } from 'react-naver-maps'
+import {
+  Container as MapDiv,
+  NaverMap,
+  useNavermaps,
+  Polyline,
+} from 'react-naver-maps'
 import { useEffect, useState } from 'react'
 import { CustomMarker } from '@/components'
 import { Place } from '@/types'
+import { useGetRoutes } from '@/apis/hooks'
 
 interface NaverProps {
-  departure: Place | null
-  destination: Place | null
+  start: Place | null
+  goal: Place | null
 }
 
-const const_departure = {
-  name: '강남역',
-  longitude: '127.02775190108358',
-  latitude: '37.49921175228123',
-  category: '지하철, 전철',
-  address: '서울 강남구 강남대로 396',
-}
-const const_destination = {
-  name: '가천대역',
-  longitude: '127.126635',
-  latitude: '37.44960200000001',
-  category: '지하철, 전철',
-  address: '경기 성남시 수정구 성남대로 1332',
-}
-
-const Naver = ({ departure = null, destination = null }: NaverProps) => {
+const Naver = ({
+  start = { lat: '37.4319958', lng: '127.1285607' },
+  goal = { lat: '37.2066719', lng: '128.8376985' },
+}: NaverProps) => {
   const navermaps = useNavermaps()
   const [map, setMap] = useState(null)
+  const { data: routes } = useGetRoutes({
+    start: [start.lng, start.lat].join(','),
+    goal: [goal.lng, goal.lat].join(','),
+  })
 
-  // 임시 데이터
-  departure = const_departure
-  destination = const_destination
+  const route = routes[0].coordinates.map((coordinate: [number, number]) => {
+    return {
+      lat: coordinate[0],
+      lng: coordinate[1],
+    }
+  })
 
   useEffect(() => {
-    if (map && navermaps && !departure && !destination) {
+    if (map && navermaps && !start && !goal) {
       navigator.geolocation.getCurrentPosition(
         position => {
           const { latitude, longitude } = position.coords
@@ -45,25 +46,21 @@ const Naver = ({ departure = null, destination = null }: NaverProps) => {
         },
       )
     }
-  }, [map, navermaps, departure, destination])
+  }, [map, navermaps, start, goal])
 
   useEffect(() => {
-    if (departure && map && navermaps) {
-      map.setCenter(
-        new navermaps.LatLng(departure.latitude, departure.longitude),
-      )
+    if (start && map && navermaps) {
+      map.setCenter(new navermaps.LatLng(start.lat, start.lng))
       map.setZoom(15)
     }
-  }, [map, navermaps, departure])
+  }, [map, navermaps, start])
 
   useEffect(() => {
-    if (destination && map && navermaps) {
-      map.setCenter(
-        new navermaps.LatLng(destination.latitude, destination.longitude),
-      )
+    if (goal && map && navermaps) {
+      map.setCenter(new navermaps.LatLng(goal.lat, goal.lng))
       map.setZoom(15)
     }
-  }, [map, navermaps, destination])
+  }, [map, navermaps, goal])
 
   return (
     <MapDiv style={{ width: '100%', height: '100dvh' }}>
@@ -72,22 +69,32 @@ const Naver = ({ departure = null, destination = null }: NaverProps) => {
         defaultZoom={12}
         ref={setMap}
       >
-        {departure && (
+        {start && (
           <CustomMarker
             position={{
-              lat: departure.latitude,
-              lng: departure.longitude,
+              lat: start.lat,
+              lng: start.lng,
             }}
-            type="departure"
+            type="start"
           />
         )}
-        {destination && (
+        {goal && (
           <CustomMarker
             position={{
-              lat: destination.latitude,
-              lng: destination.longitude,
+              lat: goal.lat,
+              lng: goal.lng,
             }}
-            type="destination"
+            type="goal"
+          />
+        )}
+        {start && goal && (
+          <Polyline
+            path={route}
+            strokeLineCap="round"
+            strokeLineJoin="round"
+            strokeColor="#2DB400"
+            strokeOpacity={0.8}
+            strokeWeight={5}
           />
         )}
       </NaverMap>
