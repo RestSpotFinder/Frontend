@@ -12,4 +12,5 @@ export type LocationInfoType = {
   distance: number
   tollFee: number
   fuelCost: number
+  optionText: string
 }

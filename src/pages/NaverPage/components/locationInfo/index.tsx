@@ -1,7 +1,7 @@
 import { LocationInfoType } from '@/types'
 
 const LocationInfo = (props: LocationInfoType) => {
-  const { ranking, time, distance, tollFee, fuelCost } = props
+  const { ranking, time, distance, tollFee, fuelCost, optionText } = props
 
   const tollInfo = tollFee === 0 ? '통행료 무료' : `통행료 ${tollFee}원`
 
@@ -11,7 +11,7 @@ const LocationInfo = (props: LocationInfoType) => {
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <p className="text-white">{ranking + 1}</p>
         </span>
-        <h1 className="mb-1 ml-7 font-bold text-green-600">실시간 추천</h1>
+        <h1 className="mb-1 ml-7 font-bold text-green-600">{optionText}</h1>
       </div>
       <div className="flex flex-row">
         <p className="mb-2  text-3xl font-bold">{time}</p>
