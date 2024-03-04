@@ -17,7 +17,7 @@ const useGetRoutes = ({ start, goal }: Request) => {
   const getRoutes = async () => {
     const response = await apiClient.get(`/route?start=${start}&goal=${goal}`)
 
-    return response.data
+    return response.data.data
   }
 
   return useSuspenseQuery<Response, Error>({
