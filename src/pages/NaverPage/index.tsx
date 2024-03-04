@@ -1,10 +1,7 @@
-
-
-import InputSubmit from "./components/InputSubmit"
+import InputSubmit from './components/InputSubmit'
 
 import Logos from './components/Logos'
 import { NaverMap } from '@/components'
-
 
 const NaverPage = () => {
   return (
@@ -14,7 +11,6 @@ const NaverPage = () => {
       <InputSubmit />
 
       <NaverMap />
-
     </div>
   )
 }
