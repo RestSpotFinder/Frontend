@@ -55,7 +55,7 @@ const InputSubmit = () => {
     })
   }
   return (
-    <div className="relative  h-60 w-96  bg-white p-12">
+    <div className="relative  h-52 w-96 border-b border-gray-300 p-8">
       <input
         type="text"
         name="startSearchTerm"

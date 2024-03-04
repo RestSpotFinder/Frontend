@@ -1,12 +1,12 @@
-import { LocationInfoType } from '@/types'
+import { PathInfoType } from '@/types'
 
-const LocationInfo = (props: LocationInfoType) => {
+const PathInfo = (props: PathInfoType) => {
   const { ranking, time, distance, tollFee, fuelCost, optionText } = props
 
   const tollInfo = tollFee === 0 ? '통행료 무료' : `통행료 ${tollFee}원`
 
   return (
-    <div className="relative h-36 w-96 p-11">
+    <div className="relative h-36 w-96 border-b border-gray-300 p-8">
       <div className="relative flex flex-row">
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <p className="text-white">{ranking + 1}</p>
@@ -28,4 +28,4 @@ const LocationInfo = (props: LocationInfoType) => {
   )
 }
 
-export default LocationInfo
+export default PathInfo

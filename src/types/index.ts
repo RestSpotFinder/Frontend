@@ -6,7 +6,7 @@ export interface Place {
   address: string
 }
 
-export type LocationInfoType = {
+export type PathInfoType = {
   ranking: number
   time: number
   distance: number

@@ -2,7 +2,7 @@ import InputSubmit from './components/InputSubmit'
 import Logos from './components/Logos'
 
 import { NaverMap } from '@/components'
-import LocationInfoContainer from './containers/locationInfo'
+import LocationInfoContainer from './components/PathInfo/container'
 
 const NaverPage = () => {
   return (
@@ -10,9 +10,7 @@ const NaverPage = () => {
       <Logos />
       <div className="flex flex-col">
         <InputSubmit />
-        <div className="overflow-scroll">
-          <LocationInfoContainer />
-        </div>
+        <LocationInfoContainer />
       </div>
       <NaverMap />
     </div>

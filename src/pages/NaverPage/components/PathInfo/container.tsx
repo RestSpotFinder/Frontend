@@ -1,6 +1,6 @@
-import LocationInfo from '../components/locationInfo'
+import LocationInfo from '.'
 
-const LocationInfoContainer = () => {
+const PathInfoContainer = () => {
   const mockData = [
     {
       optionText: '실시간 추천',
@@ -45,7 +45,7 @@ const LocationInfoContainer = () => {
   ]
 
   return (
-    <div>
+    <div className="overflow-scroll">
       {mockData.map((value, index) => {
         return (
           <LocationInfo
@@ -63,4 +63,4 @@ const LocationInfoContainer = () => {
   )
 }
 
-export default LocationInfoContainer
+export default PathInfoContainer
