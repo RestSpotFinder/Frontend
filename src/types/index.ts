@@ -5,3 +5,11 @@ export interface Place {
   category: string
   address: string
 }
+
+export type LocationInfoType = {
+  ranking: number
+  time: number
+  distance: number
+  tollFee: number
+  fuelCost: number
+}

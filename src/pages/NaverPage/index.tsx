@@ -1,8 +1,8 @@
 import InputSubmit from './components/InputSubmit'
 import Logos from './components/Logos'
-import LocationInfo from './components/locationInfo'
+
 import { NaverMap } from '@/components'
-import LocationInfoContainer from './components/locationInfo/container'
+import LocationInfoContainer from './containers/locationInfo'
 
 const NaverPage = () => {
   return (
