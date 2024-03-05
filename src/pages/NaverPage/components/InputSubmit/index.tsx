@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import restart_icon from '../../../../assets/restart.svg'
-import plus_icon from '../../../../assets/plus.svg'
-import right_icon from '../../../../assets/right.svg'
+import restart_icon from '@/assets/restart.svg'
+import plus_icon from '@/assets/plus.svg'
+import right_icon from '@/assets/right.svg'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
