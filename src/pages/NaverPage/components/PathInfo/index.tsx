@@ -1,12 +1,27 @@
 import { PathInfoType } from '@/types'
+import { useState } from 'react'
 
 const PathInfo = (props: PathInfoType) => {
   const { ranking, time, distance, tollFee, fuelCost, optionText } = props
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null)
 
   const tollInfo = tollFee === 0 ? '통행료 무료' : `통행료 ${tollFee}원`
 
+  const handleClick = (idx: number) => {
+    if (selectedIdx === idx) {
+      setSelectedIdx(null) // 클릭된 인덱스가 현재 인덱스와 동일하면 선택 해제
+    } else {
+      setSelectedIdx(idx) // 클릭된 인덱스를 선택
+    }
+  }
+
   return (
-    <div className="relative h-36 w-96 border-b border-gray-300 p-8">
+    <div
+      className={`relative h-36 w-96 border-b border-gray-300 p-8 ${
+        selectedIdx !== null ? 'bg-green-100' : ''
+      }`}
+      onClick={() => handleClick(ranking)}
+    >
       <div className="relative flex flex-row">
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <p className="text-white">{ranking + 1}</p>

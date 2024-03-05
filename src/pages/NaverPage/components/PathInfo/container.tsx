@@ -26,22 +26,6 @@ const PathInfoContainer = () => {
       fuelCost: 284,
       id: '3',
     },
-    {
-      optionText: '올림픽대로 이용',
-      time: 7,
-      distance: 3.1,
-      tollFee: 3000,
-      fuelCost: 383,
-      id: '4',
-    },
-    {
-      optionText: '거리 우선',
-      time: 10,
-      distance: 5.2,
-      tollFee: 1000,
-      fuelCost: 386,
-      id: '5',
-    },
   ]
 
   return (
