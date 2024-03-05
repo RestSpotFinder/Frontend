@@ -1,6 +1,5 @@
 import InputSubmit from './components/InputSubmit'
 import Logos from './components/Logos'
-
 import { NaverMap } from '@/components'
 import LocationInfoContainer from './components/PathInfo/container'
 
