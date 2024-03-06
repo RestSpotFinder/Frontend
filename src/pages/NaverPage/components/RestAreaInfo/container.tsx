@@ -107,7 +107,7 @@ const RestAreaInfoContainer = () => {
   ]
 
   return (
-    <div className=" overflow-scroll border-l border-gray-300">
+    <div className="overflow-scroll border-l border-gray-300">
       {pathInfoMockData.map((value, index) => {
         return (
           <PathInfo

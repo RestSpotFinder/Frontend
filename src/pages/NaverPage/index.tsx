@@ -12,7 +12,7 @@ const NaverPage = () => {
         <InputSubmit />
         <LocationInfoContainer />
       </div>
-      <div className="flex flex-col">
+      <div className="flex">
         <RestAreaInfoContainer />
       </div>
       <NaverMap />
