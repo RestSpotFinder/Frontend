@@ -38,8 +38,8 @@ const RestAreaInfo = (props: RestAreaInfoType) => {
       break
   }
   return (
-    <div className="w-96xs relative border-b border-gray-200 p-2">
-      <div className="grid grid-cols-2  ">
+    <div className="relative w-96 border-b border-gray-200 p-2">
+      <div className="grid grid-cols-2">
         <div className="col-span-1">
           <img src={iconSrc} alt="icon" className="ml-14 h-16 w-16" />
         </div>

@@ -107,8 +107,8 @@ const RestAreaInfoContainer = () => {
   ]
 
   return (
-    <div className="overflow-scroll border-l border-gray-300">
-      {pathInfoMockData.map((value, index) => {
+    <div className="flex w-full flex-col overflow-auto border-l border-gray-300">
+      {pathInfoMockData.map(value => {
         return (
           <PathInfo
             key={value.id}
@@ -121,7 +121,7 @@ const RestAreaInfoContainer = () => {
           />
         )
       })}
-      {restAreaInfoMockData.map((value, index) => {
+      {restAreaInfoMockData.map(value => {
         return (
           <RestAreaInfo
             key={value.id}
