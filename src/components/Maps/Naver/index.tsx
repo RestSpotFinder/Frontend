@@ -27,8 +27,8 @@ const Naver = ({
 
   const route = routes[0].coordinates.map((coordinate: [number, number]) => {
     return {
-      lat: coordinate[0],
-      lng: coordinate[1],
+      lat: coordinate.y,
+      lng: coordinate.x,
     }
   })
 

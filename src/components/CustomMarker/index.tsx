@@ -1,7 +1,7 @@
 import { Marker } from 'react-naver-maps'
 
 interface CustomMarkerProps {
-  type?: 'departure' | 'destination'
+  type?: 'start' | 'goal'
   position: { lat: number; lng: number }
 }
 
@@ -23,7 +23,7 @@ const CustomMarker = ({ type, position }: CustomMarkerProps) => {
               </defs>
             </svg>`,
           ' <p style=" position: absolute; transform: translateY(-25%); font-size: 0.75rem; font-weight: bold; color: white; font-style: normal;">',
-          `   ${type === 'departure' ? '출발' : '도착'}`,
+          `   ${type === 'start' ? '출발' : '도착'}`,
           ' </p>',
           '</i>',
         ].join(''),
