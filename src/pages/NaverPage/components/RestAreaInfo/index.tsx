@@ -41,11 +41,11 @@ const RestAreaInfo = (props: RestAreaInfoType) => {
     <div className="w-96xs relative border-b border-gray-200 p-2">
       <div className="grid grid-cols-2  ">
         <div className="col-span-1">
-          <img src={iconSrc} alt="icon" className="ml-8 h-16 w-16" />
+          <img src={iconSrc} alt="icon" className="ml-14 h-16 w-16" />
         </div>
-        <div className="col-span-1">
+        <div className="col-span-1 mr-14">
           <div>
-            <h1 className="flex justify-center text-xl font-bold">{title}</h1>
+            <h1 className=" flex justify-center text-xl font-bold">{title}</h1>
           </div>
           <div className="flex flex-row justify-around">
             {electricCar && (
@@ -91,15 +91,3 @@ const RestAreaInfo = (props: RestAreaInfoType) => {
 }
 
 export default RestAreaInfo
-
-{
-  /* <div className="mt-5 flex flex-row justify-around">
-          {electricCar && (
-            <img src={electric_car_icon} alt="electric_car_icon" />
-          )}
-          {restaurant && <img src={restaurant_icon} alt="restaurant_icon" />}
-          {gasStation && <img src={gas_station_icon} alt="gas_station_icon" />}
-          {pharmacy && <img src={pharmacy_icon} alt="pharmacy_icon" />}
-          {toilet && <img src={toilet_icon} alt="toilet_icon" />}
-        </div> */
-}
