@@ -14,3 +14,12 @@ export type PathInfoType = {
   fuelCost: number
   optionText: string
 }
+
+export type RestAreaInfoType = {
+  restAreaType: number
+  restaurant: boolean
+  gasStation: boolean
+  electricCar: boolean
+  pharmacy: boolean
+  toilet: boolean
+}

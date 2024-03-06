@@ -17,10 +17,9 @@ const PathInfo = (props: PathInfoType) => {
 
   return (
     <div
-      className={`relative h-36 w-96 border-b border-gray-300 p-8 ${
+      className={`relative h-36 w-96 border-b border-gray-300  p-8 ${
         selectedIdx !== null ? 'bg-green-100' : ''
       }`}
-      onClick={() => handleClick(ranking)}
     >
       <div className="relative flex flex-row">
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">

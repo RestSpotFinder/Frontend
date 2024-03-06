@@ -1,4 +1,4 @@
-import LocationInfo from '.'
+import PathInfo from '.'
 
 const PathInfoContainer = () => {
   const mockData = [
@@ -32,7 +32,7 @@ const PathInfoContainer = () => {
     <div className="overflow-scroll">
       {mockData.map((value, index) => {
         return (
-          <LocationInfo
+          <PathInfo
             key={value.id}
             ranking={index}
             time={value.time}
