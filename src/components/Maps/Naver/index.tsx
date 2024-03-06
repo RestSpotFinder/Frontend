@@ -4,7 +4,7 @@ import {
   useNavermaps,
   Polyline,
 } from 'react-naver-maps'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { CustomMarker } from '@/components'
 import { Place } from '@/types'
 import { useGetRoutes } from '@/apis/hooks'
@@ -12,11 +12,15 @@ import { useGetRoutes } from '@/apis/hooks'
 interface NaverProps {
   start: Place | null
   goal: Place | null
+  selectedRouteOption: string
+  setSelectedRouteOption?: Dispatch<SetStateAction<string>>
 }
 
 const Naver = ({
-  start = { lat: '37.4319958', lng: '127.1285607' },
-  goal = { lat: '37.2066719', lng: '128.8376985' },
+  start = { lat: '37.9319958', lng: '127.1285607' },
+  goal = { lat: '37.5066719', lng: '127.8376911' },
+  selectedRouteOption = 'comfort',
+  setSelectedRouteOption,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const [map, setMap] = useState(null)
@@ -25,19 +29,12 @@ const Naver = ({
     goal: [goal.lng, goal.lat].join(','),
   })
 
-  const route = routes[0].coordinates.map((coordinate: [number, number]) => {
-    return {
-      lat: coordinate[0],
-      lng: coordinate[1],
-    }
-  })
-
   useEffect(() => {
-    if (map && navermaps && !start && !goal) {
+    if (map && !start && !goal) {
       navigator.geolocation.getCurrentPosition(
         position => {
           const { latitude, longitude } = position.coords
-          const myPosition = new navermaps.LatLng(latitude, longitude)
+          const myPosition = { lat: latitude, lng: longitude }
 
           map.setCenter(myPosition)
         },
@@ -46,21 +43,31 @@ const Naver = ({
         },
       )
     }
-  }, [map, navermaps, start, goal])
+  }, [map, start, goal])
 
   useEffect(() => {
-    if (start && map && navermaps) {
-      map.setCenter(new navermaps.LatLng(start.lat, start.lng))
+    if (start && map) {
+      map.setCenter({ lat: start.lat, lng: start.lng })
       map.setZoom(15)
     }
-  }, [map, navermaps, start])
+  }, [map, start])
 
   useEffect(() => {
-    if (goal && map && navermaps) {
-      map.setCenter(new navermaps.LatLng(goal.lat, goal.lng))
+    if (goal && map) {
+      map.setCenter({ lat: goal.lat, lng: goal.lng })
       map.setZoom(15)
     }
-  }, [map, navermaps, goal])
+  }, [map, goal])
+
+  useEffect(() => {
+    if (selectedRouteOption && map && start && goal) {
+      map.setCenter({
+        lat: (parseFloat(start.lat) + parseFloat(goal.lat)) / 2,
+        lng: (parseFloat(start.lng) + parseFloat(goal.lng)) / 2,
+      })
+      map.setZoom(10)
+    }
+  }, [selectedRouteOption, map, start, goal])
 
   return (
     <MapDiv style={{ width: '100%', height: '100dvh' }}>
@@ -87,16 +94,26 @@ const Naver = ({
             type="goal"
           />
         )}
-        {start && goal && (
-          <Polyline
-            path={route}
-            strokeLineCap="round"
-            strokeLineJoin="round"
-            strokeColor="#2DB400"
-            strokeOpacity={0.8}
-            strokeWeight={5}
-          />
-        )}
+        {start &&
+          goal &&
+          routes.map(path => (
+            <Polyline
+              key={path.routeId}
+              path={path.coordinates.map((coordinate: [number, number]) => {
+                return {
+                  lat: coordinate.y,
+                  lng: coordinate.x,
+                }
+              })}
+              strokeLineCap="round"
+              strokeLineJoin="round"
+              strokeColor={`${path.routeOption === selectedRouteOption ? '#2DB400' : '#A9A9A9'}`}
+              strokeOpacity={0.8}
+              strokeWeight={6}
+              clickable={true}
+              onClick={() => setSelectedRouteOption(path.routeOption)}
+            />
+          ))}
       </NaverMap>
     </MapDiv>
   )
