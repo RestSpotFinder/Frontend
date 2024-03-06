@@ -39,19 +39,67 @@ const RestAreaInfo = (props: RestAreaInfoType) => {
   }
   return (
     <div className="w-96xs relative border-b border-gray-200 p-2">
-      <div className="flex justify-around">
-        <img src={iconSrc} alt="icon" className="h-12 w-12" />
-        <h1 className=" mt-2 text-xl font-bold">{title}</h1>
-      </div>
-      <div className="mt-5 flex justify-around">
-        {electricCar && <img src={electric_car_icon} alt="electric_car_icon" />}
-        {restaurant && <img src={restaurant_icon} alt="restaurant_icon" />}
-        {gasStation && <img src={gas_station_icon} alt="gas_station_icon" />}
-        {pharmacy && <img src={pharmacy_icon} alt="pharmacy_icon" />}
-        {toilet && <img src={toilet_icon} alt="toilet_icon" />}
+      <div className="grid grid-cols-2  ">
+        <div className="col-span-1">
+          <img src={iconSrc} alt="icon" className="ml-8 h-16 w-16" />
+        </div>
+        <div className="col-span-1">
+          <div>
+            <h1 className="flex justify-center text-xl font-bold">{title}</h1>
+          </div>
+          <div className="flex flex-row justify-around">
+            {electricCar && (
+              <img
+                src={electric_car_icon}
+                alt="electric_car_icon"
+                className="mt-2 h-7 w-7"
+              />
+            )}
+            {restaurant && (
+              <img
+                src={restaurant_icon}
+                alt="restaurant_icon"
+                className="mt-2 h-7 w-7"
+              />
+            )}
+            {gasStation && (
+              <img
+                src={gas_station_icon}
+                alt="gas_station_icon"
+                className="mt-2 h-7 w-7"
+              />
+            )}
+            {pharmacy && (
+              <img
+                src={pharmacy_icon}
+                alt="pharmacy_icon"
+                className="mt-2 h-7 w-7"
+              />
+            )}
+            {toilet && (
+              <img
+                src={toilet_icon}
+                alt="toilet_icon"
+                className="mt-2 h-7 w-7"
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
 export default RestAreaInfo
+
+{
+  /* <div className="mt-5 flex flex-row justify-around">
+          {electricCar && (
+            <img src={electric_car_icon} alt="electric_car_icon" />
+          )}
+          {restaurant && <img src={restaurant_icon} alt="restaurant_icon" />}
+          {gasStation && <img src={gas_station_icon} alt="gas_station_icon" />}
+          {pharmacy && <img src={pharmacy_icon} alt="pharmacy_icon" />}
+          {toilet && <img src={toilet_icon} alt="toilet_icon" />}
+        </div> */
+}

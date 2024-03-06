@@ -5,7 +5,7 @@ const RestAreaInfoContainer = () => {
   const pathInfoMockData = [
     {
       optionText: '실시간 추천',
-      ranking: 1,
+      ranking: 0,
       time: 8,
       distance: 2,
       tollFee: 1000,
