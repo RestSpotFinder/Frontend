@@ -18,7 +18,7 @@ interface NaverProps {
 
 const Naver = ({
   start = { lat: '37.9319958', lng: '127.1285607' },
-  goal = { lat: '37.2066719', lng: '128.1376911' },
+  goal = { lat: '37.5066719', lng: '127.8376911' },
   selectedRouteOption = 'comfort',
   setSelectedRouteOption,
 }: NaverProps) => {
