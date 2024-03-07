@@ -107,7 +107,7 @@ const RestAreaInfoContainer = () => {
   ]
 
   return (
-    <div className="flex w-full flex-col overflow-auto border-l border-gray-300">
+    <div className="overflow-none border-l border-gray-300">
       {pathInfoMockData.map(value => {
         return (
           <PathInfo
@@ -123,15 +123,16 @@ const RestAreaInfoContainer = () => {
       })}
       {restAreaInfoMockData.map(value => {
         return (
-          <RestAreaInfo
-            key={value.id}
-            restAreaType={value.restAreaType}
-            restaurant={value.restaurant}
-            gasStation={value.gasStaion}
-            electricCar={value.electricCar}
-            pharmacy={value.pharmacy}
-            toilet={value.toilet}
-          />
+          <div className="overflow-y-auto bg-red-100" key={value.id}>
+            <RestAreaInfo
+              restAreaType={value.restAreaType}
+              restaurant={value.restaurant}
+              gasStation={value.gasStaion}
+              electricCar={value.electricCar}
+              pharmacy={value.pharmacy}
+              toilet={value.toilet}
+            />
+          </div>
         )
       })}
     </div>
