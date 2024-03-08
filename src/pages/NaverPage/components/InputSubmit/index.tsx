@@ -1,7 +1,5 @@
-import { useState } from 'react'
-import restart_icon from '@/assets/restart.svg'
-import plus_icon from '@/assets/plus.svg'
-import right_icon from '@/assets/right.svg'
+import { useState, ChangeEvent } from 'react'
+import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -48,12 +46,13 @@ const InputSubmit = () => {
     setWayPoints([...wayPoints, ''])
     if (wayPoints.length === 4) setIsMax(true)
   }
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch({
       ...search,
       [e.target.name]: e.target.value,
     })
   }
+
   return (
     <div className="relative  h-52 w-96 border-b border-gray-300 p-8">
       <input
@@ -98,23 +97,19 @@ const InputSubmit = () => {
           className="flex items-center rounded border border-gray-400 p-2"
           onClick={handleResetClick}
         >
-          <img src={restart_icon} alt="restart_icon" />
+          <RestartIcon />
           <span className="mr-2">다시 입력</span>
         </button>
         <button
-          className={
-            isMax
-              ? `ml-2 flex hidden items-center rounded border border-gray-400 p-2`
-              : `ml-2 flex items-center rounded border border-gray-400 p-2`
-          }
+          className={`ml-2 flex items-center rounded border border-gray-400 p-2 ${isMax && 'hidden'}`}
           onClick={handleWaypointClick}
         >
-          <img src={plus_icon} alt="plus_icon" className="mr-1" />
+          <PlusIcon className="mr-1" />
           <span className="mr-2">경유지</span>
         </button>
         <button className="ml-auto flex items-center rounded border border-gray-400 bg-green-600 p-2 text-white">
           <span className="ml-1">길찾기</span>
-          <img src={right_icon} alt="right_icon" />
+          <RightIcon />
         </button>
       </div>
     </div>

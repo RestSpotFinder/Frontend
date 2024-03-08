@@ -10,13 +10,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: [
-    'react',
-    'react-refresh',
-    'import',
-    '@typescript-eslint',
-    'prettier',
-  ],
+  plugins: ['react-refresh', 'import'],
   settings: {
     'import/resolver': {
       node: {
@@ -33,12 +27,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'import/newline-after-import': ['error'],
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-      },
-    ],
     'no-undef': 'error',
   },
 }
