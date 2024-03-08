@@ -1,6 +1,6 @@
 import { PathInfoType } from '@/types'
 
-const PathInfo = (props: PathInfoType) => {
+const PathInfoContent = (props: PathInfoType) => {
   const { ranking, time, distance, tollFee, fuelCost, optionText } = props
 
   const tollInfo = tollFee === 0 ? '통행료 무료' : `통행료 ${tollFee}원`
@@ -28,4 +28,4 @@ const PathInfo = (props: PathInfoType) => {
   )
 }
 
-export default PathInfo
+export default PathInfoContent

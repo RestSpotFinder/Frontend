@@ -8,7 +8,7 @@ import electric_car_icon from '@/assets/electric_car.svg'
 import toilet_icon from '@/assets/toilet.svg'
 import { RestAreaInfoType } from '@/types'
 
-const RestAreaInfo = (props: RestAreaInfoType) => {
+const RestAreaInfoContent = (props: RestAreaInfoType) => {
   const {
     restAreaType,
     restaurant,
@@ -90,4 +90,4 @@ const RestAreaInfo = (props: RestAreaInfoType) => {
   )
 }
 
-export default RestAreaInfo
+export default RestAreaInfoContent

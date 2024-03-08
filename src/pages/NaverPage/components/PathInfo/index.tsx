@@ -1,6 +1,6 @@
-import PathInfo from './PathInfo'
+import PathInfoContent from './pathInfoContent'
 
-const PathInfoContainer = () => {
+const PathInfo = () => {
   const mockData = [
     {
       optionText: '실시간 추천',
@@ -32,7 +32,7 @@ const PathInfoContainer = () => {
     <div className="overflow-scroll">
       {mockData.map((value, index) => {
         return (
-          <PathInfo
+          <PathInfoContent
             key={value.id}
             ranking={index}
             time={value.time}
@@ -47,4 +47,4 @@ const PathInfoContainer = () => {
   )
 }
 
-export default PathInfoContainer
+export default PathInfo

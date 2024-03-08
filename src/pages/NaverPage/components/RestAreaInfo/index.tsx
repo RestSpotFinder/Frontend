@@ -1,7 +1,7 @@
-import PathInfo from '../PathInfo/PathInfo'
-import RestAreaInfo from './RestAreaInfo'
+import PathInfoContent from '../PathInfo/pathInfoContent'
+import RestAreaInfoContent from './restAreaInfoContent'
 
-const RestAreaInfoContainer = () => {
+const RestAreaInfo = () => {
   const pathInfoMockData = [
     {
       optionText: '실시간 추천',
@@ -110,7 +110,7 @@ const RestAreaInfoContainer = () => {
     <div className="z-50 flex w-96 flex-col border-l border-gray-300">
       {pathInfoMockData.map(value => {
         return (
-          <PathInfo
+          <PathInfoContent
             key={value.id}
             ranking={value.ranking}
             time={value.time}
@@ -124,7 +124,7 @@ const RestAreaInfoContainer = () => {
       <div className="flex flex-col overflow-scroll">
         {restAreaInfoMockData.map(value => {
           return (
-            <RestAreaInfo
+            <RestAreaInfoContent
               key={value.id}
               restAreaType={value.restAreaType}
               restaurant={value.restaurant}
@@ -140,4 +140,4 @@ const RestAreaInfoContainer = () => {
   )
 }
 
-export default RestAreaInfoContainer
+export default RestAreaInfo
