@@ -1,12 +1,5 @@
 import { NaverMap } from '@/components'
-import {
-  Logos,
-  InputSubmit,
-  PathInfo,
-  RestAreaInfo,
-  Title,
-  RecentSearch,
-} from './components'
+import { Logos, InputSubmit, Title, RecentSearch } from './components'
 
 const NaverPage = () => {
   return (
@@ -16,9 +9,8 @@ const NaverPage = () => {
         <Title />
         <InputSubmit />
         <RecentSearch />
-        {/* <PathInfo /> */}
       </div>
-      <RestAreaInfo />
+
       <NaverMap />
     </div>
   )
