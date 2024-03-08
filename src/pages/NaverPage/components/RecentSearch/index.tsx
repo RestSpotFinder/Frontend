@@ -1,4 +1,4 @@
-import location_icon from '@/assets/location.svg'
+import { LocationIcon } from '@/assets/Icons'
 
 const RecentSearch = () => {
   return (
@@ -9,23 +9,23 @@ const RecentSearch = () => {
       </div>
       <div className="flex flex-col">
         <div className="flex flex-row">
-          <img src={location_icon} alt="location_icon" className="mr-2 mt-2" />
+          <LocationIcon className="mr-2 mt-2" />
           <p className="mt-2 text-slate-800">가천대학교 글로벌 캠퍼스</p>
         </div>
         <div className="flex flex-row">
-          <img src={location_icon} alt="location_icon" className="mr-2 mt-2" />
+          <LocationIcon className="mr-2 mt-2" />
           <p className="mt-2 ">모란역</p>
         </div>
         <div className="flex flex-row">
-          <img src={location_icon} alt="location_icon" className="mr-2 mt-2" />
+          <LocationIcon className="mr-2 mt-2" />
           <p className="mt-2">판교역</p>
         </div>
         <div className="flex flex-row">
-          <img src={location_icon} alt="location_icon" className="mr-2 mt-2" />
+          <LocationIcon className="mr-2 mt-2" />
           <p className="mt-2">강남역</p>
         </div>
         <div className="flex flex-row">
-          <img src={location_icon} alt="location_icon" className="mr-2 mt-2" />
+          <LocationIcon className="mr-2 mt-2" />
           <p className="mt-2">잠실역</p>
         </div>
       </div>

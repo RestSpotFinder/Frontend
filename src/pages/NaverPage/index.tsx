@@ -16,8 +16,9 @@ const NaverPage = () => {
         <Title />
         <InputSubmit />
         <RecentSearch />
+        {/* <PathInfo /> */}
       </div>
-      {/* <RestAreaInfo /> */}
+      <RestAreaInfo />
       <NaverMap />
     </div>
   )

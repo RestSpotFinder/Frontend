@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
 
 const InputSubmit = () => {
@@ -106,7 +106,7 @@ const InputSubmit = () => {
           className="flex items-center rounded border border-gray-400 p-2"
           onClick={handleResetClick}
         >
-          <RestartIcon />
+          <RestartIcon className="mr-1" />
           <span className="mr-2">다시 입력</span>
         </button>
         <button
