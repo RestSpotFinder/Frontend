@@ -1,93 +1,143 @@
-import normal_icon from '@/assets/normal.svg'
-import nature_icon from '@/assets/nature.svg'
-import cargo_icon from '@/assets/cargo.svg'
-import restaurant_icon from '@/assets/restaurant.svg'
-import gas_station_icon from '@/assets/gas_station.svg'
-import pharmacy_icon from '@/assets/pharmacy.svg'
-import electric_car_icon from '@/assets/electric_car.svg'
-import toilet_icon from '@/assets/toilet.svg'
-import { RestAreaInfoType } from '@/types'
+import PathInfo from '../PathInfo/PathInfo'
+import RestAreaInfo from './RestAreaInfo'
 
-const RestAreaInfo = (props: RestAreaInfoType) => {
-  const {
-    restAreaType,
-    restaurant,
-    gasStation,
-    electricCar,
-    pharmacy,
-    toilet,
-  } = props
+const RestAreaInfoContainer = () => {
+  const pathInfoMockData = [
+    {
+      optionText: '실시간 추천',
+      ranking: 0,
+      time: 8,
+      distance: 2,
+      tollFee: 1000,
+      fuleCost: 286,
+      id: 1,
+    },
+  ]
+  const restAreaInfoMockData = [
+    {
+      restAreaType: 1,
+      restaurant: true,
+      gasStaion: true,
+      electricCar: true,
+      pharmacy: true,
+      toilet: true,
+      id: '1',
+    },
+    {
+      restAreaType: 1,
+      restaurant: true,
+      gasStaion: false,
+      electricCar: false,
+      pharmacy: true,
+      toilet: true,
+      id: '2',
+    },
+    {
+      restAreaType: 2,
+      restaurant: false,
+      gasStaion: false,
+      electricCar: false,
+      pharmacy: true,
+      toilet: true,
+      id: '3',
+    },
+    {
+      restAreaType: 3,
+      restaurant: true,
+      gasStaion: false,
+      electricCar: false,
+      pharmacy: true,
+      toilet: true,
+      id: '4',
+    },
+    {
+      restAreaType: 1,
+      restaurant: false,
+      gasStaion: true,
+      electricCar: false,
+      pharmacy: true,
+      toilet: true,
+      id: '5',
+    },
+    {
+      restAreaType: 2,
+      restaurant: true,
+      gasStaion: true,
+      electricCar: true,
+      pharmacy: true,
+      toilet: true,
+      id: '6',
+    },
+    {
+      restAreaType: 1,
+      restaurant: true,
+      gasStaion: true,
+      electricCar: false,
+      pharmacy: false,
+      toilet: false,
+      id: '7',
+    },
+    {
+      restAreaType: 2,
+      restaurant: true,
+      gasStaion: true,
+      electricCar: true,
+      pharmacy: true,
+      toilet: true,
+      id: '8',
+    },
+    {
+      restAreaType: 1,
+      restaurant: false,
+      gasStaion: true,
+      electricCar: true,
+      pharmacy: false,
+      toilet: false,
+      id: '9',
+    },
+    {
+      restAreaType: 3,
+      restaurant: true,
+      gasStaion: false,
+      electricCar: true,
+      pharmacy: true,
+      toilet: false,
+      id: '10',
+    },
+  ]
 
-  let iconSrc, title
-
-  switch (restAreaType) {
-    case 1:
-      iconSrc = normal_icon
-      title = '일반 휴게소'
-      break
-    case 2:
-      iconSrc = nature_icon
-      title = '간이 휴게소'
-      break
-    case 3:
-      iconSrc = cargo_icon
-      title = '화물 휴게소'
-      break
-    default:
-      title = '휴게소'
-      break
-  }
   return (
-    <div className="relative w-96 border-b border-gray-200 p-2">
-      <div className="grid grid-cols-2">
-        <div className="col-span-1">
-          <img src={iconSrc} alt="icon" className="ml-14 h-16 w-16" />
-        </div>
-        <div className="col-span-1 mr-14">
-          <div>
-            <h1 className=" flex justify-center text-xl font-bold">{title}</h1>
-          </div>
-          <div className="flex flex-row justify-around">
-            {electricCar && (
-              <img
-                src={electric_car_icon}
-                alt="electric_car_icon"
-                className="mt-2 h-7 w-7"
-              />
-            )}
-            {restaurant && (
-              <img
-                src={restaurant_icon}
-                alt="restaurant_icon"
-                className="mt-2 h-7 w-7"
-              />
-            )}
-            {gasStation && (
-              <img
-                src={gas_station_icon}
-                alt="gas_station_icon"
-                className="mt-2 h-7 w-7"
-              />
-            )}
-            {pharmacy && (
-              <img
-                src={pharmacy_icon}
-                alt="pharmacy_icon"
-                className="mt-2 h-7 w-7"
-              />
-            )}
-            {toilet && (
-              <img
-                src={toilet_icon}
-                alt="toilet_icon"
-                className="mt-2 h-7 w-7"
-              />
-            )}
-          </div>
-        </div>
+    <div className="z-50 flex w-96 flex-col border-l border-gray-300">
+      {pathInfoMockData.map(value => {
+        return (
+          <PathInfo
+            key={value.id}
+            ranking={value.ranking}
+            time={value.time}
+            distance={value.distance}
+            tollFee={value.tollFee}
+            fuelCost={value.fuleCost}
+            optionText={value.optionText}
+          />
+        )
+      })}
+      <div className="flex flex-col overflow-scroll">
+        {restAreaInfoMockData.map(value => {
+          return (
+            <RestAreaInfo
+              key={value.id}
+              restAreaType={value.restAreaType}
+              restaurant={value.restaurant}
+              gasStation={value.gasStaion}
+              electricCar={value.electricCar}
+              pharmacy={value.pharmacy}
+              toilet={value.toilet}
+            />
+          )
+        })}
       </div>
     </div>
   )
 }
 
-export default RestAreaInfo
+export default RestAreaInfoContainer

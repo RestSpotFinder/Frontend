@@ -1,9 +1,5 @@
-import InputSubmit from './components/InputSubmit'
-import Logos from './components/Logos'
 import { NaverMap } from '@/components'
-import LocationInfoContainer from './components/PathInfo/container'
-import RestAreaInfoContainer from './components/RestAreaInfo/container'
-import { HideButton } from './components'
+import { Logos, InputSubmit, PathInfo, RestAreaInfo } from './components'
 
 const NaverPage = () => {
   return (
@@ -11,12 +7,9 @@ const NaverPage = () => {
       <Logos />
       <div className="flex flex-col">
         <InputSubmit />
-        <LocationInfoContainer />
+        <PathInfo />
       </div>
-
-      <RestAreaInfoContainer />
-
-      <HideButton />
+      <RestAreaInfo />
       <NaverMap />
     </div>
   )

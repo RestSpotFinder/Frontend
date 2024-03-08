@@ -8,7 +8,6 @@ import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { CustomMarker } from '@/components'
 import { Place } from '@/types'
 import { useGetRoutes } from '@/apis/hooks'
-import HideButton from '@/pages/NaverPage/components/HideButton'
 
 interface NaverProps {
   start: Place | null
