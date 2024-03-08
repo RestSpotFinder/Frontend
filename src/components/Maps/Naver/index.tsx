@@ -26,8 +26,8 @@ const Naver = ({
   const navermaps = useNavermaps()
   const [map, setMap] = useState(null)
   const { data: routes } = useGetRoutes({
-    start: [start.lng, start.lat].join(','),
-    goal: [goal.lng, goal.lat].join(','),
+    start: [start?.lng, start?.lat].join(','),
+    goal: [goal?.lng, goal?.lat].join(','),
   })
 
   useEffect(() => {
@@ -72,7 +72,6 @@ const Naver = ({
 
   return (
     <MapDiv style={{ width: '100%', height: '100dvh' }}>
-      <HideButton />
       <NaverMap
         defaultCenter={new navermaps.LatLng(37.3595704, 127.105399)}
         defaultZoom={12}

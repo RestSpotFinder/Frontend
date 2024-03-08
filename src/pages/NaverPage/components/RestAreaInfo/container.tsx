@@ -107,7 +107,7 @@ const RestAreaInfoContainer = () => {
   ]
 
   return (
-    <div className="overflow-none border-l border-gray-300">
+    <div className="z-50 flex w-96 flex-col border-l border-gray-300">
       {pathInfoMockData.map(value => {
         return (
           <PathInfo
@@ -121,10 +121,11 @@ const RestAreaInfoContainer = () => {
           />
         )
       })}
-      {restAreaInfoMockData.map(value => {
-        return (
-          <div className="overflow-y-auto bg-red-100" key={value.id}>
+      <div className="flex flex-col overflow-scroll">
+        {restAreaInfoMockData.map(value => {
+          return (
             <RestAreaInfo
+              key={value.id}
               restAreaType={value.restAreaType}
               restaurant={value.restaurant}
               gasStation={value.gasStaion}
@@ -132,9 +133,9 @@ const RestAreaInfoContainer = () => {
               pharmacy={value.pharmacy}
               toilet={value.toilet}
             />
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </div>
   )
 }
