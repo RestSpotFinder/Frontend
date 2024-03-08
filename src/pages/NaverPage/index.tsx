@@ -1,15 +1,23 @@
 import { NaverMap } from '@/components'
-import { Logos, InputSubmit, PathInfo, RestAreaInfo } from './components'
+import {
+  Logos,
+  InputSubmit,
+  PathInfo,
+  RestAreaInfo,
+  Title,
+  RecentSearch,
+} from './components'
 
 const NaverPage = () => {
   return (
     <div className="flex h-full">
       <Logos />
       <div className="flex flex-col">
+        <Title />
         <InputSubmit />
-        <PathInfo />
+        <RecentSearch />
       </div>
-      <RestAreaInfo />
+      {/* <RestAreaInfo /> */}
       <NaverMap />
     </div>
   )
