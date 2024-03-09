@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
+import { Place } from '@/types'
 
 interface Request {
   start: string
@@ -10,7 +11,7 @@ interface Response {
   routeId: number | null
   routeOption: string
   createdDate: string
-  coordinates: Array<[number, number]>
+  coordinates: Array<Place>
 }
 
 const useGetRoutes = ({ start, goal }: Request) => {
@@ -20,7 +21,7 @@ const useGetRoutes = ({ start, goal }: Request) => {
     return response.data.data
   }
 
-  return useSuspenseQuery<Response, Error>({
+  return useSuspenseQuery<Response[], Error>({
     queryKey: ['routes'],
     queryFn: getRoutes,
   })

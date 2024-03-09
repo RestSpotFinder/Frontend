@@ -23,7 +23,7 @@ const Naver = ({
   setSelectedRouteOption,
 }: NaverProps) => {
   const navermaps = useNavermaps()
-  const [map, setMap] = useState(null)
+  const [map, setMap] = useState<naver.maps.Map | null>(null)
   const { data: routes } = useGetRoutes({
     start: [start?.lng, start?.lat].join(','),
     goal: [goal?.lng, goal?.lat].join(','),
@@ -47,14 +47,18 @@ const Naver = ({
 
   useEffect(() => {
     if (start && map) {
-      map.setCenter({ lat: start.lat, lng: start.lng })
+      map.setCenter(
+        new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
+      )
       map.setZoom(15)
     }
   }, [map, start])
 
   useEffect(() => {
     if (goal && map) {
-      map.setCenter({ lat: goal.lat, lng: goal.lng })
+      map.setCenter(
+        new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
+      )
       map.setZoom(15)
     }
   }, [map, goal])
@@ -69,6 +73,8 @@ const Naver = ({
     }
   }, [selectedRouteOption, map, start, goal])
 
+  console.log(routes)
+
   return (
     <MapDiv style={{ width: '100%', height: '100dvh' }}>
       <NaverMap
@@ -79,8 +85,8 @@ const Naver = ({
         {start && (
           <CustomMarker
             position={{
-              lat: start.lat,
-              lng: start.lng,
+              lat: parseFloat(start.lat),
+              lng: parseFloat(start.lng),
             }}
             type="start"
           />
@@ -88,8 +94,8 @@ const Naver = ({
         {goal && (
           <CustomMarker
             position={{
-              lat: goal.lat,
-              lng: goal.lng,
+              lat: parseFloat(goal.lat),
+              lng: parseFloat(goal.lng),
             }}
             type="goal"
           />
@@ -99,11 +105,11 @@ const Naver = ({
           routes.map(path => (
             <Polyline
               key={path.routeId}
-              path={path.coordinates.map((coordinate: [number, number]) => {
-                return {
-                  lat: coordinate.lat,
-                  lng: coordinate.lng,
-                }
+              path={path.coordinates.map(coordinate => {
+                return new navermaps.LatLng(
+                  parseFloat(coordinate.lat),
+                  parseFloat(coordinate.lng),
+                )
               })}
               strokeLineCap="round"
               strokeLineJoin="round"
@@ -111,7 +117,10 @@ const Naver = ({
               strokeOpacity={0.8}
               strokeWeight={6}
               clickable={true}
-              onClick={() => setSelectedRouteOption(path.routeOption)}
+              onClick={() =>
+                setSelectedRouteOption &&
+                setSelectedRouteOption(path.routeOption)
+              }
             />
           ))}
       </NaverMap>

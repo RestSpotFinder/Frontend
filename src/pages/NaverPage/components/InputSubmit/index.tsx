@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
 
 const InputSubmit = () => {
@@ -54,7 +54,7 @@ const InputSubmit = () => {
     setInputHeight(inputHeight + 50)
   }
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch({
       ...search,
       [e.target.name]: e.target.value,
