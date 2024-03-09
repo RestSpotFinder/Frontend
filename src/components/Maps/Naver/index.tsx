@@ -25,8 +25,8 @@ const Naver = ({
   const navermaps = useNavermaps()
   const [map, setMap] = useState(null)
   const { data: routes } = useGetRoutes({
-    start: [start.lng, start.lat].join(','),
-    goal: [goal.lng, goal.lat].join(','),
+    start: [start?.lng, start?.lat].join(','),
+    goal: [goal?.lng, goal?.lat].join(','),
   })
 
   useEffect(() => {

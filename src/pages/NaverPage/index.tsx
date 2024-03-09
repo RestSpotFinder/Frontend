@@ -1,16 +1,16 @@
-import InputSubmit from './components/InputSubmit'
-import Logos from './components/Logos'
 import { NaverMap } from '@/components'
-import LocationInfoContainer from './components/PathInfo/container'
+import { Logos, InputSubmit, Title, RecentSearch } from './components'
 
 const NaverPage = () => {
   return (
     <div className="flex h-full">
       <Logos />
       <div className="flex flex-col">
+        <Title />
         <InputSubmit />
-        <LocationInfoContainer />
+        <RecentSearch />
       </div>
+
       <NaverMap />
     </div>
   )
