@@ -101,8 +101,8 @@ const Naver = ({
               key={path.routeId}
               path={path.coordinates.map((coordinate: [number, number]) => {
                 return {
-                  lat: coordinate.y,
-                  lng: coordinate.x,
+                  lat: coordinate.lat,
+                  lng: coordinate.lng,
                 }
               })}
               strokeLineCap="round"
