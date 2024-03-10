@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
+import { useGetSearch } from '@/apis/hooks'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -14,6 +15,10 @@ const InputSubmit = () => {
   const [isMax, setIsMax] = useState(false)
   const [inputHeight, setInputHeight] = useState(32)
 
+  const searchTerm = '강남'
+  const { data } = useGetSearch(searchTerm)
+
+  console.log('데이터 받아오는지 확인', data)
   const handleStartPlaceholderClick = () => {
     setStartPointPlaceholder('출발지를 입력하세요')
   }
