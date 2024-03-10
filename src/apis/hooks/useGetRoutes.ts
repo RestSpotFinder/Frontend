@@ -5,6 +5,8 @@ import { Place } from '@/types'
 interface Request {
   start: string
   goal: string
+  waypoints?: string
+  page?: string
 }
 
 interface Response {
@@ -14,9 +16,11 @@ interface Response {
   coordinates: Array<Place>
 }
 
-const useGetRoutes = ({ start, goal }: Request) => {
+const useGetRoutes = ({ start, goal, waypoints, page = '1' }: Request) => {
   const getRoutes = async () => {
-    const response = await apiClient.get(`/route?start=${start}&goal=${goal}`)
+    const response = await apiClient.get(
+      `/route?start=${start}&goal=${goal}&waypoints=${waypoints}&page=${page}`,
+    )
 
     return response.data.data
   }
