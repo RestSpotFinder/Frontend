@@ -12,6 +12,7 @@ import { useGetRoutes } from '@/apis/hooks'
 interface NaverProps {
   start: Place | null
   goal: Place | null
+  waypoints?: Place[]
   selectedRouteOption: string
   setSelectedRouteOption?: Dispatch<SetStateAction<string>>
 }
@@ -19,14 +20,22 @@ interface NaverProps {
 const Naver = ({
   start = { lat: '37.9319958', lng: '127.1285607' },
   goal = { lat: '37.5066719', lng: '127.8376911' },
-  selectedRouteOption = 'comfort',
+  waypoints = [
+    { lat: '37.4449168', lng: '127.1388684' },
+    { lat: '37.8847972', lng: '127.7169083' },
+  ],
+  selectedRouteOption = 'fast',
   setSelectedRouteOption,
 }: NaverProps) => {
   const navermaps = useNavermaps()
-  const [map, setMap] = useState(null)
+  const [map, setMap] = useState<naver.maps.Map | null>(null)
   const { data: routes } = useGetRoutes({
     start: [start?.lng, start?.lat].join(','),
     goal: [goal?.lng, goal?.lat].join(','),
+    waypoints: waypoints.map(waypoint =>
+      [waypoint.lng, waypoint.lat].join(','),
+    ),
+    page: '1',
   })
 
   useEffect(() => {
@@ -47,14 +56,18 @@ const Naver = ({
 
   useEffect(() => {
     if (start && map) {
-      map.setCenter({ lat: start.lat, lng: start.lng })
+      map.setCenter(
+        new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
+      )
       map.setZoom(15)
     }
   }, [map, start])
 
   useEffect(() => {
     if (goal && map) {
-      map.setCenter({ lat: goal.lat, lng: goal.lng })
+      map.setCenter(
+        new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
+      )
       map.setZoom(15)
     }
   }, [map, goal])
@@ -79,8 +92,8 @@ const Naver = ({
         {start && (
           <CustomMarker
             position={{
-              lat: start.lat,
-              lng: start.lng,
+              lat: parseFloat(start.lat),
+              lng: parseFloat(start.lng),
             }}
             type="start"
           />
@@ -88,22 +101,36 @@ const Naver = ({
         {goal && (
           <CustomMarker
             position={{
-              lat: goal.lat,
-              lng: goal.lng,
+              lat: parseFloat(goal.lat),
+              lng: parseFloat(goal.lng),
             }}
             type="goal"
           />
         )}
+        {waypoints &&
+          waypoints.map((waypoint, idx) => {
+            return (
+              <CustomMarker
+                position={{
+                  lat: parseFloat(waypoint.lat),
+                  lng: parseFloat(waypoint.lng),
+                }}
+                type="waypoints"
+                key={idx}
+                waypointsIndex={idx + 1}
+              />
+            )
+          })}
         {start &&
           goal &&
           routes.map(path => (
             <Polyline
               key={path.routeId}
-              path={path.coordinates.map((coordinate: [number, number]) => {
-                return {
-                  lat: coordinate.y,
-                  lng: coordinate.x,
-                }
+              path={path.coordinates.map(coordinate => {
+                return new navermaps.LatLng(
+                  parseFloat(coordinate.lat),
+                  parseFloat(coordinate.lng),
+                )
               })}
               strokeLineCap="round"
               strokeLineJoin="round"
@@ -111,7 +138,11 @@ const Naver = ({
               strokeOpacity={0.8}
               strokeWeight={6}
               clickable={true}
-              onClick={() => setSelectedRouteOption(path.routeOption)}
+              onClick={() =>
+                setSelectedRouteOption &&
+                setSelectedRouteOption(path.routeOption)
+              }
+              zIndex={selectedRouteOption === path.routeOption ? 1 : 0}
             />
           ))}
       </NaverMap>
