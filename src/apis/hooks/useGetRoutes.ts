@@ -5,7 +5,7 @@ import { Place } from '@/types'
 interface Request {
   start: string
   goal: string
-  waypoints?: string
+  waypoints?: string[]
   page?: string
 }
 
@@ -19,7 +19,7 @@ interface Response {
 const useGetRoutes = ({ start, goal, waypoints, page = '1' }: Request) => {
   const getRoutes = async () => {
     const response = await apiClient.get(
-      `/route?start=${start}&goal=${goal}&waypoints=${waypoints}&page=${page}`,
+      `/route?start=${start}&goal=${goal}&waypoints=${waypoints?.join('%7c')}&page=${page}`,
     )
 
     return response.data.data

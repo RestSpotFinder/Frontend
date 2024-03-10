@@ -12,6 +12,7 @@ import { useGetRoutes } from '@/apis/hooks'
 interface NaverProps {
   start: Place | null
   goal: Place | null
+  waypoints?: Place[]
   selectedRouteOption: string
   setSelectedRouteOption?: Dispatch<SetStateAction<string>>
 }
@@ -19,7 +20,11 @@ interface NaverProps {
 const Naver = ({
   start = { lat: '37.9319958', lng: '127.1285607' },
   goal = { lat: '37.5066719', lng: '127.8376911' },
-  selectedRouteOption = 'comfort',
+  waypoints = [
+    { lat: '37.4449168', lng: '127.1388684' },
+    { lat: '37.8847972', lng: '127.7169083' },
+  ],
+  selectedRouteOption = 'fast',
   setSelectedRouteOption,
 }: NaverProps) => {
   const navermaps = useNavermaps()
@@ -27,6 +32,10 @@ const Naver = ({
   const { data: routes } = useGetRoutes({
     start: [start?.lng, start?.lat].join(','),
     goal: [goal?.lng, goal?.lat].join(','),
+    waypoints: waypoints.map(waypoint =>
+      [waypoint.lng, waypoint.lat].join(','),
+    ),
+    page: '1',
   })
 
   useEffect(() => {
@@ -73,8 +82,6 @@ const Naver = ({
     }
   }, [selectedRouteOption, map, start, goal])
 
-  console.log(routes)
-
   return (
     <MapDiv style={{ width: '100%', height: '100dvh' }}>
       <NaverMap
@@ -100,6 +107,20 @@ const Naver = ({
             type="goal"
           />
         )}
+        {waypoints &&
+          waypoints.map((waypoint, idx) => {
+            return (
+              <CustomMarker
+                position={{
+                  lat: parseFloat(waypoint.lat),
+                  lng: parseFloat(waypoint.lng),
+                }}
+                type="waypoints"
+                key={idx}
+                waypointsIndex={idx + 1}
+              />
+            )
+          })}
         {start &&
           goal &&
           routes.map(path => (
@@ -121,6 +142,7 @@ const Naver = ({
                 setSelectedRouteOption &&
                 setSelectedRouteOption(path.routeOption)
               }
+              zIndex={selectedRouteOption === path.routeOption ? 1 : 0}
             />
           ))}
       </NaverMap>
