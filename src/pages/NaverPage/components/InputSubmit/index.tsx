@@ -17,7 +17,9 @@ const InputSubmit = () => {
   })
   const [result, setResult] = useState(null)
 
-  const searchTerm = useDebounce(search.startSearchTerm || search.endSearchTerm)
+  const searchTerm = useDebounce(
+    search.startSearchTerm || search.endSearchTerm || wayPoints.join(''),
+  )
 
   useEffect(() => {
     const getResult = async () => {
@@ -89,7 +91,7 @@ const InputSubmit = () => {
   }
 
   return (
-    <div className={`relative h-${inputHeight} w-96 p-8 transition-all`}>
+    <div className={`relative h-${inputHeight} w-96 bg-white p-8 `}>
       <input
         type="text"
         name="startSearchTerm"
@@ -121,6 +123,7 @@ const InputSubmit = () => {
           </button>
         </div>
       ))}
+
       <input
         type="text"
         name="endSearchTerm"

@@ -12,7 +12,7 @@ const List = (props: ListType) => {
   }
 
   return (
-    <div className="absolute  w-80 rounded-b border border-b border-l border-r border-black border-t-white bg-white">
+    <div className="absolute z-50 w-80 rounded-b border border-b border-l border-r border-black border-t-white bg-white">
       {dataArr?.map((value: ValueT, index: number) => {
         return (
           <ListContent
