@@ -14,11 +14,15 @@ const ListContent = (props: ListContentType) => {
     setIsHovered(false)
   }
 
+  const handleClick = () => {
+    console.log('name', name, 'category', category, 'address', address)
+  }
   return (
     <div
-      className={`flex flex-col ${isHovered ? 'bg-green-300 bg-opacity-50' : ''}`}
+      className={`flex flex-col ${isHovered ? 'bg-gray-300 bg-opacity-30' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       <div className="flex flex-row items-center justify-between">
         <div className="mt-7 flex items-center">
