@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, ChangeEvent, useEffect } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
 import { List } from '..'
 import useDebounce from '@/hooks/useDebounce'
@@ -81,7 +81,7 @@ const InputSubmit = () => {
     setInputHeight(inputHeight + 50)
   }
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch({
       ...search,
       [e.target.name]: e.target.value,
