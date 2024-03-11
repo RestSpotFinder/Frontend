@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
-import { useGetSearch } from '@/apis/hooks'
+import { List } from '..'
+import useDebounce from '@/hooks/useDebounce'
+import RecentSearch from '../RecentSearch'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -11,20 +13,40 @@ const InputSubmit = () => {
   const [search, setSearch] = useState({
     startSearchTerm: '',
     endSearchTerm: '',
+    waySearchTerm: '',
   })
+  const [result, setResult] = useState(null)
+
+  const searchTerm = useDebounce(search.startSearchTerm || search.endSearchTerm)
+
+  useEffect(() => {
+    const getResult = async () => {
+      return await fetch(
+        `http://3.37.19.140:8080/api/place/naver?searchTerm=${searchTerm}`,
+      )
+        .then(res => {
+          return res.json()
+        })
+        .then(list => {
+          setResult(list?.data)
+        })
+    }
+    if (searchTerm) {
+      getResult()
+    }
+  }, [searchTerm])
+
   const [isMax, setIsMax] = useState(false)
   const [inputHeight, setInputHeight] = useState(32)
 
-  const searchTerm = '강남'
-  const { data } = useGetSearch(searchTerm)
-
-  console.log('데이터 받아오는지 확인', data)
   const handleStartPlaceholderClick = () => {
     setStartPointPlaceholder('출발지를 입력하세요')
+    search.endSearchTerm = ''
   }
 
   const handleEndPlaceholderClick = () => {
     setEndPointPlaceholder('도착지를 입력하세요')
+    search.startSearchTerm = ''
   }
 
   const handleStartPlaceholderBlur = () => {
@@ -37,7 +59,7 @@ const InputSubmit = () => {
 
   const handleResetClick = () => {
     setWayPoints([])
-    setSearch({ endSearchTerm: '', startSearchTerm: '' })
+    setSearch({ endSearchTerm: '', startSearchTerm: '', waySearchTerm: '' })
     setIsMax(false)
   }
 
@@ -78,16 +100,19 @@ const InputSubmit = () => {
         onClick={handleStartPlaceholderClick}
         onBlur={handleStartPlaceholderBlur}
       />
+      {search.startSearchTerm ? <List result={result} /> : null}
       {wayPoints.map((waypoint, index) => (
         <div key={index} className="relative">
           <input
             type="text"
+            name="waySearchTerm"
             className="h-10 w-80 border border-l border-r border-black border-b-zinc-100 border-t-zinc-50 p-4 placeholder-gray-400 placeholder-opacity-50"
             placeholder={wayPointPlaceholder}
             onFocus={() => setWayPointPlaceholder('경유지를 입력하세요')}
             value={waypoint}
             onChange={e => handleWaypointChange(index, e.target.value)}
           />
+          {waypoint ? <List result={result} /> : null}
           <button
             className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-transparent text-gray-300"
             onClick={() => handleDeleteWaypoint(index)}
@@ -106,6 +131,7 @@ const InputSubmit = () => {
         onClick={handleEndPlaceholderClick}
         onBlur={handleEndPlaceholderBlur}
       />
+      {search.endSearchTerm ? <List result={result} /> : null}
       <div className="mt-3 flex h-10 w-80 justify-between bg-white">
         <button
           className="flex items-center rounded border border-gray-400 p-2"
@@ -126,6 +152,7 @@ const InputSubmit = () => {
           <RightIcon />
         </button>
       </div>
+      <RecentSearch />
     </div>
   )
 }

@@ -20,3 +20,12 @@ export type RestAreaInfoType = {
   pharmacy: boolean
   toilet: boolean
 }
+
+export type ListContentType = {
+  name: string
+  category: string
+  address: string
+}
+export type ListType = {
+  result: ListContentType[] | null
+}

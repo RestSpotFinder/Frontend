@@ -6,7 +6,6 @@ import {
   RecentSearch,
   PathInfo,
   RestAreaInfo,
-  Test,
   List,
 } from './components'
 
@@ -16,14 +15,12 @@ const NaverPage = () => {
       <Logos />
       <div className="flex flex-col">
         <Title />
-        {/* <InputSubmit /> */}
-        <Test />
-        <List />
+        <InputSubmit />
         {/* <RecentSearch /> */}
         {/* <PathInfo /> */}
       </div>
       <RestAreaInfo />
-      <NaverMap />
+      {/* <NaverMap /> */}
     </div>
   )
 }

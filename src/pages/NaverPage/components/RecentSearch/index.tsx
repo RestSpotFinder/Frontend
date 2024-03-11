@@ -2,7 +2,7 @@ import { LocationIcon } from '@/assets/Icons'
 
 const RecentSearch = () => {
   return (
-    <div className="relative mt-10 w-96 p-8">
+    <div className=" mt-12 w-80 bg-white ">
       <div>
         <h1 className="text-xm  font-bold">최근 검색</h1>
         <hr className="mx-auto mt-3 w-80 border-gray-200" />
