@@ -10,6 +10,7 @@ import {
   startClickedFalse,
 } from '@/store/start'
 import { endCheckedFalse, endClickedFalse, endClickedTrue } from '@/store/end'
+import { useGetRoutes } from '@/apis/hooks'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -61,6 +62,7 @@ const InputSubmit = () => {
     dispatch(startClickedTrue())
     dispatch(endClickedFalse())
     dispatch(startCheckedFalse())
+    search.endSearchTerm = ''
   }
 
   const handleEndPlaceholderClick = () => {
@@ -69,6 +71,7 @@ const InputSubmit = () => {
     dispatch(endClickedTrue())
     dispatch(startClickedFalse())
     dispatch(endCheckedFalse())
+    search.startSearchTerm = ''
   }
 
   const handleStartPlaceholderBlur = () => {
