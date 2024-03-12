@@ -1,9 +1,9 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
 import { RestSpot } from '@/types'
 
 interface Request {
-  routeId: number
+  routeId: number | undefined
 }
 
 const useGetRestSpots = ({ routeId }: Request) => {
@@ -13,9 +13,10 @@ const useGetRestSpots = ({ routeId }: Request) => {
     return response.data.data
   }
 
-  return useSuspenseQuery<RestSpot[], Error>({
+  return useQuery<RestSpot[], Error>({
     queryKey: ['restSpots'],
     queryFn: getRestSpots,
+    enabled: !!routeId,
   })
 }
 
