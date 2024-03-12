@@ -10,6 +10,7 @@ import {
   startClickedFalse,
 } from '@/store/start'
 import { endCheckedFalse, endClickedFalse, endClickedTrue } from '@/store/end'
+import { useGetSearch } from '@/apis/hooks'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -29,7 +30,6 @@ const InputSubmit = () => {
   )
 
   const dispatch = useDispatch()
-
   const startName = useSelector((state: any) => state.start.name)
   const endName = useSelector((state: any) => state.end.name)
   const isStartChecked = useSelector((state: any) => state.start.isChecked)

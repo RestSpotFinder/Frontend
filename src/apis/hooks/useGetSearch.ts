@@ -13,8 +13,6 @@ type DataT = {
   address: string
 }
 interface Response {
-  code: number
-  message: string
   data: DataT[]
 }
 
@@ -25,7 +23,7 @@ const useGetSearch = ({ searchTerm }: Request) => {
       `/place/naver?searchTerm=${searchTerm}`,
     )
     console.log('확인', response.data)
-    return response.data
+    return response.data.data
   }
 
   return useSuspenseQuery<Response, Error>({
