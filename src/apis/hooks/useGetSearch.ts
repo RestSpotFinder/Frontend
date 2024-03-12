@@ -24,10 +24,11 @@ const useGetSearch = ({ searchTerm }: Request) => {
     const response = await apiClient.get(
       `/place/naver?searchTerm=${searchTerm}`,
     )
-    return response.data.data
+    console.log('확인', response.data)
+    return response.data
   }
 
-  return useSuspenseQuery<Response[], Error>({
+  return useSuspenseQuery<Response, Error>({
     queryKey: ['search'],
     queryFn: getSearch,
   })

@@ -11,7 +11,7 @@ const NaverPage = () => {
         {/* <PathInfo /> */}
       </div>
       {/* <RestAreaInfo /> */}
-      <NaverMap />
+      {/* <NaverMap /> */}
     </div>
   )
 }
