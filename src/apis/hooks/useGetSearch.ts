@@ -27,7 +27,7 @@ const useGetSearch = ({ searchTerm }: Request) => {
     return response.data.data
   }
 
-  return useSuspenseQuery<Response, Error>({
+  return useSuspenseQuery<Response[], Error>({
     queryKey: ['search'],
     queryFn: getSearch,
   })

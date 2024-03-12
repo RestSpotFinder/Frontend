@@ -21,11 +21,21 @@ export type RestAreaInfoType = {
   toilet: boolean
 }
 
-export type ListContentType = {
+export type DataType = {
   name: string
+  lat: string
+  lng: string
   category: string
   address: string
 }
-export type ListType = {
-  result: ListContentType[] | null
+export type SearchListContentType = {
+  name: string
+  category: string
+  address: string
+  lat: string
+  lng: string
+  onDataClick: (data: DataType) => void
+}
+export type SearchListType = {
+  result: SearchListContentType[] | null
 }

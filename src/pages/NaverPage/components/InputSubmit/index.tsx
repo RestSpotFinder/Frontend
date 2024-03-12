@@ -1,8 +1,15 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
-import { List } from '..'
+import { StartSearchList, EndSearchList } from '..'
 import useDebounce from '@/hooks/useDebounce'
 import RecentSearch from '../RecentSearch'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  startCheckedFalse,
+  startClickedTrue,
+  startClickedFalse,
+} from '@/store/start'
+import { endCheckedFalse, endClickedFalse, endClickedTrue } from '@/store/end'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -20,6 +27,13 @@ const InputSubmit = () => {
   const searchTerm = useDebounce(
     search.startSearchTerm || search.endSearchTerm || wayPoints.join(''),
   )
+
+  const dispatch = useDispatch()
+
+  const startName = useSelector((state: any) => state.start.name)
+  const endName = useSelector((state: any) => state.end.name)
+  const isStartChecked = useSelector((state: any) => state.start.isChecked)
+  const isEndChecked = useSelector((state: any) => state.end.isChecked)
 
   useEffect(() => {
     const getResult = async () => {
@@ -43,12 +57,18 @@ const InputSubmit = () => {
 
   const handleStartPlaceholderClick = () => {
     setStartPointPlaceholder('출발지를 입력하세요')
-    search.endSearchTerm = ''
+    setWayPoints([])
+    dispatch(startClickedTrue())
+    dispatch(endClickedFalse())
+    dispatch(startCheckedFalse())
   }
 
   const handleEndPlaceholderClick = () => {
     setEndPointPlaceholder('도착지를 입력하세요')
-    search.startSearchTerm = ''
+    setWayPoints([])
+    dispatch(endClickedTrue())
+    dispatch(startClickedFalse())
+    dispatch(endCheckedFalse())
   }
 
   const handleStartPlaceholderBlur = () => {
@@ -95,14 +115,16 @@ const InputSubmit = () => {
       <input
         type="text"
         name="startSearchTerm"
-        value={search.startSearchTerm}
+        value={isStartChecked ? startName : search.startSearchTerm}
         onChange={handleSearchChange}
         className="h-10 w-80 rounded-t border border-l border-r border-t border-black border-b-zinc-100 p-4 placeholder-gray-400 placeholder-opacity-50"
         placeholder={startPointPlaceholder}
         onClick={handleStartPlaceholderClick}
         onBlur={handleStartPlaceholderBlur}
       />
-      {search.startSearchTerm ? <List result={result} /> : null}
+      {search.startSearchTerm ? (
+        <StartSearchList result={result} setSearch={setSearch} />
+      ) : null}
       {wayPoints.map((waypoint, index) => (
         <div key={index} className="relative">
           <input
@@ -114,7 +136,7 @@ const InputSubmit = () => {
             value={waypoint}
             onChange={e => handleWaypointChange(index, e.target.value)}
           />
-          {waypoint ? <List result={result} /> : null}
+          {waypoint ? <StartSearchList result={result} /> : null}
           <button
             className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-transparent text-gray-300"
             onClick={() => handleDeleteWaypoint(index)}
@@ -127,14 +149,16 @@ const InputSubmit = () => {
       <input
         type="text"
         name="endSearchTerm"
-        value={search.endSearchTerm}
+        value={isEndChecked ? endName : search.endSearchTerm}
         onChange={handleSearchChange}
         className="h-10 w-80 rounded-b border border-b border-l border-r border-black border-t-zinc-100 p-4 placeholder-gray-400 placeholder-opacity-50"
         placeholder={endPointPlaceholder}
         onClick={handleEndPlaceholderClick}
         onBlur={handleEndPlaceholderBlur}
       />
-      {search.endSearchTerm ? <List result={result} /> : null}
+      {search.endSearchTerm ? (
+        <EndSearchList result={result} setSearch={setSearch} />
+      ) : null}
       <div className="mt-3 flex h-10 w-80 justify-between bg-white">
         <button
           className="flex items-center rounded border border-gray-400 p-2"
