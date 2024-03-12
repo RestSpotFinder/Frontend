@@ -80,7 +80,10 @@ const InputSubmit = () => {
   }
 
   const handleResetClick = () => {
+    dispatch(startCheckedFalse())
+    dispatch(endCheckedFalse())
     setWayPoints([])
+
     setSearch({ endSearchTerm: '', startSearchTerm: '', waySearchTerm: '' })
     setIsMax(false)
   }
