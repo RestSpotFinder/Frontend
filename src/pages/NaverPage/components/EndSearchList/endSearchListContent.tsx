@@ -39,7 +39,7 @@ const EndSearchListContent = (props: SearchListContentType) => {
   }
   return (
     <div
-      className={`flex flex-col ${isHovered ? 'bg-gray-300 bg-opacity-30' : ''}`}
+      className={'flex flex-col hover:bg-gray-300 hover:bg-opacity-30'}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
