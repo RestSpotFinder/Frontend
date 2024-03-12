@@ -32,6 +32,7 @@ const Naver = ({
   const [init, setInit] = useState<boolean>(true)
   const [selectedRoute, setSelectedRoute] = useState<Route>()
   const [restSpots, setRestSpots] = useState<RestSpot[]>()
+  const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
   const { data: routes } = useGetRoutes({
     start: [start?.lng, start?.lat].join(','),
     goal: [goal?.lng, goal?.lat].join(','),
@@ -150,14 +151,16 @@ const Naver = ({
             )
           })}
         {restSpots &&
-          restSpots.map((spot, idx) => {
+          restSpots.map(spot => {
             return (
               <RestSpotMarker
                 position={{
                   lat: spot.lat,
                   lng: spot.lng,
                 }}
-                key={idx}
+                onClick={() => setRestSpotClicked(spot)}
+                clicked={restSpotClicked?.restAreaId === spot.restAreaId}
+                key={spot.restAreaId}
               />
             )
           })}
