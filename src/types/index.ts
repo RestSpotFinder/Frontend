@@ -3,6 +3,19 @@ export interface Place {
   lat: string
 }
 
+export interface Route {
+  coordinates: Place[]
+  createdDate: string
+  distance: string
+  duration: string
+  fuelPrice: string
+  optionText: string
+  routeId: number
+  routeOption: string
+  searchId: number
+  tollFare: string
+}
+
 export type PathInfoType = {
   ranking: number
   time: number
