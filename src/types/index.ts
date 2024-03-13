@@ -59,7 +59,7 @@ export interface RestSpot {
   phoneNumber: string
 }
 
-export type DataType = {
+export type SearchPlaceDataType = {
   name: string
   lat: string
   lng: string
@@ -68,12 +68,46 @@ export type DataType = {
 }
 export type SearchListContentType = {
   name: string
-  category: string
-  address: string
   lat: string
   lng: string
-  onDataClick: (data: DataType) => void
+  category: string
+  address: string
+  searchPlaceData: any
+  onDataClick: (data: SearchPlaceDataType) => void
 }
-export type SearchListType = {
+
+export type StartSearchListType = {
   result: SearchListContentType[] | null
+  setSearch: React.Dispatch<
+    React.SetStateAction<{
+      startSearchTerm: string
+      endSearchTerm: string
+      waySearchTerm: string
+    }>
+  >
+}
+
+export type EndSearchListType = {
+  result: SearchListContentType[] | null
+  setSearch: React.Dispatch<
+    React.SetStateAction<{
+      startSearchTerm: string
+      endSearchTerm: string
+      waySearchTerm: string
+    }>
+  >
+}
+
+export interface StartState {
+  start: {
+    name: string
+    isChecked: boolean
+  }
+}
+
+export interface EndState {
+  end: {
+    name: string
+    isChecked: boolean
+  }
 }

@@ -19,12 +19,6 @@ const start = createSlice({
       state.category = action.payload.category
       state.address = action.payload.address
     },
-    startType: state => {
-      state.isClicked = true
-    },
-    endType: state => {
-      state.isClicked = false
-    },
     startClickedTrue: state => {
       state.isClicked = true
     },
@@ -42,8 +36,6 @@ const start = createSlice({
 
 export const {
   startInitiate,
-  startType,
-  endType,
   startClickedTrue,
   startClickedFalse,
   startChekcedTrue,

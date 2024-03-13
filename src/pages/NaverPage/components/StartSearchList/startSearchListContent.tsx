@@ -1,47 +1,25 @@
 import { LocationIcon } from '@/assets/Icons'
-import { useState } from 'react'
-import { SearchListContentType } from '@/types'
+import { SearchListContentType, SearchPlaceDataType } from '@/types'
 
-const StartSearchListContent = (props: SearchListContentType) => {
-  const { name, category, address, onDataClick, lat, lng } = props
-  const [isHovered, setIsHovered] = useState(false)
-
-  const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
-
-  type ObjType = {
-    name: string
-    lat: string
-    lng: string
-    category: string
-    address: string
-  }
-
+const StartSearchListContent = ({
+  searchPlaceData,
+  onDataClick,
+}: SearchListContentType) => {
+  const { name, category, address, lat, lng } = searchPlaceData
   const handleClick = () => {
-    const obj: ObjType = {
-      name: '',
-      lat: '',
-      lng: '',
-      category: '',
-      address: '',
+    const obj: SearchPlaceDataType = {
+      name: name,
+      lat: lat,
+      lng: lng,
+      category: category,
+      address: address,
     }
-    obj.name = name
-    obj.lat = lat
-    obj.lng = lng
-    obj.category = category
-    obj.address = address
     onDataClick(obj)
   }
+
   return (
     <div
       className={'flex flex-col hover:bg-gray-300 hover:bg-opacity-30 '}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
       <div className="flex flex-row items-center justify-between">

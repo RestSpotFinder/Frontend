@@ -1,16 +1,16 @@
-import SearchListContent from './startSearchListContent'
+import StartSearchListContent from './startSearchListContent'
 import { useDispatch, useSelector } from 'react-redux'
-import { startInitiate } from '@/store/start'
-import { startChekcedTrue } from '@/store/start'
-import { DataType } from '@/types'
+import { startChekcedTrue, startInitiate } from '@/store/start'
+import { SearchPlaceDataType, StartSearchListType, StartState } from '@/types'
 
-const StartSearchList = (props: any) => {
-  const { result, setSearch } = props
+const StartSearchList = ({ result, setSearch }: StartSearchListType) => {
   const dataArr = result
   const dispatch = useDispatch()
-  const isStartChecked = useSelector((state: any) => state.start.isChecked)
+  const isStartChecked = useSelector(
+    (state: StartState) => state.start.isChecked,
+  )
 
-  const handleDataClick = (data: DataType) => {
+  const handleDataClick = (data: SearchPlaceDataType) => {
     setSearch({
       startSearchTerm: '',
       endSearchTerm: '',
@@ -20,27 +20,15 @@ const StartSearchList = (props: any) => {
     dispatch(startChekcedTrue())
   }
 
-  type ValueT = {
-    name: string
-    category: string
-    address: string
-    lat: string
-    lng: string
-  }
-
   return (
     <div
-      className={`absolute z-50  w-80 rounded-b border border-black border-t-white bg-white ${isStartChecked ? 'hidden' : ''}`}
+      className={`absolute z-50  w-80 rounded-b border border-black border-t-white bg-white ${isStartChecked && 'hidden'}`}
     >
-      {dataArr?.map((value: ValueT, index: number) => {
+      {dataArr?.map((value: SearchPlaceDataType, index: number) => {
         return (
-          <SearchListContent
+          <StartSearchListContent
             key={index}
-            name={value.name}
-            category={value.category}
-            address={value.address}
-            lat={value.lat}
-            lng={value.lng}
+            searchPlaceData={value}
             onDataClick={handleDataClick}
           />
         )

@@ -2,15 +2,14 @@ import EndSearchListContent from './endSearchListContent'
 import { useDispatch, useSelector } from 'react-redux'
 import { endInitiate } from '@/store/end'
 import { endCheckedTrue } from '@/store/end'
-import { DataType } from '@/types'
+import { SearchPlaceDataType, EndSearchListType, EndState } from '@/types'
 
-const EndSearchList = (props: any) => {
-  const { result, setSearch } = props
+const EndSearchList = ({ result, setSearch }: EndSearchListType) => {
   const dataArr = result
   const dispatch = useDispatch()
-  const isEndChecked = useSelector((state: any) => state.end.isChecked)
+  const isEndChecked = useSelector((state: EndState) => state.end.isChecked)
 
-  const handleDataClick = (data: DataType) => {
+  const handleDataClick = (data: SearchPlaceDataType) => {
     setSearch({
       endSearchTerm: '',
       startSearchTerm: '',
@@ -26,22 +25,18 @@ const EndSearchList = (props: any) => {
     address: string
     lat: string
     lng: string
-    onDataClick: (data: DataType) => void
+    onDataClick: (data: SearchPlaceDataType) => void
   }
 
   return (
     <div
-      className={`absolute z-50  w-80 rounded-b border border-b border-l border-r border-black border-t-white bg-white ${isEndChecked ? 'hidden' : ''}`}
+      className={`absolute z-50  w-80 rounded-b border border-b border-l border-r border-black border-t-white bg-white ${isEndChecked && 'hidden'}`}
     >
       {dataArr?.map((value: ValueT, index: number) => {
         return (
           <EndSearchListContent
             key={index}
-            name={value.name}
-            category={value.category}
-            address={value.address}
-            lat={value.lat}
-            lng={value.lng}
+            searchPlaceData={value}
             onDataClick={handleDataClick}
           />
         )

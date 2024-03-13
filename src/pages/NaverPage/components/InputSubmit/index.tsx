@@ -10,6 +10,7 @@ import {
   startClickedFalse,
 } from '@/store/start'
 import { endCheckedFalse, endClickedFalse, endClickedTrue } from '@/store/end'
+import { StartState, EndState } from '@/types'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -29,10 +30,12 @@ const InputSubmit = () => {
   )
 
   const dispatch = useDispatch()
-  const startName = useSelector((state: any) => state.start.name)
-  const endName = useSelector((state: any) => state.end.name)
-  const isStartChecked = useSelector((state: any) => state.start.isChecked)
-  const isEndChecked = useSelector((state: any) => state.end.isChecked)
+  const startName = useSelector((state: StartState) => state.start.name)
+  const endName = useSelector((state: EndState) => state.end.name)
+  const isStartChecked = useSelector(
+    (state: StartState) => state.start.isChecked,
+  )
+  const isEndChecked = useSelector((state: EndState) => state.end.isChecked)
 
   useEffect(() => {
     const getResult = async () => {
@@ -126,9 +129,9 @@ const InputSubmit = () => {
         onClick={handleStartPlaceholderClick}
         onBlur={handleStartPlaceholderBlur}
       />
-      {search.startSearchTerm ? (
+      {search.startSearchTerm && (
         <StartSearchList result={result} setSearch={setSearch} />
-      ) : null}
+      )}
       {wayPoints.map((waypoint, index) => (
         <div key={index} className="relative">
           <input
@@ -140,7 +143,9 @@ const InputSubmit = () => {
             value={waypoint}
             onChange={e => handleWaypointChange(index, e.target.value)}
           />
-          {waypoint ? <StartSearchList result={result} /> : null}
+          {waypoint && (
+            <StartSearchList result={result} setSearch={setSearch} />
+          )}
           <button
             className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-transparent text-gray-300"
             onClick={() => handleDeleteWaypoint(index)}
@@ -160,9 +165,9 @@ const InputSubmit = () => {
         onClick={handleEndPlaceholderClick}
         onBlur={handleEndPlaceholderBlur}
       />
-      {search.endSearchTerm ? (
+      {search.endSearchTerm && (
         <EndSearchList result={result} setSearch={setSearch} />
-      ) : null}
+      )}
       <div className="mt-3 flex h-10 w-80 justify-between bg-white">
         <button
           className="flex items-center rounded border border-gray-400 p-2"
