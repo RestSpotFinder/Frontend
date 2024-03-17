@@ -18,10 +18,10 @@ export interface Route {
 
 export type PathInfoType = {
   ranking: number
-  time: number
-  distance: number
-  tollFee: number
-  fuelCost: number
+  duration: string
+  distance: string
+  tollFare: string
+  fuelPrice: string
   optionText: string
 }
 
@@ -102,6 +102,8 @@ export interface StartState {
   start: {
     name: string
     isChecked: boolean
+    lat: string
+    lng: string
   }
 }
 
@@ -109,5 +111,13 @@ export interface EndState {
   end: {
     name: string
     isChecked: boolean
+    lat: string
+    lng: string
+  }
+}
+
+export interface ClickState {
+  click: {
+    findPath: boolean
   }
 }

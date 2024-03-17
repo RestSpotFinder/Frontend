@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
 import { Route } from '@/types'
 
@@ -9,8 +9,9 @@ interface Request {
   page?: string
 }
 
-const useGetRoutes = ({ start, goal, waypoints, page = '1' }: Request) => {
+const useGetRoutes = ({ start, goal, waypoints, page }: Request) => {
   const getRoutes = async () => {
+    if (!(start && goal)) return
     const response = await apiClient.get(
       `/route?start=${start}&goal=${goal}&waypoints=${waypoints?.join('%7c')}&page=${page}`,
     )
@@ -18,9 +19,14 @@ const useGetRoutes = ({ start, goal, waypoints, page = '1' }: Request) => {
     return response.data.data
   }
 
-  return useSuspenseQuery<Route[], Error>({
-    queryKey: ['routes'],
+  const enabled = !!(start.length > 5 && goal.length > 5)
+  const queryKey = ['routes', start, goal, waypoints, page]
+
+  return useQuery<Route[], Error>({
+    queryKey,
     queryFn: getRoutes,
+    enabled,
+    notifyOnChangeProps: ['data'],
   })
 }
 

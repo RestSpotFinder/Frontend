@@ -20,6 +20,13 @@ const end = createSlice({
       state.category = action.payload.category
       state.address = action.payload.address
     },
+    endReset: state => {
+      state.name = ''
+      state.lat = ''
+      state.lng = ''
+      state.category = ''
+      state.address = ''
+    },
     endClickedTrue: state => {
       state.isClicked = true
     },
@@ -37,6 +44,7 @@ const end = createSlice({
 
 export const {
   endInitiate,
+  endReset,
   endClickedTrue,
   endClickedFalse,
   endCheckedTrue,

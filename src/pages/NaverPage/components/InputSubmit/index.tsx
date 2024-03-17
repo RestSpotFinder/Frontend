@@ -8,10 +8,21 @@ import {
   startCheckedFalse,
   startClickedTrue,
   startClickedFalse,
+  startReset,
 } from '@/store/start'
-import { endCheckedFalse, endClickedFalse, endClickedTrue } from '@/store/end'
+import {
+  endCheckedFalse,
+  endClickedFalse,
+  endClickedTrue,
+  endReset,
+} from '@/store/end'
 import { StartState, EndState, SearchPlaceDataType } from '@/types'
 import { useGetSearchSpot } from '@/apis/hooks'
+import {
+  clickFindPathActivate,
+  clickFindPathUnactivate,
+  clickMorePathDataUnactivate,
+} from '@/store/click'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
@@ -20,6 +31,7 @@ const InputSubmit = () => {
     useState<string>('도착지 입력')
   const [wayPointPlaceholder, setWayPointPlaceholder] =
     useState<string>('경유지 입력')
+  const [hideRecentSearch, setHideRecentSearch] = useState<boolean>(false)
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [search, setSearch] = useState({
     startSearchTerm: '',
@@ -58,7 +70,10 @@ const InputSubmit = () => {
     dispatch(startClickedTrue())
     dispatch(endClickedFalse())
     dispatch(startCheckedFalse())
+    dispatch(startReset())
     search.endSearchTerm = ''
+    dispatch(clickFindPathUnactivate())
+    dispatch(clickMorePathDataUnactivate())
   }
 
   const handleEndPlaceholderClick = () => {
@@ -67,7 +82,10 @@ const InputSubmit = () => {
     dispatch(endClickedTrue())
     dispatch(startClickedFalse())
     dispatch(endCheckedFalse())
+    dispatch(endReset())
     search.startSearchTerm = ''
+    dispatch(clickFindPathUnactivate())
+    dispatch(clickMorePathDataUnactivate())
   }
 
   const handleStartPlaceholderBlur = () => {
@@ -82,7 +100,10 @@ const InputSubmit = () => {
     dispatch(startCheckedFalse())
     dispatch(endCheckedFalse())
     setWayPoints([])
-
+    dispatch(clickFindPathUnactivate())
+    dispatch(clickMorePathDataUnactivate())
+    dispatch(startReset())
+    dispatch(endReset())
     setSearch({ endSearchTerm: '', startSearchTerm: '', waySearchTerm: '' })
     setIsMax(false)
   }
@@ -110,6 +131,15 @@ const InputSubmit = () => {
       ...search,
       [e.target.name]: e.target.value,
     })
+  }
+
+  const findPathButton = () => {
+    setHideRecentSearch(true)
+    dispatch(clickFindPathActivate())
+    if (!startName || !endName) {
+      console.log('데이터가 페칭 되지 않았습니다.')
+      dispatch(clickFindPathUnactivate())
+    }
   }
 
   return (
@@ -178,7 +208,10 @@ const InputSubmit = () => {
           <PlusIcon className="mr-1" />
           <span className="mr-2">경유지</span>
         </button>
-        <button className="ml-auto flex items-center rounded border border-gray-400 bg-green-600 p-2 text-white">
+        <button
+          className="ml-auto flex items-center rounded border border-gray-400 bg-green-600 p-2 text-white"
+          onClick={findPathButton}
+        >
           <span className="ml-1">길찾기</span>
           <RightIcon />
         </button>

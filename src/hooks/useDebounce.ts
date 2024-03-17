@@ -6,10 +6,12 @@ const useDebounce = (value: string, delay: number = 200) => {
     const handler = setTimeout(() => {
       setDebounceVal(value)
     }, delay)
+
     return () => {
       clearTimeout(handler)
     }
   }, [value, delay])
+
   return debounceVal
 }
 
