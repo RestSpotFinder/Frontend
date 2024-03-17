@@ -10,20 +10,23 @@ import {
   startClickedFalse,
 } from '@/store/start'
 import { endCheckedFalse, endClickedFalse, endClickedTrue } from '@/store/end'
-import { StartState, EndState } from '@/types'
+import { StartState, EndState, SearchPlaceDataType } from '@/types'
+import { useGetSearchSpot } from '@/apis/hooks'
 
 const InputSubmit = () => {
   const [startPointPlaceholder, setStartPointPlaceholder] =
     useState('출발지 입력')
-  const [endPointPlaceholder, setEndPointPlaceholder] = useState('도착지 입력')
-  const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
+  const [endPointPlaceholder, setEndPointPlaceholder] =
+    useState<string>('도착지 입력')
+  const [wayPointPlaceholder, setWayPointPlaceholder] =
+    useState<string>('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [search, setSearch] = useState({
     startSearchTerm: '',
     endSearchTerm: '',
     waySearchTerm: '',
   })
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState<SearchPlaceDataType[] | null>(null)
 
   const searchTerm = useDebounce(
     search.startSearchTerm || search.endSearchTerm || wayPoints.join(''),
@@ -37,22 +40,14 @@ const InputSubmit = () => {
   )
   const isEndChecked = useSelector((state: EndState) => state.end.isChecked)
 
+  const { data: searchPlace, refetch } = useGetSearchSpot({ searchTerm })
+
   useEffect(() => {
-    const getResult = async () => {
-      return await fetch(
-        `http://3.37.19.140:8080/api/place/naver?searchTerm=${searchTerm}`,
-      )
-        .then(res => {
-          return res.json()
-        })
-        .then(list => {
-          setResult(list?.data)
-        })
+    if (searchPlace && searchTerm) {
+      setResult(searchPlace)
+      refetch()
     }
-    if (searchTerm) {
-      getResult()
-    }
-  }, [searchTerm])
+  }, [searchPlace, setResult, refetch, searchTerm])
 
   const [isMax, setIsMax] = useState(false)
   const [inputHeight, setInputHeight] = useState(32)

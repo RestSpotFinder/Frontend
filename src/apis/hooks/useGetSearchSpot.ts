@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
 import { SearchPlaceDataType } from '@/types'
 interface Request {
@@ -7,7 +7,6 @@ interface Request {
 
 const useGetSearchSpot = ({ searchTerm }: Request) => {
   const getSearch = async () => {
-    if (!searchTerm) return null
     const response = await apiClient.get(
       `/place/naver?searchTerm=${searchTerm}`,
     )
@@ -15,9 +14,10 @@ const useGetSearchSpot = ({ searchTerm }: Request) => {
     return response.data.data
   }
 
-  return useSuspenseQuery<SearchPlaceDataType[], Error>({
+  return useQuery<SearchPlaceDataType[], Error>({
     queryKey: ['search'],
     queryFn: getSearch,
+    enabled: !!searchTerm,
   })
 }
 

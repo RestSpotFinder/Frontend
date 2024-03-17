@@ -1,11 +1,11 @@
 import { LocationIcon } from '@/assets/Icons'
 import { SearchListContentType, SearchPlaceDataType } from '@/types'
 
-const StartSearchListContent = ({
+const SearchListContent = ({
   searchPlaceData,
   onDataClick,
 }: SearchListContentType) => {
-  const { name, category, address, lat, lng } = searchPlaceData
+  const { name, lat, lng, category, address } = searchPlaceData
   const handleClick = () => {
     const obj: SearchPlaceDataType = {
       name: name,
@@ -19,7 +19,7 @@ const StartSearchListContent = ({
 
   return (
     <div
-      className={'flex flex-col hover:bg-gray-300 hover:bg-opacity-30 '}
+      className={'flex flex-col hover:bg-gray-300 hover:bg-opacity-30'}
       onClick={handleClick}
     >
       <div className="flex flex-row items-center justify-between">
@@ -34,4 +34,4 @@ const StartSearchListContent = ({
   )
 }
 
-export default StartSearchListContent
+export default SearchListContent

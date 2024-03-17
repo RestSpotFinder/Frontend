@@ -66,18 +66,18 @@ export type SearchPlaceDataType = {
   category: string
   address: string
 }
+
 export type SearchListContentType = {
-  name: string
-  lat: string
-  lng: string
-  category: string
-  address: string
-  searchPlaceData: any
+  searchPlaceData: SearchPlaceDataType
   onDataClick: (data: SearchPlaceDataType) => void
 }
 
+export type SearchListType = {
+  result: SearchPlaceDataType[] | null
+}
+
 export type StartSearchListType = {
-  result: SearchListContentType[] | null
+  result: SearchPlaceDataType[] | null
   setSearch: React.Dispatch<
     React.SetStateAction<{
       startSearchTerm: string
@@ -88,7 +88,7 @@ export type StartSearchListType = {
 }
 
 export type EndSearchListType = {
-  result: SearchListContentType[] | null
+  result: SearchPlaceDataType[] | null
   setSearch: React.Dispatch<
     React.SetStateAction<{
       startSearchTerm: string

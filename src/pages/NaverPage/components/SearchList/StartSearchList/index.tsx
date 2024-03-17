@@ -1,4 +1,4 @@
-import StartSearchListContent from './startSearchListContent'
+import SearchListContent from '../SearchListContent'
 import { useDispatch, useSelector } from 'react-redux'
 import { startChekcedTrue, startInitiate } from '@/store/start'
 import { SearchPlaceDataType, StartSearchListType, StartState } from '@/types'
@@ -24,9 +24,9 @@ const StartSearchList = ({ result, setSearch }: StartSearchListType) => {
     <div
       className={`absolute z-50  w-80 rounded-b border border-black border-t-white bg-white ${isStartChecked && 'hidden'}`}
     >
-      {dataArr?.map((value: SearchPlaceDataType, index: number) => {
+      {dataArr?.map((value, index) => {
         return (
-          <StartSearchListContent
+          <SearchListContent
             key={index}
             searchPlaceData={value}
             onDataClick={handleDataClick}
