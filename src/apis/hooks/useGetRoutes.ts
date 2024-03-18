@@ -26,7 +26,6 @@ const useGetRoutes = ({ start, goal, waypoints, page }: Request) => {
     queryKey,
     queryFn: getRoutes,
     enabled,
-    notifyOnChangeProps: ['data'],
   })
 }
 

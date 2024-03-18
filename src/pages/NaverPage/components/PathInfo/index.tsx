@@ -14,7 +14,7 @@ const PathInfo = () => {
   const endLng = useSelector((state: EndState) => state.end.lng)
   const clickEvent = useSelector((state: ClickState) => state.click.findPath)
   const clickEventMorePath = useSelector(
-    (state: any) => state.click.morePathData,
+    (state: ClickState) => state.click.morePathData,
   )
 
   const [result, setResult] = useState<Route[] | null>(null)

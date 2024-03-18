@@ -119,5 +119,6 @@ export interface EndState {
 export interface ClickState {
   click: {
     findPath: boolean
+    morePathData: boolean
   }
 }

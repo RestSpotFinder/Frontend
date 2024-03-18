@@ -31,7 +31,7 @@ const InputSubmit = () => {
     useState<string>('도착지 입력')
   const [wayPointPlaceholder, setWayPointPlaceholder] =
     useState<string>('경유지 입력')
-  const [hideRecentSearch, setHideRecentSearch] = useState<boolean>(false)
+
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [search, setSearch] = useState({
     startSearchTerm: '',
@@ -134,7 +134,6 @@ const InputSubmit = () => {
   }
 
   const findPathButton = () => {
-    setHideRecentSearch(true)
     dispatch(clickFindPathActivate())
     if (!startName || !endName) {
       console.log('데이터가 페칭 되지 않았습니다.')
