@@ -85,7 +85,6 @@ const Naver = ({
 
   useEffect(() => {
     if (start && init) {
-      console.log('출발지 변경')
       mapRef.current?.setCenter(
         new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
       )
@@ -95,7 +94,6 @@ const Naver = ({
 
   useEffect(() => {
     if (goal && init) {
-      console.log('목적지 변경')
       mapRef.current?.setCenter(
         new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
       )
@@ -105,7 +103,6 @@ const Naver = ({
 
   useEffect(() => {
     if (start && goal && init) {
-      console.log('출발지 목적지 설정')
       mapRef.current?.setCenter({
         lat: (parseFloat(start.lat) + parseFloat(goal.lat)) / 2,
         lng: (parseFloat(start.lng) + parseFloat(goal.lng)) / 2,

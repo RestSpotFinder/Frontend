@@ -76,6 +76,7 @@ const PathInfo = () => {
               tollFare={value.tollFare}
               fuelPrice={value.fuelPrice}
               optionText={value.optionText}
+              routeId={value.routeId}
             />
           )
         })}
@@ -90,6 +91,7 @@ const PathInfo = () => {
                 tollFare={value.tollFare}
                 fuelPrice={value.fuelPrice}
                 optionText={value.optionText}
+                routeId={value.routeId}
               />
             )
           })}

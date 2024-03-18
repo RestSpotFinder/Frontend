@@ -1,7 +1,20 @@
 import { PathInfoType } from '@/types'
+import { useDispatch } from 'react-redux'
+import { clickRestAreaListActivate } from '@/store/click'
+import { pathInfoInitiate } from '@/store/pathInfo'
 
 const PathInfoContent = (props: PathInfoType) => {
-  const { ranking, duration, distance, tollFare, fuelPrice, optionText } = props
+  const dispatch = useDispatch()
+
+  const {
+    ranking,
+    duration,
+    distance,
+    tollFare,
+    fuelPrice,
+    optionText,
+    routeId,
+  } = props
 
   const convertTimeToHoursMinutes = (milliseconds: number) => {
     const hours = Math.floor(milliseconds / 3600000)
@@ -21,8 +34,25 @@ const PathInfoContent = (props: PathInfoType) => {
   const formattedTime = convertTimeToHoursMinutes(Number(duration))
   const formattedDistance = convertMeterToKilometer(Number(distance))
 
+  const pathInfoData = {
+    ranking: ranking,
+    duration: duration,
+    distance: distance,
+    tollFare: tollFare,
+    fuelPrice: fuelPrice,
+    optionText: optionText,
+    routeId: routeId,
+  }
+  const handlePathInfo = () => {
+    dispatch(pathInfoInitiate(pathInfoData))
+    dispatch(clickRestAreaListActivate())
+  }
+
   return (
-    <div className="relative h-36 w-96 border-b border-t border-gray-300 p-8">
+    <div
+      className="relative h-36 w-96 border-b border-t border-gray-300 p-8"
+      onDoubleClick={handlePathInfo}
+    >
       <div className="relative flex flex-row">
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <p className="text-white">{ranking + 1}</p>

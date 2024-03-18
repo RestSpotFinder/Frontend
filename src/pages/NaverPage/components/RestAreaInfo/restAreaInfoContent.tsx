@@ -11,35 +11,29 @@ import {
 } from '@/assets/Icons'
 
 const RestAreaInfoContent = (props: RestAreaInfoType) => {
-  const {
-    restAreaType,
-    restaurant,
-    gasStation,
-    electricCar,
-    pharmacy,
-    toilet,
-  } = props
+  const { type, restaurant, gasStation, electricCar, pharmacy, toilet } = props
+
   const typeMapping: {
-    [key: number]: {
+    [key: string]: {
       title: string
       icon: JSX.Element
     }
   } = {
-    1: {
-      title: '일반 휴게소',
+    일반휴게소: {
+      title: type,
       icon: <NormalIcon className="ml-14 h-16 w-16" />,
     },
-    2: {
-      title: '간이 휴게소',
+    간이휴게소: {
+      title: type,
       icon: <NatureIcon className="ml-14 h-16 w-16" />,
     },
-    3: {
-      title: '화물 휴게소',
+    화물차휴게소: {
+      title: type,
       icon: <CargoIcon className="ml-14 h-16 w-16" />,
     },
   }
 
-  const { title, icon } = typeMapping[restAreaType] || {
+  const { title, icon } = typeMapping[type] || {
     title: '휴게소',
     icon: null,
   }
