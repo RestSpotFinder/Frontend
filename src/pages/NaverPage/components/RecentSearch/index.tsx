@@ -1,8 +1,14 @@
 import { LocationIcon } from '@/assets/Icons'
+import { useSelector } from 'react-redux'
+import { ClickState } from '@/types'
 
 const RecentSearch = () => {
+  const isFindPathClicked = useSelector(
+    (state: ClickState) => state.click.findPath,
+  )
+
   return (
-    <div className="relative mt-10 w-96 p-8">
+    <div className={` mt-12 w-80 bg-white ${isFindPathClicked && 'hidden'} `}>
       <div>
         <h1 className="text-xm  font-bold">최근 검색</h1>
         <hr className="mx-auto mt-3 w-80 border-gray-200" />

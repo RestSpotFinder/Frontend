@@ -18,10 +18,10 @@ export interface Route {
 
 export type PathInfoType = {
   ranking: number
-  time: number
-  distance: number
-  tollFee: number
-  fuelCost: number
+  duration: string
+  distance: string
+  tollFare: string
+  fuelPrice: string
   optionText: string
 }
 
@@ -57,4 +57,68 @@ export interface RestSpot {
   otherFacilities: string
   representativeFood: string
   phoneNumber: string
+}
+
+export type SearchPlaceDataType = {
+  name: string
+  lat: string
+  lng: string
+  category: string
+  address: string
+}
+
+export type SearchListContentType = {
+  searchPlaceData: SearchPlaceDataType
+  onDataClick: (data: SearchPlaceDataType) => void
+}
+
+export type SearchListType = {
+  result: SearchPlaceDataType[] | null
+}
+
+export type StartSearchListType = {
+  result: SearchPlaceDataType[] | null
+  setSearch: React.Dispatch<
+    React.SetStateAction<{
+      startSearchTerm: string
+      endSearchTerm: string
+      waySearchTerm: string
+    }>
+  >
+}
+
+export type EndSearchListType = {
+  result: SearchPlaceDataType[] | null
+  setSearch: React.Dispatch<
+    React.SetStateAction<{
+      startSearchTerm: string
+      endSearchTerm: string
+      waySearchTerm: string
+    }>
+  >
+}
+
+export interface StartState {
+  start: {
+    name: string
+    isChecked: boolean
+    lat: string
+    lng: string
+  }
+}
+
+export interface EndState {
+  end: {
+    name: string
+    isChecked: boolean
+    lat: string
+    lng: string
+  }
+}
+
+export interface ClickState {
+  click: {
+    findPath: boolean
+    morePathData: boolean
+  }
 }

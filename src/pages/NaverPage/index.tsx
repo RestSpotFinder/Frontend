@@ -1,5 +1,5 @@
 import { NaverMap } from '@/components'
-import { Logos, InputSubmit, Title, RecentSearch } from './components'
+import { Logos, InputSubmit, Title, PathInfo } from './components'
 
 const NaverPage = () => {
   return (
@@ -8,9 +8,8 @@ const NaverPage = () => {
       <div className="flex flex-col">
         <Title />
         <InputSubmit />
-        <RecentSearch />
+        <PathInfo />
       </div>
-
       <NaverMap />
     </div>
   )

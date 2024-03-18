@@ -6,8 +6,9 @@ import {
 } from 'react-naver-maps'
 import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
-import { Place, Route, RestSpot } from '@/types'
+import { Place, Route, RestSpot, StartState, EndState } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
+import { useSelector } from 'react-redux'
 
 interface NaverProps {
   start: Place | null
@@ -27,6 +28,13 @@ const Naver = ({
   // selectedRouteOption = 'fast',
   // setSelectedRouteOption,
 }: NaverProps) => {
+  const startLat = useSelector((state: StartState) => state.start.lat)
+
+  const startLng = useSelector((state: StartState) => state.start.lng)
+
+  const goalLat = useSelector((state: EndState) => state.end.lat)
+  const goalLng = useSelector((state: EndState) => state.end.lng)
+
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
   const [init, setInit] = useState<boolean>(true)
@@ -34,8 +42,8 @@ const Naver = ({
   const [restSpots, setRestSpots] = useState<RestSpot[]>()
   const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
   const { data: routes } = useGetRoutes({
-    start: [start?.lng, start?.lat].join(','),
-    goal: [goal?.lng, goal?.lat].join(','),
+    start: [startLng, startLat].join(','),
+    goal: [goalLng, goalLat].join(','),
     waypoints: waypoints.map(waypoint =>
       [waypoint.lng, waypoint.lat].join(','),
     ),
@@ -47,7 +55,7 @@ const Naver = ({
 
   useEffect(() => {
     setSelectedRoute(
-      routes.find(route => route.routeOption === selectedRoute?.routeOption),
+      routes?.find(route => route.routeOption === selectedRoute?.routeOption),
     )
   }, [routes, setSelectedRoute, selectedRoute])
 
@@ -70,7 +78,7 @@ const Naver = ({
           console.error(error)
         },
       )
-      setSelectedRoute(routes[0])
+      setSelectedRoute(routes && routes[0])
       setInit(false)
     }
   }, [mapRef, init, routes])
@@ -107,7 +115,7 @@ const Naver = ({
   }, [mapRef, start, goal, init])
 
   const handleClickRoute = (routeOption: string) => {
-    setSelectedRoute(routes.find(route => route.routeOption === routeOption))
+    setSelectedRoute(routes?.find(route => route.routeOption === routeOption))
     console.log(routeOption)
   }
 
@@ -118,20 +126,20 @@ const Naver = ({
         defaultZoom={12}
         ref={mapRef}
       >
-        {start && (
+        {startLat && startLng && (
           <CustomMarker
             position={{
-              lat: parseFloat(start.lat),
-              lng: parseFloat(start.lng),
+              lat: parseFloat(startLat),
+              lng: parseFloat(startLng),
             }}
             type="start"
           />
         )}
-        {goal && (
+        {goalLat && goalLng && (
           <CustomMarker
             position={{
-              lat: parseFloat(goal.lat),
-              lng: parseFloat(goal.lng),
+              lat: parseFloat(goalLat),
+              lng: parseFloat(goalLng),
             }}
             type="goal"
           />
@@ -166,7 +174,7 @@ const Naver = ({
           })}
         {start &&
           goal &&
-          routes.map(path => (
+          routes?.map(path => (
             <Polyline
               key={path.routeId}
               path={path.coordinates.map(coordinate => {
