@@ -11,8 +11,8 @@ import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import { useSelector } from 'react-redux'
 
 interface NaverProps {
-  start: Place | null
-  goal: Place | null
+  start?: Place | null
+  goal?: Place | null
   waypoints?: Place[]
   selectedRouteOption?: string
   setSelectedRouteOption?: Dispatch<SetStateAction<string>>

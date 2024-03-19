@@ -6,10 +6,10 @@ const RestAreaInfo = () => {
     {
       optionText: '실시간 추천',
       ranking: 0,
-      time: 8,
-      distance: 2,
-      tollFee: 1000,
-      fuleCost: 286,
+      time: '8',
+      distance: '2',
+      tollFee: '1000',
+      fuleCost: '286',
       id: 1,
     },
   ]
@@ -113,10 +113,10 @@ const RestAreaInfo = () => {
           <PathInfoContent
             key={value.id}
             ranking={value.ranking}
-            time={value.time}
+            duration={value.time}
             distance={value.distance}
-            tollFee={value.tollFee}
-            fuelCost={value.fuleCost}
+            tollFare={value.tollFee}
+            fuelPrice={value.fuleCost}
             optionText={value.optionText}
           />
         )
