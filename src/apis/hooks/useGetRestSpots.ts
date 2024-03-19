@@ -13,8 +13,9 @@ const useGetRestSpots = ({ routeId }: Request) => {
     return response.data.data
   }
 
+  const queryKey = ['restSpots', routeId]
   return useQuery<RestSpot[], Error>({
-    queryKey: ['restSpots'],
+    queryKey,
     queryFn: getRestSpots,
     enabled: !!routeId,
   })

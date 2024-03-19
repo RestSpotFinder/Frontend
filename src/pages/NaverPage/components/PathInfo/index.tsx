@@ -65,7 +65,7 @@ const PathInfo = () => {
           더블 클릭시 경로상 휴게소 정보가 표시됩니다.
         </h1>
       </div>
-      <div className=" mb-10 mt-10 max-h-[calc(100vh-25rem)] overflow-y-auto ">
+      <div className="mb-10 mt-10 max-h-[calc(100vh-25rem)] overflow-y-auto ">
         {result?.map((value, index) => {
           return (
             <PathInfoContent
@@ -76,6 +76,7 @@ const PathInfo = () => {
               tollFare={value.tollFare}
               fuelPrice={value.fuelPrice}
               optionText={value.optionText}
+              routeId={value.routeId}
             />
           )
         })}
@@ -90,6 +91,7 @@ const PathInfo = () => {
                 tollFare={value.tollFare}
                 fuelPrice={value.fuelPrice}
                 optionText={value.optionText}
+                routeId={value.routeId}
               />
             )
           })}

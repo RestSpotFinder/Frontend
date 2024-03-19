@@ -11,53 +11,48 @@ import {
 } from '@/assets/Icons'
 
 const RestAreaInfoContent = (props: RestAreaInfoType) => {
-  const {
-    restAreaType,
-    restaurant,
-    gasStation,
-    electricCar,
-    pharmacy,
-    toilet,
-  } = props
+  const { type, restaurant, gasStation, electricCar, pharmacy, toilet } = props
   const typeMapping: {
-    [key: number]: {
+    [key: string]: {
       title: string
       icon: JSX.Element
     }
   } = {
-    1: {
-      title: '일반 휴게소',
-      icon: <NormalIcon className="ml-14 h-16 w-16" />,
+    일반휴게소: {
+      title: type,
+      icon: <NormalIcon className="ml-2 mt-2 h-8 w-8" />,
     },
-    2: {
-      title: '간이 휴게소',
-      icon: <NatureIcon className="ml-14 h-16 w-16" />,
+    간이휴게소: {
+      title: type,
+      icon: <NatureIcon className="ml-2 mt-2 h-8 w-8" />,
     },
-    3: {
-      title: '화물 휴게소',
-      icon: <CargoIcon className="ml-14 h-16 w-16" />,
+    화물차휴게소: {
+      title: type,
+      icon: <CargoIcon className="ml-2 mt-2 h-8 w-8" />,
     },
   }
 
-  const { title, icon } = typeMapping[restAreaType] || {
+  const { title, icon } = typeMapping[type] || {
     title: '휴게소',
     icon: null,
   }
 
   return (
-    <div className="relative w-96 border-b border-gray-200 p-2">
-      <div className="grid grid-cols-2">
-        <div className="col-span-1">{icon && <div>{icon}</div>}</div>
-        <div className="col-span-1 mr-14">
+    <div className="relative w-96 border-b border-gray-200 ">
+      <div className="grid" style={{ gridTemplateColumns: '0.3fr 0.7fr' }}>
+        <div className="col-span-1 ">{icon && <div>{icon}</div>}</div>
+        <div className="col-span-1  ">
           <div>
-            <h1 className="flex justify-center text-xl font-bold">{title}</h1>
+            <h1 className="mt-1 flex justify-center text-sm font-bold hover:text-blue-600">
+              {title}
+            </h1>
           </div>
-          <div className="flex flex-row justify-around">
-            {electricCar && <ElectricCarIcon className="mt-2 h-7 w-7" />}
-            {restaurant && <RestaurantIcon className="mt-2 h-7 w-7" />}
-            {gasStation && <GasStationIcon className="mt-2 h-7 w-7" />}
-            {pharmacy && <PharmacyIcon className="mt-2 h-7 w-7" />}
-            {toilet && <ToiletIcon className="mt-2 h-7 w-7" />}
+          <div className=" flex flex-row justify-around">
+            {electricCar && <ElectricCarIcon className="mt-2 h-4 w-4" />}
+            {restaurant && <RestaurantIcon className="mt-2 h-4 w-4" />}
+            {gasStation && <GasStationIcon className="mt-2 h-4 w-4" />}
+            {pharmacy && <PharmacyIcon className="mt-2 h-4 w-4" />}
+            {toilet && <ToiletIcon className="mt-2 h-4 w-4" />}
           </div>
         </div>
       </div>

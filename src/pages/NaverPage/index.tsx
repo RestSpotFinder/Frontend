@@ -1,5 +1,5 @@
 import { NaverMap } from '@/components'
-import { Logos, InputSubmit, Title, PathInfo } from './components'
+import { Logos, InputSubmit, Title, PathInfo, RestAreaInfo } from './components'
 
 const NaverPage = () => {
   return (
@@ -10,6 +10,7 @@ const NaverPage = () => {
         <InputSubmit />
         <PathInfo />
       </div>
+      <RestAreaInfo />
       <NaverMap />
     </div>
   )

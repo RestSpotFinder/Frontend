@@ -22,6 +22,7 @@ import {
   clickFindPathActivate,
   clickFindPathUnactivate,
   clickMorePathDataUnactivate,
+  clickRestAreaListUnactivate,
 } from '@/store/click'
 
 const InputSubmit = () => {
@@ -74,6 +75,7 @@ const InputSubmit = () => {
     search.endSearchTerm = ''
     dispatch(clickFindPathUnactivate())
     dispatch(clickMorePathDataUnactivate())
+    dispatch(clickRestAreaListUnactivate())
   }
 
   const handleEndPlaceholderClick = () => {
@@ -86,6 +88,7 @@ const InputSubmit = () => {
     search.startSearchTerm = ''
     dispatch(clickFindPathUnactivate())
     dispatch(clickMorePathDataUnactivate())
+    dispatch(clickRestAreaListUnactivate())
   }
 
   const handleStartPlaceholderBlur = () => {
@@ -106,6 +109,7 @@ const InputSubmit = () => {
     dispatch(endReset())
     setSearch({ endSearchTerm: '', startSearchTerm: '', waySearchTerm: '' })
     setIsMax(false)
+    dispatch(clickRestAreaListUnactivate())
   }
 
   const handleDeleteWaypoint = (index: number) => {

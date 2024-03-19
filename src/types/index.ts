@@ -26,7 +26,7 @@ export type PathInfoType = {
 }
 
 export type RestAreaInfoType = {
-  restAreaType: number
+  type: string
   restaurant: boolean
   gasStation: boolean
   electricCar: boolean
@@ -120,5 +120,19 @@ export interface ClickState {
   click: {
     findPath: boolean
     morePathData: boolean
+    restAreaList: boolean
+    restart: boolean
+  }
+}
+
+export interface PathInfoState {
+  pathInfo: {
+    ranking: number
+    duration: string
+    distance: string
+    tollFare: string
+    fuelPrice: string
+    optionText: string
+    routeId: number
   }
 }
