@@ -17,11 +17,11 @@ export interface Route {
 }
 
 export type PathInfoType = {
+  time: number
   ranking: number
-  duration: string
-  distance: string
-  tollFare: string
-  fuelPrice: string
+  distance: number
+  tollFee: number
+  fuelCost: number
   optionText: string
 }
 
