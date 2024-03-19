@@ -1,7 +1,7 @@
 import { PathInfoType } from '@/types'
 
 const PathInfoContent = (props: PathInfoType) => {
-  const { ranking, time, distance, tollFee, fuelCost, optionText } = props
+  const { ranking, duration, distance, tollFare, fuelPrice, optionText } = props
 
   const convertTimeToHoursMinutes = (milliseconds: number) => {
     const hours = Math.floor(milliseconds / 3600000)
@@ -17,8 +17,8 @@ const PathInfoContent = (props: PathInfoType) => {
     return kilometersWithoutDecimal
   }
 
-  const tollInfo = tollFee === 0 ? '통행료 무료' : `통행료 ${tollFee}원`
-  const formattedTime = convertTimeToHoursMinutes(Number(time))
+  const tollInfo = tollFare === '0' ? '통행료 무료' : `통행료 ${tollFare}원`
+  const formattedTime = convertTimeToHoursMinutes(Number(duration))
   const formattedDistance = convertMeterToKilometer(Number(distance))
 
   return (
@@ -56,7 +56,7 @@ const PathInfoContent = (props: PathInfoType) => {
       <div className="flex flex-row">
         <p className="mr-2">{tollInfo}</p>
         <div className="mr-2 mt-1 border-l border-gray-300"></div>
-        <p>연료비 {fuelCost}원</p>
+        <p>연료비 {fuelPrice}원</p>
       </div>
     </div>
   )
