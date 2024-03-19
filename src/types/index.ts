@@ -16,13 +16,11 @@ export interface Route {
   tollFare: string
 }
 
-export type PathInfoType = {
+export type PathInfoType = Omit<
+  Route,
+  'coordinates' | 'createdDate' | 'searchId' | 'routeOption' | 'routeId'
+> & {
   ranking: number
-  duration: string
-  distance: string
-  tollFare: string
-  fuelPrice: string
-  optionText: string
 }
 
 export type RestAreaInfoType = {
