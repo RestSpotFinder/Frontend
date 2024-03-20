@@ -6,7 +6,14 @@ import {
 } from 'react-naver-maps'
 import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
-import { Place, Route, RestSpot, StartState, EndState } from '@/types'
+import {
+  Place,
+  Route,
+  RestSpot,
+  StartState,
+  EndState,
+  PathInfoState,
+} from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import { useSelector } from 'react-redux'
 
@@ -22,8 +29,8 @@ const Naver = ({
   start = { lat: '37.9319958', lng: '127.1285607' },
   goal = { lat: '37.5066719', lng: '127.8376911' },
   waypoints = [
-    { lat: '37.4449168', lng: '127.1388684' },
-    { lat: '37.8847972', lng: '127.7169083' },
+    // { lat: '37.4449168', lng: '127.1388684' },
+    // { lat: '37.8847972', lng: '127.7169083' },
   ],
   // selectedRouteOption = 'fast',
   // setSelectedRouteOption,
@@ -34,6 +41,10 @@ const Naver = ({
 
   const goalLat = useSelector((state: EndState) => state.end.lat)
   const goalLng = useSelector((state: EndState) => state.end.lng)
+
+  const pathInfoData = useSelector((state: PathInfoState) => state.pathInfo)
+
+  const routeId = pathInfoData.routeId
 
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
@@ -50,7 +61,7 @@ const Naver = ({
     page: '1',
   })
   const { data: restSpotData } = useGetRestSpots({
-    routeId: selectedRoute?.routeId,
+    routeId,
   })
 
   useEffect(() => {
@@ -84,35 +95,35 @@ const Naver = ({
   }, [mapRef, init, routes])
 
   useEffect(() => {
-    if (start && init) {
+    if (startLat && startLng && init) {
       console.log('출발지 변경')
       mapRef.current?.setCenter(
-        new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
+        new naver.maps.LatLng(parseFloat(startLat), parseFloat(startLng)),
       )
       mapRef.current?.setZoom(15)
     }
-  }, [mapRef, start, init])
+  }, [mapRef, startLat, startLng, init])
 
   useEffect(() => {
-    if (goal && init) {
+    if (goalLat && goalLng && init) {
       console.log('목적지 변경')
       mapRef.current?.setCenter(
-        new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
+        new naver.maps.LatLng(parseFloat(goalLat), parseFloat(goalLng)),
       )
       mapRef.current?.setZoom(15)
     }
-  }, [mapRef, goal, init])
+  }, [mapRef, goalLat, goalLng, init])
 
   useEffect(() => {
-    if (start && goal && init) {
+    if (startLat && startLng && goalLat && goalLng && init) {
       console.log('출발지 목적지 설정')
       mapRef.current?.setCenter({
-        lat: (parseFloat(start.lat) + parseFloat(goal.lat)) / 2,
-        lng: (parseFloat(start.lng) + parseFloat(goal.lng)) / 2,
+        lat: (parseFloat(startLat) + parseFloat(goalLat)) / 2,
+        lng: (parseFloat(startLng) + parseFloat(goalLng)) / 2,
       })
       mapRef.current?.setZoom(10)
     }
-  }, [mapRef, start, goal, init])
+  }, [mapRef, startLat, startLng, goalLat, goalLng, init])
 
   const handleClickRoute = (routeOption: string) => {
     setSelectedRoute(routes?.find(route => route.routeOption === routeOption))
@@ -135,7 +146,7 @@ const Naver = ({
             type="start"
           />
         )}
-        {goalLat && goalLng && (
+        {goalLng && goalLat && (
           <CustomMarker
             position={{
               lat: parseFloat(goalLat),
@@ -144,7 +155,7 @@ const Naver = ({
             type="goal"
           />
         )}
-        {waypoints &&
+        {/* {waypoints &&
           waypoints.map((waypoint, idx) => {
             return (
               <CustomMarker
@@ -157,7 +168,7 @@ const Naver = ({
                 waypointsIndex={idx + 1}
               />
             )
-          })}
+          })} */}
         {restSpots &&
           restSpots.map(spot => {
             return (
