@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState, Dispatch } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
 import RecentSearch from '../RecentSearch'
 import { SearchPlaceDataType } from '@/types'
 import Input from './input'
 
-const InputSubmit = () => {
+interface InputSubmitProps {
+  setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+}
+
+const InputSubmit = ({ setStartPlace, setGoalPlace }: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [isMax, setIsMax] = useState(false)
-  const [inputHeight, setInputHeight] = useState(32)
 
   const handleDeleteWaypoint = (index: number) => {
     const updatedWaypoints = wayPoints.filter((_, i) => i !== index)
@@ -17,7 +21,7 @@ const InputSubmit = () => {
   }
 
   const handleWaypointChange = (index: number, value: string) => {
-    const updatedWaypoints: string[] = [...wayPoints]
+    const updatedWaypoints = [...wayPoints]
     updatedWaypoints[index] = value
     setWayPoints(updatedWaypoints)
   }
@@ -25,19 +29,15 @@ const InputSubmit = () => {
   const handleWaypointClick = () => {
     setWayPoints([...wayPoints, ''])
     if (wayPoints.length === 4) setIsMax(true)
-    setInputHeight(inputHeight + 50)
   }
 
   //////
-  const [startPlace, setStartPlace] = useState<SearchPlaceDataType | null>(null)
-  const [goalPlace, setGoalPlace] = useState<SearchPlaceDataType | null>(null)
   const [isReset, setIsReset] = useState<boolean>(false)
 
   const handleClickReset = () => {
     setStartPlace(null)
     setGoalPlace(null)
     setIsReset(true)
-    console.log(startPlace, goalPlace)
   }
 
   useEffect(() => {
