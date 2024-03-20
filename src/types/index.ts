@@ -1,6 +1,9 @@
 export interface Place {
-  lng: string
+  name?: string
   lat: string
+  lng: string
+  category?: string
+  address?: string
 }
 
 export interface Route {
