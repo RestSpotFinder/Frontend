@@ -28,13 +28,13 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     }
   } = {
     일반휴게소: {
-      restArea: <NormalIcon className="h-10 w-14" />,
+      restArea: <NormalIcon className="h-7 w-12" />,
     },
     간이휴게소: {
-      restArea: <NatureIcon className="h-10 w-14" />,
+      restArea: <NatureIcon className="h-7 w-12" />,
     },
     화물차휴게소: {
-      restArea: <CargoIcon className="h-10 w-14" />,
+      restArea: <CargoIcon className="h-7 w-12" />,
     },
   }
 
@@ -46,8 +46,8 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     window.open(naverMapUrl, '_blank')
   }
   return (
-    <div className="relative flex w-full gap-6 px-4 py-4">
-      <div className="flex h-full items-center rounded-full border border-gray-400 bg-gray-50 ">
+    <div className="relative flex w-full gap-5 px-4 py-4">
+      <div className="flex h-full items-center rounded-full bg-gray-100 ">
         {Icon.restArea}
       </div>
       <div className="flex w-full flex-col items-center justify-center gap-3">
@@ -60,30 +60,30 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
           </h1>
           <p className="text-sm text-gray-600">{routeName}</p>
         </div>
-        <div className="flex w-full items-center justify-center gap-3">
-          <div className=" flex w-full gap-3">
+        <div className="flex w-full items-center justify-center">
+          <div className=" flex w-full">
             {restaurant && (
-              <div className="rounded-full border border-gray-400 p-0.5">
+              <div className="border-r border-gray-300 pr-2">
                 <RestaurantIcon className="h-4 w-4" />
               </div>
             )}
             {gasStation && (
-              <div className="rounded-full border border-gray-400 p-0.5">
+              <div className="pr- border-r border-gray-300 px-2">
                 <GasStationIcon className="h-4 w-4" />
               </div>
             )}
             {pharmacy && (
-              <div className="rounded-full border border-gray-400 p-0.5">
+              <div className="border-r border-gray-300 px-2">
                 <PharmacyIcon className="h-4 w-4" />
               </div>
             )}
             {toilet && (
-              <div className="rounded-full border border-gray-400 p-0.5">
+              <div className="border-r border-gray-300 px-2">
                 <ToiletIcon className="h-4 w-4" />
               </div>
             )}
             {electricCar && (
-              <div className="rounded-full border border-gray-400 p-0.5">
+              <div className="px-2">
                 <ElectricCarIcon className="h-4 w-4" />
               </div>
             )}

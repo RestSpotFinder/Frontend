@@ -62,7 +62,7 @@ const PathInfoContent = (props: PathInfoType) => {
       </div>
       <div className="flex flex-row">
         <p
-          className={`b-2  text-3xl font-bold ${formattedTime.hours === 0 && 'hidden'}`}
+          className={`b-2 text-3xl font-bold ${formattedTime.hours === 0 && 'hidden'}`}
         >
           {formattedTime.hours}
         </p>
