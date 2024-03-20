@@ -6,9 +6,8 @@ import {
 } from 'react-naver-maps'
 import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
-import { Place, Route, RestSpot, StartState, EndState } from '@/types'
+import { Place, Route, RestSpot } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
-import { useSelector } from 'react-redux'
 
 interface NaverProps {
   start?: Place | null
@@ -19,8 +18,8 @@ interface NaverProps {
 }
 
 const Naver = ({
-  start = { lat: '37.9319958', lng: '127.1285607' },
-  goal = { lat: '37.5066719', lng: '127.8376911' },
+  start,
+  goal,
   waypoints = [
     { lat: '37.4449168', lng: '127.1388684' },
     { lat: '37.8847972', lng: '127.7169083' },
@@ -28,13 +27,6 @@ const Naver = ({
   // selectedRouteOption = 'fast',
   // setSelectedRouteOption,
 }: NaverProps) => {
-  const startLat = useSelector((state: StartState) => state.start.lat)
-
-  const startLng = useSelector((state: StartState) => state.start.lng)
-
-  const goalLat = useSelector((state: EndState) => state.end.lat)
-  const goalLng = useSelector((state: EndState) => state.end.lng)
-
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
   const [init, setInit] = useState<boolean>(true)
@@ -42,8 +34,8 @@ const Naver = ({
   const [restSpots, setRestSpots] = useState<RestSpot[]>()
   const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
   const { data: routes } = useGetRoutes({
-    start: [startLng, startLat].join(','),
-    goal: [goalLng, goalLat].join(','),
+    start: [start?.lng, start?.lat].join(','),
+    goal: [goal?.lng, goal?.lat].join(','),
     waypoints: waypoints.map(waypoint =>
       [waypoint.lng, waypoint.lat].join(','),
     ),
@@ -52,6 +44,24 @@ const Naver = ({
   const { data: restSpotData } = useGetRestSpots({
     routeId: selectedRoute?.routeId,
   })
+
+  // 출발지 입력시마다 마커 변경
+  useEffect(() => {
+    if (start) {
+      mapRef.current?.setCenter(
+        new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
+      )
+    }
+  }, [start, mapRef])
+
+  // 도착지 입력시마다 마커 변경
+  useEffect(() => {
+    if (goal) {
+      mapRef.current?.setCenter(
+        new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
+      )
+    }
+  }, [goal, mapRef])
 
   useEffect(() => {
     setSelectedRoute(
@@ -84,26 +94,6 @@ const Naver = ({
   }, [mapRef, init, routes])
 
   useEffect(() => {
-    if (start && init) {
-      console.log('출발지 변경')
-      mapRef.current?.setCenter(
-        new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
-      )
-      mapRef.current?.setZoom(15)
-    }
-  }, [mapRef, start, init])
-
-  useEffect(() => {
-    if (goal && init) {
-      console.log('목적지 변경')
-      mapRef.current?.setCenter(
-        new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
-      )
-      mapRef.current?.setZoom(15)
-    }
-  }, [mapRef, goal, init])
-
-  useEffect(() => {
     if (start && goal && init) {
       console.log('출발지 목적지 설정')
       mapRef.current?.setCenter({
@@ -126,25 +116,25 @@ const Naver = ({
         defaultZoom={12}
         ref={mapRef}
       >
-        {startLat && startLng && (
+        {start && (
           <CustomMarker
             position={{
-              lat: parseFloat(startLat),
-              lng: parseFloat(startLng),
+              lat: parseFloat(start.lat),
+              lng: parseFloat(start.lng),
             }}
             type="start"
           />
         )}
-        {goalLat && goalLng && (
+        {goal && (
           <CustomMarker
             position={{
-              lat: parseFloat(goalLat),
-              lng: parseFloat(goalLng),
+              lat: parseFloat(goal.lat),
+              lng: parseFloat(goal.lng),
             }}
             type="goal"
           />
         )}
-        {waypoints &&
+        {/* {waypoints &&
           waypoints.map((waypoint, idx) => {
             return (
               <CustomMarker
@@ -157,7 +147,7 @@ const Naver = ({
                 waypointsIndex={idx + 1}
               />
             )
-          })}
+          })} */}
         {restSpots &&
           restSpots.map(spot => {
             return (

@@ -13,7 +13,7 @@ const CustomMarker = ({
 }: CustomMarkerProps) => {
   return (
     <Marker
-      defaultPosition={position}
+      position={position}
       icon={{
         content: [
           '<i style="position: relative; display: flex; align-items: center; justify-content: center; top: 0; left: 0; transform: translate(-50%, -100%);">',
