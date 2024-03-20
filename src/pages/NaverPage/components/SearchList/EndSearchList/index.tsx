@@ -2,6 +2,7 @@ import SearchListContent from '../SearchListContent'
 import { useDispatch, useSelector } from 'react-redux'
 import { endCheckedTrue, endInitiate } from '@/store/end'
 import { SearchPlaceDataType, EndSearchListType, EndState } from '@/types'
+import React from 'react'
 
 const EndSearchList = ({ result, setSearch }: EndSearchListType) => {
   const dataArr = result
@@ -24,11 +25,14 @@ const EndSearchList = ({ result, setSearch }: EndSearchListType) => {
     >
       {dataArr?.map((value: SearchPlaceDataType, index: number) => {
         return (
-          <SearchListContent
-            key={index}
-            searchPlaceData={value}
-            onDataClick={handleDataClick}
-          />
+          <React.Fragment key={index}>
+            <SearchListContent
+              key={index}
+              searchPlaceData={value}
+              onDataClick={handleDataClick}
+            />
+            {index !== dataArr.length - 1 && <hr />}
+          </React.Fragment>
         )
       })}
     </div>

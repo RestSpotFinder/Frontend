@@ -2,10 +2,8 @@ import { PathInfoType } from '@/types'
 import { useDispatch } from 'react-redux'
 import { clickRestAreaListActivate } from '../../../../store/click'
 import { pathInfoInitiate } from '../../../../store/pathInfo'
-import { useState } from 'react'
 
 const PathInfoContent = (props: PathInfoType) => {
-  const [clickedId, setClickedId] = useState<string | null>(null)
   const {
     ranking,
     duration,
@@ -53,7 +51,7 @@ const PathInfoContent = (props: PathInfoType) => {
 
   return (
     <div
-      className={`relative h-36 w-96 border-b border-t border-gray-300 p-8 ${clickedId === routeId ? 'bg-gray-200' : ''}`}
+      className="relative h-36 w-96 border-gray-300 p-8"
       onDoubleClick={handlePathInfo}
     >
       <div className="relative flex flex-row">

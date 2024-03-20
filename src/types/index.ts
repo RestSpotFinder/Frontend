@@ -16,11 +16,14 @@ export interface Route {
   tollFare: string
 }
 
-export type PathInfoType = Omit<
-  Route,
-  'coordinates' | 'createdDate' | 'searchId' | 'routeOption' | 'routeId'
-> & {
+export type PathInfoType = {
   ranking: number
+  duration: string
+  distance: string
+  tollFare: string
+  fuelPrice: string
+  optionText: string
+  routeId: number
 }
 
 export type RestAreaInfoType = {
@@ -30,6 +33,9 @@ export type RestAreaInfoType = {
   electricCar: boolean
   pharmacy: boolean
   toilet: boolean
+  name: string
+  routeName: string
+  naverMapUrl: string
 }
 
 export interface RestSpot {
@@ -55,6 +61,7 @@ export interface RestSpot {
   otherFacilities: string
   representativeFood: string
   phoneNumber: string
+  naverMapUrl: string
 }
 
 export type SearchPlaceDataType = {

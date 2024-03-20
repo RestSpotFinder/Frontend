@@ -1,14 +1,16 @@
 import PathInfoContent from '../PathInfo/pathInfoContent'
 import RestAreaInfoContent from './restAreaInfoContent'
 import { useSelector } from 'react-redux'
-import { PathInfoState } from '@/types'
+import { PathInfoState, RestSpot } from '@/types'
 import { useGetRestSpots } from '@/apis/hooks'
-import { Loading } from '..'
-import { useEffect, useState } from 'react'
+import { Loading, NoRestArea } from '..'
+import React, { useEffect, useState } from 'react'
 import { ClickState } from '@/types'
 
 const RestAreaInfo = () => {
-  const [restAreaList, setRestAreaList] = useState(null)
+  const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>(
+    undefined,
+  )
 
   const pathInfoData = useSelector((state: PathInfoState) => state.pathInfo)
   const restAreaListActivate = useSelector(
@@ -19,21 +21,21 @@ const RestAreaInfo = () => {
   const {
     data: restAreaListData,
     isLoading: restAreaListLoading,
-    refetch,
+    refetch: restSpotsRefetch,
   } = useGetRestSpots({ routeId })
 
   useEffect(() => {
-    if (restAreaListData) {
+    if (!restAreaListLoading) {
       setRestAreaList(restAreaListData)
-      refetch()
+      restSpotsRefetch()
     }
-  }, [restAreaListData, setRestAreaList, refetch])
+  }, [restAreaListData, setRestAreaList, restSpotsRefetch, restAreaListLoading])
 
   if (restAreaListLoading) return <Loading />
 
   return (
     <div
-      className={` z-50 mb-10 flex w-96 flex-col border-l border-gray-300 ${!restAreaListActivate && 'hidden'}`}
+      className={` z-50 mb-10 flex w-96 flex-col border border-gray-300 ${!restAreaListActivate && 'hidden'}`}
     >
       <PathInfoContent
         key={pathInfoData.routeId}
@@ -45,19 +47,26 @@ const RestAreaInfo = () => {
         optionText={pathInfoData.optionText}
         routeId={pathInfoData.routeId}
       />
-
+      <hr />
+      {restAreaListData?.length === 0 && <NoRestArea />}
       <div className="flex flex-col overflow-scroll">
-        {restAreaList?.map(value => {
+        {restAreaList?.map((value, index) => {
           return (
-            <RestAreaInfoContent
-              key={value.restAreaId}
-              type={value.type}
-              restaurant={value.hasRestaurant}
-              gasStation={value.hasGasStaion}
-              electricCar={value.hasElectricChargingStation}
-              pharmacy={value.hasPharmacy}
-              toilet={value.hasRestroom}
-            />
+            <React.Fragment key={index}>
+              <RestAreaInfoContent
+                key={value.restAreaId}
+                type={value.type}
+                restaurant={value.hasRestaurant}
+                gasStation={value.hasGasStation}
+                electricCar={value.hasElectricChargingStation}
+                pharmacy={value.hasPharmacy}
+                toilet={value.hasRestroom}
+                name={value.name}
+                routeName={value.routeName}
+                naverMapUrl={value.naverMapUrl}
+              />
+              {index !== restAreaList.length - 1 && <hr />}
+            </React.Fragment>
           )
         })}
       </div>

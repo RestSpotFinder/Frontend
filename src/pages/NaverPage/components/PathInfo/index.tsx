@@ -1,5 +1,5 @@
 import PathInfoContent from './pathInfoContent'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { clickMorePathDataActivate } from '@/store/click'
 import { useSelector, useDispatch } from 'react-redux'
 import { useGetRoutes } from '@/apis/hooks'
@@ -18,7 +18,6 @@ const PathInfo = () => {
   )
 
   const [result, setResult] = useState<Route[] | null>(null)
-  const [moreResult, setMoreResult] = useState<Route[] | null>(null)
 
   const start = [startLng, startLat].join(',')
   const goal = [endLng, endLat].join(',')
@@ -46,7 +45,9 @@ const PathInfo = () => {
 
   useEffect(() => {
     if (secondRoutes && clickEventMorePath) {
-      setMoreResult(secondRoutes)
+      setResult(prevResult => {
+        return [...(prevResult as Route[]), ...secondRoutes]
+      })
     }
   }, [secondRoutes, clickEventMorePath])
 
@@ -60,32 +61,18 @@ const PathInfo = () => {
 
   return (
     <div className={`${clickEvent ? '' : 'hidden'} `}>
-      <div className="top-30 sticky w-96 bg-white">
+      <div className="w-96 bg-white">
         <h1 className="sticky ml-11 font-bold text-red-600">
           더블 클릭시 경로상 휴게소 정보가 표시됩니다.
         </h1>
       </div>
-      <div className="mb-10 mt-10 max-h-[calc(100vh-25rem)] overflow-y-auto ">
+      <div className="mb-5 max-h-[calc(100vh-20rem)] overflow-y-auto ">
         {result?.map((value, index) => {
           return (
-            <PathInfoContent
-              key={value.routeId}
-              ranking={index}
-              duration={value.duration}
-              distance={value.distance}
-              tollFare={value.tollFare}
-              fuelPrice={value.fuelPrice}
-              optionText={value.optionText}
-              routeId={value.routeId}
-            />
-          )
-        })}
-        <div className={`${!clickEventMorePath && 'hidden'}`}>
-          {moreResult?.map((value, index) => {
-            return (
+            <React.Fragment key={index}>
               <PathInfoContent
                 key={value.routeId}
-                ranking={index + 3}
+                ranking={index}
                 duration={value.duration}
                 distance={value.distance}
                 tollFare={value.tollFare}
@@ -93,9 +80,10 @@ const PathInfo = () => {
                 optionText={value.optionText}
                 routeId={value.routeId}
               />
-            )
-          })}
-        </div>
+              {index !== result.length - 1 && <hr />}
+            </React.Fragment>
+          )
+        })}
         <button
           className={`relative ml-8 mt-5 h-10 w-80 rounded-md bg-green-600 ${clickEventMorePath && 'hidden'}`}
           onClick={morePathDataButton}
