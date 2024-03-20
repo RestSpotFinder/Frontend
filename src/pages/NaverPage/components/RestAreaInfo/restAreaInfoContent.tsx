@@ -28,13 +28,13 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     }
   } = {
     일반휴게소: {
-      restArea: <NormalIcon className="h-10 w-10" />,
+      restArea: <NormalIcon className="h-10 w-14" />,
     },
     간이휴게소: {
-      restArea: <NatureIcon className="h-10 w-10" />,
+      restArea: <NatureIcon className="h-10 w-14" />,
     },
     화물차휴게소: {
-      restArea: <CargoIcon className="h-10 w-10" />,
+      restArea: <CargoIcon className="h-10 w-14" />,
     },
   }
 
@@ -46,25 +46,22 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     window.open(naverMapUrl, '_blank')
   }
   return (
-    <div className="relative flex w-full gap-6 px-10 py-4">
-      <div className="flex h-full items-center">{Icon.restArea}</div>
+    <div className="relative flex w-full gap-6 px-4 py-4">
+      <div className="flex h-full items-center rounded-full border border-gray-400 bg-gray-50 ">
+        {Icon.restArea}
+      </div>
       <div className="flex w-full flex-col items-center justify-center gap-3">
         <div className="flex w-full items-center justify-between">
           <h1
             className="flex justify-center text-base font-semibold hover:text-blue-600"
             onClick={handleNameClick}
           >
-            {`${name} 휴게소`}
+            {name}
           </h1>
           <p className="text-sm text-gray-600">{routeName}</p>
         </div>
         <div className="flex w-full items-center justify-center gap-3">
           <div className=" flex w-full gap-3">
-            {electricCar && (
-              <div className="rounded-full border border-gray-400 p-0.5">
-                <ElectricCarIcon className="h-4 w-4" />
-              </div>
-            )}
             {restaurant && (
               <div className="rounded-full border border-gray-400 p-0.5">
                 <RestaurantIcon className="h-4 w-4" />
@@ -83,6 +80,11 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
             {toilet && (
               <div className="rounded-full border border-gray-400 p-0.5">
                 <ToiletIcon className="h-4 w-4" />
+              </div>
+            )}
+            {electricCar && (
+              <div className="rounded-full border border-gray-400 p-0.5">
+                <ElectricCarIcon className="h-4 w-4" />
               </div>
             )}
           </div>

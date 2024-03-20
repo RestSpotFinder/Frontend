@@ -35,7 +35,7 @@ const RestAreaInfo = () => {
 
   return (
     <div
-      className={` z-50 mb-10 flex w-96 flex-col border border-gray-300 ${!restAreaListActivate && 'hidden'}`}
+      className={`z-50 mb-10 flex w-96 flex-col border border-gray-300 ${!restAreaListActivate && 'hidden'}`}
     >
       <PathInfoContent
         key={pathInfoData.routeId}
@@ -49,6 +49,7 @@ const RestAreaInfo = () => {
       />
       <hr />
       {restAreaListData?.length === 0 && <NoRestArea />}
+      <button className="absolute right-96 h-10 w-10 bg-red-100">button</button>
       <div className="flex flex-col overflow-scroll">
         {restAreaList?.map((value, index) => {
           return (
