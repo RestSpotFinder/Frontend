@@ -33,6 +33,7 @@ const InputSubmit = () => {
   const [wayPointPlaceholder, setWayPointPlaceholder] =
     useState<string>('경유지 입력')
 
+  const [isError, setIsError] = useState<boolean>(false)
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [search, setSearch] = useState({
     startSearchTerm: '',
@@ -76,6 +77,7 @@ const InputSubmit = () => {
     dispatch(clickFindPathUnactivate())
     dispatch(clickMorePathDataUnactivate())
     dispatch(clickRestAreaListUnactivate())
+    setIsError(false)
   }
 
   const handleEndPlaceholderClick = () => {
@@ -89,6 +91,7 @@ const InputSubmit = () => {
     dispatch(clickFindPathUnactivate())
     dispatch(clickMorePathDataUnactivate())
     dispatch(clickRestAreaListUnactivate())
+    setIsError(false)
   }
 
   const handleStartPlaceholderBlur = () => {
@@ -110,6 +113,7 @@ const InputSubmit = () => {
     setSearch({ endSearchTerm: '', startSearchTerm: '', waySearchTerm: '' })
     setIsMax(false)
     dispatch(clickRestAreaListUnactivate())
+    setIsError(false)
   }
 
   const handleDeleteWaypoint = (index: number) => {
@@ -140,7 +144,7 @@ const InputSubmit = () => {
   const findPathButton = () => {
     dispatch(clickFindPathActivate())
     if (!startName || !endName) {
-      console.log('데이터가 페칭 되지 않았습니다.')
+      setIsError(true)
       dispatch(clickFindPathUnactivate())
     }
   }
@@ -219,6 +223,13 @@ const InputSubmit = () => {
           <RightIcon />
         </button>
       </div>
+      {isError && (
+        <div className=" flex justify-center  ">
+          <h1 className="mt-3 font-bold text-red-600">
+            출발지와 도착지를 모두 입력하세요!
+          </h1>
+        </div>
+      )}
       <RecentSearch />
     </div>
   )
