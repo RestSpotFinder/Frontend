@@ -7,9 +7,14 @@ import Input from './input'
 interface InputSubmitProps {
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  handleClickSearchRoutes: () => void
 }
 
-const InputSubmit = ({ setStartPlace, setGoalPlace }: InputSubmitProps) => {
+const InputSubmit = ({
+  setStartPlace,
+  setGoalPlace,
+  handleClickSearchRoutes,
+}: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
   const [isMax, setIsMax] = useState(false)
@@ -90,7 +95,10 @@ const InputSubmit = ({ setStartPlace, setGoalPlace }: InputSubmitProps) => {
           <PlusIcon className="h-6 w-6" />
           <p>경유지</p>
         </button>
-        <button className="flex items-center gap-2 rounded border border-gray-400 bg-green-600 py-1.5 pl-3 pr-1 text-white">
+        <button
+          className="flex items-center gap-2 rounded border border-gray-400 bg-green-600 py-1.5 pl-3 pr-1 text-white"
+          onClick={handleClickSearchRoutes}
+        >
           <p>길찾기</p>
           <RightIcon className="h-6 w-6" />
         </button>

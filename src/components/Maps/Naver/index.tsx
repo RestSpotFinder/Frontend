@@ -7,43 +7,34 @@ import {
 import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
 import { Place, Route, RestSpot } from '@/types'
-import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
+import { useGetRestSpots } from '@/apis/hooks'
 
 interface NaverProps {
   start?: Place | null
   goal?: Place | null
   waypoints?: Place[]
-  selectedRouteOption?: string
-  setSelectedRouteOption?: Dispatch<SetStateAction<string>>
+  routeList?: Route[]
+  selectedRoute?: Route
+  setSelectedRoute: Dispatch<SetStateAction<Route | undefined>>
 }
 
 const Naver = ({
   start,
   goal,
-  waypoints = [
-    { lat: '37.4449168', lng: '127.1388684' },
-    { lat: '37.8847972', lng: '127.7169083' },
-  ],
-  // selectedRouteOption = 'fast',
-  // setSelectedRouteOption,
+  waypoints,
+  routeList,
+  selectedRoute,
+  setSelectedRoute,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
   const [init, setInit] = useState<boolean>(true)
-  const [selectedRoute, setSelectedRoute] = useState<Route>()
-  const [restSpots, setRestSpots] = useState<RestSpot[]>()
-  const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
-  const { data: routes } = useGetRoutes({
-    start: [start?.lng, start?.lat].join(','),
-    goal: [goal?.lng, goal?.lat].join(','),
-    waypoints: waypoints.map(waypoint =>
-      [waypoint.lng, waypoint.lat].join(','),
-    ),
-    page: '1',
-  })
-  const { data: restSpotData } = useGetRestSpots({
-    routeId: selectedRoute?.routeId,
-  })
+  // const [restSpots, setRestSpots] = useState<RestSpot[]>()
+  // const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
+
+  // const { data: restSpotData } = useGetRestSpots({
+  //   routeId: selectedRoute?.routeId,
+  // })
 
   // 출발지 입력시마다 마커 변경
   useEffect(() => {
@@ -63,17 +54,19 @@ const Naver = ({
     }
   }, [goal, mapRef])
 
-  useEffect(() => {
-    setSelectedRoute(
-      routes?.find(route => route.routeOption === selectedRoute?.routeOption),
-    )
-  }, [routes, setSelectedRoute, selectedRoute])
+  // useEffect(() => {
+  //   setSelectedRoute(
+  //     routeList?.find(
+  //       route => route.routeOption === selectedRoute?.routeOption,
+  //     ),
+  //   )
+  // }, [routeList, setSelectedRoute, selectedRoute])
 
-  useEffect(() => {
-    if (restSpotData) {
-      setRestSpots(restSpotData)
-    }
-  }, [restSpotData, setRestSpots])
+  // useEffect(() => {
+  //   if (restSpotData) {
+  //     setRestSpots(restSpotData)
+  //   }
+  // }, [restSpotData, setRestSpots])
 
   useEffect(() => {
     if (init) {
@@ -88,10 +81,10 @@ const Naver = ({
           console.error(error)
         },
       )
-      setSelectedRoute(routes && routes[0])
+      setSelectedRoute(routeList && routeList[0])
       setInit(false)
     }
-  }, [mapRef, init, routes])
+  }, [mapRef, init, routeList])
 
   useEffect(() => {
     if (start && goal && init) {
@@ -105,8 +98,9 @@ const Naver = ({
   }, [mapRef, start, goal, init])
 
   const handleClickRoute = (routeOption: string) => {
-    setSelectedRoute(routes?.find(route => route.routeOption === routeOption))
-    console.log(routeOption)
+    setSelectedRoute(
+      routeList?.find(route => route.routeOption === routeOption),
+    )
   }
 
   return (
@@ -134,7 +128,7 @@ const Naver = ({
             type="goal"
           />
         )}
-        {/* {waypoints &&
+        {waypoints &&
           waypoints.map((waypoint, idx) => {
             return (
               <CustomMarker
@@ -147,8 +141,8 @@ const Naver = ({
                 waypointsIndex={idx + 1}
               />
             )
-          })} */}
-        {restSpots &&
+          })}
+        {/* {restSpots &&
           restSpots.map(spot => {
             return (
               <RestSpotMarker
@@ -161,10 +155,10 @@ const Naver = ({
                 key={spot.restAreaId}
               />
             )
-          })}
+          })} */}
         {start &&
           goal &&
-          routes?.map(path => (
+          routeList?.map(path => (
             <Polyline
               key={path.routeId}
               path={path.coordinates.map(coordinate => {
