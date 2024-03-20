@@ -7,7 +7,6 @@ import {
 import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
 import { Place, Route, RestSpot } from '@/types'
-import { useGetRestSpots } from '@/apis/hooks'
 
 interface NaverProps {
   start?: Place | null
@@ -16,6 +15,7 @@ interface NaverProps {
   routeList?: Route[]
   selectedRoute?: Route
   setSelectedRoute: Dispatch<SetStateAction<Route | undefined>>
+  restSpotList?: RestSpot[]
 }
 
 const Naver = ({
@@ -25,77 +25,25 @@ const Naver = ({
   routeList,
   selectedRoute,
   setSelectedRoute,
+  restSpotList,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
-  const [init, setInit] = useState<boolean>(true)
-  // const [restSpots, setRestSpots] = useState<RestSpot[]>()
-  // const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
+  const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
 
-  // const { data: restSpotData } = useGetRestSpots({
-  //   routeId: selectedRoute?.routeId,
-  // })
-
-  // 출발지 입력시마다 마커 변경
   useEffect(() => {
-    if (start) {
+    start &&
       mapRef.current?.setCenter(
         new naver.maps.LatLng(parseFloat(start.lat), parseFloat(start.lng)),
       )
-    }
   }, [start, mapRef])
 
-  // 도착지 입력시마다 마커 변경
   useEffect(() => {
-    if (goal) {
+    goal &&
       mapRef.current?.setCenter(
         new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
       )
-    }
   }, [goal, mapRef])
-
-  // useEffect(() => {
-  //   setSelectedRoute(
-  //     routeList?.find(
-  //       route => route.routeOption === selectedRoute?.routeOption,
-  //     ),
-  //   )
-  // }, [routeList, setSelectedRoute, selectedRoute])
-
-  // useEffect(() => {
-  //   if (restSpotData) {
-  //     setRestSpots(restSpotData)
-  //   }
-  // }, [restSpotData, setRestSpots])
-
-  useEffect(() => {
-    if (init) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { latitude, longitude } = position.coords
-          const myPosition = { lat: latitude, lng: longitude }
-
-          mapRef.current?.setCenter(myPosition)
-        },
-        error => {
-          console.error(error)
-        },
-      )
-      setSelectedRoute(routeList && routeList[0])
-      setInit(false)
-    }
-  }, [mapRef, init, routeList])
-
-  useEffect(() => {
-    if (start && goal && init) {
-      console.log('출발지 목적지 설정')
-      mapRef.current?.setCenter({
-        lat: (parseFloat(start.lat) + parseFloat(goal.lat)) / 2,
-        lng: (parseFloat(start.lng) + parseFloat(goal.lng)) / 2,
-      })
-      mapRef.current?.setZoom(10)
-    }
-  }, [mapRef, start, goal, init])
 
   const handleClickRoute = (routeOption: string) => {
     setSelectedRoute(
@@ -142,8 +90,8 @@ const Naver = ({
               />
             )
           })}
-        {/* {restSpots &&
-          restSpots.map(spot => {
+        {restSpotList &&
+          restSpotList.map(spot => {
             return (
               <RestSpotMarker
                 position={{
@@ -155,7 +103,7 @@ const Naver = ({
                 key={spot.restAreaId}
               />
             )
-          })} */}
+          })}
         {start &&
           goal &&
           routeList?.map(path => (

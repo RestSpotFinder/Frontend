@@ -2,8 +2,8 @@ import { Marker } from 'react-naver-maps'
 
 interface RestSpotMarkerProps {
   position: { lat: number; lng: number }
-  clicked: boolean
-  onClick: () => void
+  clicked?: boolean
+  onClick?: () => void
 }
 
 const RestSpotMarker = ({

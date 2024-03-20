@@ -1,8 +1,8 @@
 import { NaverMap } from '@/components'
 import { InputSubmit, Title, PathInfo } from '../'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { SearchPlaceDataType, Route } from '@/types'
-import { useGetRoutes } from '@/apis/hooks'
+import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 
 const Main = () => {
   const [startPlace, setStartPlace] = useState<SearchPlaceDataType | null>(null)
@@ -18,15 +18,22 @@ const Main = () => {
     // ),
     page: '1',
   })
+  const { data: restSpotList, refetch: restSpotsRefetch } = useGetRestSpots({
+    routeId: selectedRoute?.routeId,
+  })
 
-  const handleClickSearchRoutes = () => {
+  const handleClickSearchRoutes = async () => {
     if (startPlace && goalPlace) {
-      routesRefetch().then(res => {
-        setRouteList(res.data)
-        res.data && setSelectedRoute(res.data[0])
-      })
+      const routes = await routesRefetch()
+
+      setRouteList(routes.data)
+      routes.data && setSelectedRoute(routes.data[0])
     }
   }
+
+  useEffect(() => {
+    selectedRoute && restSpotsRefetch()
+  }, [selectedRoute, restSpotsRefetch])
 
   return (
     <div className="flex w-full">
@@ -45,6 +52,7 @@ const Main = () => {
         routeList={routeList}
         selectedRoute={selectedRoute}
         setSelectedRoute={setSelectedRoute}
+        restSpotList={restSpotList}
       />
     </div>
   )
