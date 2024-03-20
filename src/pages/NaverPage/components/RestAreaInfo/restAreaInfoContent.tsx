@@ -42,12 +42,18 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     icon: null,
   }
 
+  const handleNameClick = () => {
+    window.open(naverMapUrl, '_blank')
+  }
   return (
     <div className="relative flex w-full gap-6 px-10 py-4">
       <div className="flex h-full items-center">{Icon.restArea}</div>
       <div className="flex w-full flex-col items-center justify-center gap-3">
         <div className="flex w-full items-center justify-between">
-          <h1 className="flex justify-center text-base font-semibold hover:text-blue-600">
+          <h1
+            className="flex justify-center text-base font-semibold hover:text-blue-600"
+            onClick={handleNameClick}
+          >
             {`${name} 휴게소`}
           </h1>
           <p className="text-sm text-gray-600">{routeName}</p>
