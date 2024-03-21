@@ -1,5 +1,5 @@
 import { NaverMap } from '@/components'
-import { InputSubmit, Title, PathInfo } from '../'
+import { InputSubmit, Title, PathInfo, RecentSearch } from '../'
 import { useState, useEffect } from 'react'
 import { SearchPlaceDataType, Route } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
@@ -44,7 +44,16 @@ const Main = () => {
           setGoalPlace={setGoalPlace}
           handleClickSearchRoutes={handleClickSearchRoutes}
         />
-        <PathInfo />
+        {routeList ? (
+          <PathInfo
+            routeList={routeList}
+            setRouteList={setRouteList}
+            startPlace={startPlace}
+            goalPlace={goalPlace}
+          />
+        ) : (
+          <RecentSearch />
+        )}
       </div>
       <NaverMap
         start={startPlace}

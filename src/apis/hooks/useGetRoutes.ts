@@ -6,7 +6,7 @@ interface Request {
   start: string
   goal: string
   waypoints?: string[]
-  page?: string
+  page: string
 }
 
 const useGetRoutes = ({ start, goal, waypoints, page }: Request) => {

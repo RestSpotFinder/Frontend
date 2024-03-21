@@ -1,6 +1,5 @@
 import { SetStateAction, useEffect, useState, Dispatch } from 'react'
 import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
-import RecentSearch from '../RecentSearch'
 import { SearchPlaceDataType } from '@/types'
 import Input from './input'
 
@@ -103,8 +102,6 @@ const InputSubmit = ({
           <RightIcon className="h-6 w-6" />
         </button>
       </div>
-
-      <RecentSearch />
     </div>
   )
 }
