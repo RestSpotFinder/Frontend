@@ -6,6 +6,8 @@ import { Route, SearchPlaceDataType } from '@/types'
 interface PathInfoProps {
   routeList: Route[]
   setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
+  selectedRoute: Route | undefined
+  setSelectedRoute: Dispatch<SetStateAction<Route | undefined>>
   startPlace: SearchPlaceDataType | null
   goalPlace: SearchPlaceDataType | null
   clickedMorePath: boolean
@@ -15,6 +17,8 @@ interface PathInfoProps {
 const PathInfo = ({
   routeList,
   setRouteList,
+  selectedRoute,
+  setSelectedRoute,
   startPlace,
   goalPlace,
   clickedMorePath,
@@ -41,7 +45,11 @@ const PathInfo = ({
       <div className="h-full overflow-y-scroll">
         {routeList?.map((route, index) => {
           return (
-            <div className="flex flex-col" key={route.routeId}>
+            <div
+              className={`flex flex-col ${route === selectedRoute && 'border-b border-t border-emerald-500 bg-emerald-100'}`}
+              key={route.routeId}
+              onClick={() => setSelectedRoute(route)}
+            >
               <PathInfoContent ranking={index} route={route} />
               {index !== routeList.length - 1 && <hr />}
             </div>

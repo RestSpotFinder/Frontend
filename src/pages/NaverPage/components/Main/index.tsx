@@ -50,6 +50,8 @@ const Main = () => {
           <PathInfo
             routeList={routeList}
             setRouteList={setRouteList}
+            selectedRoute={selectedRoute}
+            setSelectedRoute={setSelectedRoute}
             startPlace={startPlace}
             goalPlace={goalPlace}
             clickedMorePath={clickedMorePath}
