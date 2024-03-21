@@ -1,7 +1,12 @@
 import { PathInfoType } from '@/types'
 
-const PathInfoContent = (props: PathInfoType) => {
-  const { ranking, duration, distance, tollFare, fuelPrice, optionText } = props
+interface PathInfoContentProps {
+  ranking: number
+  route: PathInfoType
+}
+
+const PathInfoContent = ({ route, ranking }: PathInfoContentProps) => {
+  const { duration, distance, tollFare, fuelPrice, optionText } = route
 
   const convertTimeToHoursMinutes = (milliseconds: number) => {
     const hours = Math.floor(milliseconds / 3600000)
@@ -22,7 +27,7 @@ const PathInfoContent = (props: PathInfoType) => {
   const formattedDistance = convertMeterToKilometer(Number(distance))
 
   return (
-    <div className="relative h-36 w-96 border-b border-t border-gray-300 p-8">
+    <div className="relative p-8">
       <div className="relative flex flex-row">
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <p className="text-white">{ranking + 1}</p>

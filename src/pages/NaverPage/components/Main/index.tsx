@@ -9,6 +9,7 @@ const Main = () => {
   const [goalPlace, setGoalPlace] = useState<SearchPlaceDataType | null>(null)
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
+  const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
 
   const { refetch: routesRefetch } = useGetRoutes({
     start: [startPlace?.lng, startPlace?.lat].join(','),
@@ -26,6 +27,7 @@ const Main = () => {
     if (startPlace && goalPlace) {
       const routes = await routesRefetch()
 
+      setClickedMorePath(false)
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
     }
@@ -36,8 +38,8 @@ const Main = () => {
   }, [selectedRoute, restSpotsRefetch])
 
   return (
-    <div className="flex w-full">
-      <div className="flex flex-col">
+    <div className="flex h-full w-full">
+      <div className="flex h-full flex-col">
         <Title />
         <InputSubmit
           setStartPlace={setStartPlace}
@@ -50,6 +52,8 @@ const Main = () => {
             setRouteList={setRouteList}
             startPlace={startPlace}
             goalPlace={goalPlace}
+            clickedMorePath={clickedMorePath}
+            setClickedMorePath={setClickedMorePath}
           />
         ) : (
           <RecentSearch />

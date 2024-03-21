@@ -22,9 +22,7 @@ export interface Route {
 export type PathInfoType = Omit<
   Route,
   'coordinates' | 'createdDate' | 'searchId' | 'routeOption' | 'routeId'
-> & {
-  ranking: number
-}
+>
 
 export type RestAreaInfoType = {
   restAreaType: number

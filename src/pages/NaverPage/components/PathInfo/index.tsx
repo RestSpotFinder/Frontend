@@ -1,5 +1,5 @@
 import PathInfoContent from './pathInfoContent'
-import { useState, Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { useGetRoutes } from '@/apis/hooks'
 import { Route, SearchPlaceDataType } from '@/types'
 
@@ -8,6 +8,8 @@ interface PathInfoProps {
   setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
   startPlace: SearchPlaceDataType | null
   goalPlace: SearchPlaceDataType | null
+  clickedMorePath: boolean
+  setClickedMorePath: Dispatch<SetStateAction<boolean>>
 }
 
 const PathInfo = ({
@@ -15,9 +17,9 @@ const PathInfo = ({
   setRouteList,
   startPlace,
   goalPlace,
+  clickedMorePath,
+  setClickedMorePath,
 }: PathInfoProps) => {
-  const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
-
   const { refetch: routesRefetch } = useGetRoutes({
     start: [startPlace?.lng, startPlace?.lat].join(','),
     goal: [goalPlace?.lng, goalPlace?.lat].join(','),
@@ -32,24 +34,17 @@ const PathInfo = ({
   }
 
   return (
-    <div>
-      <div className="top-30 sticky w-96 bg-white">
-        <h1 className="sticky ml-11 font-bold text-red-600">
-          더블 클릭시 경로상 휴게소 정보가 표시됩니다.
-        </h1>
-      </div>
-      <div className=" mb-10 mt-10 max-h-[calc(100vh-25rem)] overflow-y-auto ">
-        {routeList?.map((value, index) => {
+    <div className="relative flex h-full flex-col overflow-auto">
+      <h1 className="px-3 py-2 text-center font-bold text-red-600">
+        더블 클릭시 경로상 휴게소 정보가 표시됩니다.
+      </h1>
+      <div className="h-full overflow-y-scroll">
+        {routeList?.map((route, index) => {
           return (
-            <PathInfoContent
-              key={value.routeId}
-              ranking={index}
-              duration={value.duration}
-              distance={value.distance}
-              tollFare={value.tollFare}
-              fuelPrice={value.fuelPrice}
-              optionText={value.optionText}
-            />
+            <div className="flex flex-col" key={route.routeId}>
+              <PathInfoContent ranking={index} route={route} />
+              {index !== routeList.length - 1 && <hr />}
+            </div>
           )
         })}
         <button
