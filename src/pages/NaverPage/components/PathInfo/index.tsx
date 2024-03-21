@@ -79,6 +79,7 @@ const PathInfo = () => {
                 fuelPrice={value.fuelPrice}
                 optionText={value.optionText}
                 routeId={value.routeId}
+                routeOption={value.routeOption}
               />
               {index !== result.length - 1 && <hr />}
             </React.Fragment>

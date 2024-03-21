@@ -7,6 +7,7 @@ const click = createSlice({
     restart: false,
     morePathData: false,
     restAreaList: false,
+    naverMap: true,
   },
   reducers: {
     clickFindPathActivate: state => {
@@ -33,6 +34,12 @@ const click = createSlice({
     clickRestAreaListUnactivate: state => {
       state.restAreaList = false
     },
+    clickNaverMapActivate: state => {
+      state.naverMap = true
+    },
+    clickNaverMapUnactivate: state => {
+      state.naverMap = false
+    },
   },
 })
 
@@ -45,6 +52,8 @@ export const {
   clickMorePathDataUnactivate,
   clickRestAreaListActivate,
   clickRestAreaListUnactivate,
+  clickNaverMapActivate,
+  clickNaverMapUnactivate,
 } = click.actions
 
 export default click.reducer

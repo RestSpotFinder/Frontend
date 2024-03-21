@@ -24,6 +24,7 @@ export type PathInfoType = {
   fuelPrice: string
   optionText: string
   routeId: number
+  routeOption: string
 }
 
 export type RestAreaInfoType = {
@@ -127,6 +128,7 @@ export interface ClickState {
     morePathData: boolean
     restAreaList: boolean
     restart: boolean
+    naverMap: boolean
   }
 }
 
@@ -139,5 +141,6 @@ export interface PathInfoState {
     fuelPrice: string
     optionText: string
     routeId: number
+    routeOption: string
   }
 }

@@ -10,6 +10,7 @@ const pathInfo = createSlice({
     fuelPrice: '',
     optionText: '',
     routeId: 0,
+    routeOption: '',
   },
   reducers: {
     pathInfoInitiate: (state, action) => {
@@ -20,10 +21,14 @@ const pathInfo = createSlice({
       state.tollFare = action.payload.tollFare
       state.fuelPrice = action.payload.fuelPrice
       state.routeId = action.payload.routeId
+      state.routeOption = action.payload.routeOption
+    },
+    clickRouteOption: (state, action) => {
+      state.routeOption = action.payload.routeOption
     },
   },
 })
 
-export const { pathInfoInitiate } = pathInfo.actions
+export const { pathInfoInitiate, clickRouteOption } = pathInfo.actions
 
 export default pathInfo.reducer

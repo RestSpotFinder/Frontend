@@ -28,13 +28,13 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     }
   } = {
     일반휴게소: {
-      restArea: <NormalIcon className="h-7 w-12" />,
+      restArea: <NormalIcon className="h-8 w-14" />,
     },
     간이휴게소: {
-      restArea: <NatureIcon className="h-7 w-12" />,
+      restArea: <NatureIcon className="h-6 w-12" />,
     },
     화물차휴게소: {
-      restArea: <CargoIcon className="h-7 w-12" />,
+      restArea: <CargoIcon className="h-6 w-12" />,
     },
   }
 
@@ -47,7 +47,7 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
   }
   return (
     <div className="relative flex w-full gap-5 px-4 py-4">
-      <div className="flex h-full items-center rounded-full bg-gray-100 ">
+      <div className="flex items-center rounded-full bg-gray-100 ">
         {Icon.restArea}
       </div>
       <div className="flex w-full flex-col items-center justify-center gap-3">

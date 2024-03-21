@@ -22,6 +22,8 @@ import {
   clickFindPathActivate,
   clickFindPathUnactivate,
   clickMorePathDataUnactivate,
+  clickNaverMapActivate,
+  clickNaverMapUnactivate,
   clickRestAreaListUnactivate,
 } from '@/store/click'
 
@@ -78,6 +80,7 @@ const InputSubmit = () => {
     dispatch(clickMorePathDataUnactivate())
     dispatch(clickRestAreaListUnactivate())
     setIsError(false)
+    dispatch(clickNaverMapUnactivate())
   }
 
   const handleEndPlaceholderClick = () => {
@@ -92,6 +95,7 @@ const InputSubmit = () => {
     dispatch(clickMorePathDataUnactivate())
     dispatch(clickRestAreaListUnactivate())
     setIsError(false)
+    dispatch(clickNaverMapUnactivate())
   }
 
   const handleStartPlaceholderBlur = () => {
@@ -114,6 +118,7 @@ const InputSubmit = () => {
     setIsMax(false)
     dispatch(clickRestAreaListUnactivate())
     setIsError(false)
+    dispatch(clickNaverMapUnactivate())
   }
 
   const handleDeleteWaypoint = (index: number) => {
@@ -143,6 +148,7 @@ const InputSubmit = () => {
 
   const findPathButton = () => {
     dispatch(clickFindPathActivate())
+    dispatch(clickNaverMapActivate())
     if (!startName || !endName) {
       setIsError(true)
       dispatch(clickFindPathUnactivate())

@@ -13,6 +13,7 @@ import {
   StartState,
   EndState,
   PathInfoState,
+  ClickState,
 } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import { useSelector } from 'react-redux'
@@ -43,15 +44,28 @@ const Naver = ({
   const goalLng = useSelector((state: EndState) => state.end.lng)
 
   const pathInfoData = useSelector((state: PathInfoState) => state.pathInfo)
+  const naverMapActivate = useSelector(
+    (state: ClickState) => state.click.naverMap,
+  )
 
+  const clickEventMorePath = useSelector(
+    (state: ClickState) => state.click.morePathData,
+  )
   const routeId = pathInfoData.routeId
+  const routeOption = pathInfoData.routeOption
+
+  // useEffect(() => {
+  //   handleClickMoreRoute(routeOption)
+  // }, [routeOption])
 
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
-  const [init, setInit] = useState<boolean>(true)
+
   const [selectedRoute, setSelectedRoute] = useState<Route>()
+  const [selectedMoreRoute, setSelectedMoreRoute] = useState<Route>()
   const [restSpots, setRestSpots] = useState<RestSpot[]>()
   const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
+
   const { data: routes } = useGetRoutes({
     start: [startLng, startLat].join(','),
     goal: [goalLng, goalLat].join(','),
@@ -60,6 +74,16 @@ const Naver = ({
     ),
     page: '1',
   })
+
+  const { data: moreRoutes } = useGetRoutes({
+    start: [startLng, startLat].join(','),
+    goal: [goalLng, goalLat].join(','),
+    waypoints: waypoints.map(waypoint =>
+      [waypoint.lng, waypoint.lat].join(','),
+    ),
+    page: '2',
+  })
+
   const { data: restSpotData } = useGetRestSpots({
     routeId,
   })
@@ -71,13 +95,21 @@ const Naver = ({
   }, [routes, setSelectedRoute, selectedRoute])
 
   useEffect(() => {
+    setSelectedMoreRoute(
+      moreRoutes?.find(
+        route => route.routeOption === selectedMoreRoute?.routeOption,
+      ),
+    )
+  }, [moreRoutes, setSelectedMoreRoute, selectedMoreRoute])
+
+  useEffect(() => {
     if (restSpotData) {
       setRestSpots(restSpotData)
     }
   }, [restSpotData, setRestSpots])
 
   useEffect(() => {
-    if (init) {
+    if (naverMapActivate) {
       navigator.geolocation.getCurrentPosition(
         position => {
           const { latitude, longitude } = position.coords
@@ -90,32 +122,31 @@ const Naver = ({
         },
       )
       setSelectedRoute(routes && routes[0])
-      setInit(false)
     }
-  }, [mapRef, init, routes])
+  }, [mapRef, naverMapActivate, routes])
 
   useEffect(() => {
-    if (startLat && startLng && init) {
+    if (startLat && startLng && naverMapActivate) {
       console.log('출발지 변경')
       mapRef.current?.setCenter(
         new naver.maps.LatLng(parseFloat(startLat), parseFloat(startLng)),
       )
       mapRef.current?.setZoom(15)
     }
-  }, [mapRef, startLat, startLng, init])
+  }, [mapRef, startLat, startLng, naverMapActivate])
 
   useEffect(() => {
-    if (goalLat && goalLng && init) {
+    if (goalLat && goalLng && naverMapActivate) {
       console.log('목적지 변경')
       mapRef.current?.setCenter(
         new naver.maps.LatLng(parseFloat(goalLat), parseFloat(goalLng)),
       )
       mapRef.current?.setZoom(15)
     }
-  }, [mapRef, goalLat, goalLng, init])
+  }, [mapRef, goalLat, goalLng, naverMapActivate])
 
   useEffect(() => {
-    if (startLat && startLng && goalLat && goalLng && init) {
+    if (startLat && startLng && goalLat && goalLng && naverMapActivate) {
       console.log('출발지 목적지 설정')
       mapRef.current?.setCenter({
         lat: (parseFloat(startLat) + parseFloat(goalLat)) / 2,
@@ -123,11 +154,17 @@ const Naver = ({
       })
       mapRef.current?.setZoom(10)
     }
-  }, [mapRef, startLat, startLng, goalLat, goalLng, init])
+  }, [mapRef, startLat, startLng, goalLat, goalLng, naverMapActivate])
 
   const handleClickRoute = (routeOption: string) => {
     setSelectedRoute(routes?.find(route => route.routeOption === routeOption))
     console.log(routeOption)
+  }
+
+  const handleClickMoreRoute = (routeOption: string) => {
+    setSelectedMoreRoute(
+      moreRoutes?.find(route => route.routeOption === routeOption),
+    )
   }
 
   return (
@@ -170,6 +207,7 @@ const Naver = ({
             )
           })} */}
         {restSpots &&
+          naverMapActivate &&
           restSpots.map(spot => {
             return (
               <RestSpotMarker
@@ -196,12 +234,36 @@ const Naver = ({
               })}
               strokeLineCap="round"
               strokeLineJoin="round"
-              strokeColor={`${path.routeOption === selectedRoute?.routeOption ? '#2DB400' : '#A9A9A9'}`}
+              strokeColor={`${path.routeOption === routeOption ? '#2DB400' : '#A9A9A9'}`}
               strokeOpacity={0.8}
               strokeWeight={6}
               clickable={true}
               onClick={() => handleClickRoute(path.routeOption)}
               zIndex={selectedRoute?.routeOption === path.routeOption ? 1 : 0}
+            />
+          ))}
+        {start &&
+          goal &&
+          clickEventMorePath &&
+          moreRoutes?.map(path => (
+            <Polyline
+              key={path.routeId}
+              path={path.coordinates.map(coordinate => {
+                return new navermaps.LatLng(
+                  parseFloat(coordinate.lat),
+                  parseFloat(coordinate.lng),
+                )
+              })}
+              strokeLineCap="round"
+              strokeLineJoin="round"
+              strokeColor={`${path.routeOption === routeOption ? '#2DB400' : '#A9A9A9'}`}
+              strokeOpacity={0.8}
+              strokeWeight={6}
+              clickable={true}
+              onClick={() => handleClickMoreRoute(path.routeOption)}
+              zIndex={
+                selectedMoreRoute?.routeOption === path.routeOption ? 1 : 0
+              }
             />
           ))}
       </NaverMap>

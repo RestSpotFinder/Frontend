@@ -1,7 +1,8 @@
 import { PathInfoType } from '@/types'
 import { useDispatch } from 'react-redux'
 import { clickRestAreaListActivate } from '../../../../store/click'
-import { pathInfoInitiate } from '../../../../store/pathInfo'
+import { pathInfoInitiate, clickRouteOption } from '../../../../store/pathInfo'
+import { NaverMap } from '@/components'
 
 const PathInfoContent = (props: PathInfoType) => {
   const {
@@ -12,6 +13,7 @@ const PathInfoContent = (props: PathInfoType) => {
     fuelPrice,
     optionText,
     routeId,
+    routeOption,
   } = props
 
   const dispatch = useDispatch()
@@ -42,6 +44,7 @@ const PathInfoContent = (props: PathInfoType) => {
     fuelPrice: fuelPrice,
     optionText: optionText,
     routeId: routeId,
+    routeOption: routeOption,
   }
 
   const handlePathInfo = () => {
@@ -49,10 +52,15 @@ const PathInfoContent = (props: PathInfoType) => {
     dispatch(clickRestAreaListActivate())
   }
 
+  const sendRouteOptionToNaverMap = () => {
+    dispatch(clickRouteOption(pathInfoData))
+  }
+
   return (
     <div
       className="relative h-36 w-96 border-gray-300 p-8"
       onDoubleClick={handlePathInfo}
+      onClick={sendRouteOptionToNaverMap}
     >
       <div className="relative flex flex-row">
         <span className="absolute inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
