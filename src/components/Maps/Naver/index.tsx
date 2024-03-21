@@ -17,6 +17,7 @@ import {
 } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import { useSelector } from 'react-redux'
+import { Loading } from '@/pages/NaverPage/components'
 
 interface NaverProps {
   start?: Place | null
@@ -27,8 +28,8 @@ interface NaverProps {
 }
 
 const Naver = ({
-  start = { lat: '37.9319958', lng: '127.1285607' },
-  goal = { lat: '37.5066719', lng: '127.8376911' },
+  // start = { lat: '37.9319958', lng: '127.1285607' },
+  // goal = { lat: '37.5066719', lng: '127.8376911' },
   waypoints = [
     // { lat: '37.4449168', lng: '127.1388684' },
     // { lat: '37.8847972', lng: '127.7169083' },
@@ -43,6 +44,8 @@ const Naver = ({
   const goalLat = useSelector((state: EndState) => state.end.lat)
   const goalLng = useSelector((state: EndState) => state.end.lng)
 
+  const start = { lat: startLat, lng: startLng }
+  const goal = { lat: goalLat, lng: goalLng }
   const pathInfoData = useSelector((state: PathInfoState) => state.pathInfo)
   const naverMapActivate = useSelector(
     (state: ClickState) => state.click.naverMap,
@@ -84,9 +87,10 @@ const Naver = ({
     page: '2',
   })
 
-  const { data: restSpotData } = useGetRestSpots({
-    routeId,
-  })
+  const { data: restSpotData, isLoading: restSpotDataLoading } =
+    useGetRestSpots({
+      routeId,
+    })
 
   useEffect(() => {
     setSelectedRoute(

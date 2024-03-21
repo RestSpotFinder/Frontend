@@ -2,7 +2,6 @@ import { PathInfoType } from '@/types'
 import { useDispatch } from 'react-redux'
 import { clickRestAreaListActivate } from '../../../../store/click'
 import { pathInfoInitiate, clickRouteOption } from '../../../../store/pathInfo'
-import { NaverMap } from '@/components'
 
 const PathInfoContent = (props: PathInfoType) => {
   const {

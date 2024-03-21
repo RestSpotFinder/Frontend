@@ -46,10 +46,10 @@ const RestAreaInfo = () => {
         fuelPrice={pathInfoData.fuelPrice}
         optionText={pathInfoData.optionText}
         routeId={pathInfoData.routeId}
+        routeOption={pathInfoData.routeOption}
       />
       <hr />
       {restAreaListData?.length === 0 && <NoRestArea />}
-      {/* <button className="absolute right-96 h-10 w-10 bg-red-100">button</button> */}
       <div className="flex flex-col overflow-scroll">
         {restAreaList?.map((value, index) => {
           return (
