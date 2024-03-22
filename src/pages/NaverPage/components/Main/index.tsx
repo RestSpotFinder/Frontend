@@ -10,6 +10,7 @@ const Main = () => {
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
+  const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
 
   const { refetch: routesRefetch } = useGetRoutes({
     start: [startPlace?.lng, startPlace?.lat].join(','),
@@ -56,12 +57,18 @@ const Main = () => {
             goalPlace={goalPlace}
             clickedMorePath={clickedMorePath}
             setClickedMorePath={setClickedMorePath}
+            setRestSpotModalOpen={setRestSpotModalOpen}
           />
         ) : (
           <RecentSearch />
         )}
       </div>
-      {selectedRoute && <RestAreaInfo route={selectedRoute} />}
+      {selectedRoute && restSpotModalOpen && (
+        <RestAreaInfo
+          route={selectedRoute}
+          setRestSpotModalOpen={setRestSpotModalOpen}
+        />
+      )}
       <NaverMap
         start={startPlace}
         goal={goalPlace}

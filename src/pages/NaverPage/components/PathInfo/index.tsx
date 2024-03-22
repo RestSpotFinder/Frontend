@@ -12,6 +12,7 @@ interface PathInfoProps {
   goalPlace: SearchPlaceDataType | null
   clickedMorePath: boolean
   setClickedMorePath: Dispatch<SetStateAction<boolean>>
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const PathInfo = ({
@@ -23,6 +24,7 @@ const PathInfo = ({
   goalPlace,
   clickedMorePath,
   setClickedMorePath,
+  setRestSpotModalOpen,
 }: PathInfoProps) => {
   const { refetch: routesRefetch } = useGetRoutes({
     start: [startPlace?.lng, startPlace?.lat].join(','),
@@ -49,6 +51,7 @@ const PathInfo = ({
               className={`flex flex-col ${route === selectedRoute && 'border-b border-t border-emerald-500 bg-emerald-100'}`}
               key={route.routeId}
               onClick={() => setSelectedRoute(route)}
+              onDoubleClick={() => setRestSpotModalOpen(true)}
             >
               <PathInfoContent ranking={index} route={route} />
               {index !== routeList.length - 1 && <hr />}

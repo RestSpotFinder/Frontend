@@ -3,16 +3,16 @@ import RestAreaInfoContent from './restAreaInfoContent'
 import { RestSpot, PathInfoType } from '@/types'
 import { useGetRestSpots } from '@/apis/hooks'
 import { Loading } from '..'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction, Fragment } from 'react'
+import { DoubleLeftArrowIcon } from '@/assets/Icons'
 
 interface RestAreaInfoProps {
   route: PathInfoType | undefined
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const RestAreaInfo = ({ route }: RestAreaInfoProps) => {
-  const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>(
-    undefined,
-  )
+const RestAreaInfo = ({ route, setRestSpotModalOpen }: RestAreaInfoProps) => {
+  const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
 
   const {
     data: restAreaListData,
@@ -30,8 +30,16 @@ const RestAreaInfo = ({ route }: RestAreaInfoProps) => {
   if (restAreaListLoading) return <Loading />
 
   return (
-    <div className={`z-50 flex w-96 shrink-0 flex-col border border-gray-300 `}>
+    <div
+      className={`relative z-50 flex w-96 shrink-0 flex-col border border-gray-300 `}
+    >
       {route && <PathInfoContent ranking={-1} route={route} />}
+      <i
+        className="absolute right-3 top-3 rounded-lg hover:bg-emerald-100"
+        onClick={() => setRestSpotModalOpen(false)}
+      >
+        <DoubleLeftArrowIcon className="h-6 w-6 hover:stroke-green-800" />
+      </i>
       <hr />
       {restAreaListData?.length === 0 ? (
         <div className="relative flex w-full justify-center">
@@ -41,7 +49,7 @@ const RestAreaInfo = ({ route }: RestAreaInfoProps) => {
         <div className="flex w-full flex-col overflow-scroll">
           {restAreaList?.map((value, index) => {
             return (
-              <React.Fragment key={index}>
+              <Fragment key={index}>
                 <RestAreaInfoContent
                   key={value.restAreaId}
                   type={value.type}
@@ -55,7 +63,7 @@ const RestAreaInfo = ({ route }: RestAreaInfoProps) => {
                   naverMapUrl={value.naverMapUrl}
                 />
                 {index !== restAreaList.length - 1 && <hr />}
-              </React.Fragment>
+              </Fragment>
             )
           })}
         </div>
