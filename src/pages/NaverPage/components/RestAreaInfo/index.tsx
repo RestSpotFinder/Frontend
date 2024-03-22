@@ -16,18 +16,17 @@ const RestAreaInfo = ({ route, setRestSpotModalOpen }: RestAreaInfoProps) => {
 
   const {
     data: restAreaListData,
-    isLoading: restAreaListLoading,
+    isFetching: restSpotsFetching,
+    isLoading: restSpotsLoading,
     refetch: restSpotsRefetch,
   } = useGetRestSpots({ routeId: route?.routeId })
 
   useEffect(() => {
-    if (!restAreaListLoading) {
+    if (!restSpotsLoading) {
       setRestAreaList(restAreaListData)
       restSpotsRefetch()
     }
-  }, [restAreaListData, setRestAreaList, restSpotsRefetch, restAreaListLoading])
-
-  if (restAreaListLoading) return <Loading />
+  }, [restAreaListData, setRestAreaList, restSpotsRefetch, restSpotsLoading])
 
   return (
     <div
@@ -41,32 +40,38 @@ const RestAreaInfo = ({ route, setRestSpotModalOpen }: RestAreaInfoProps) => {
         <DoubleLeftArrowIcon className="h-6 w-6 hover:stroke-green-800" />
       </i>
       <hr />
-      {restAreaListData?.length === 0 ? (
-        <div className="relative flex w-full justify-center">
-          <h1 className="font-bold">보여줄 휴게소가 없습니다.</h1>
-        </div>
+      {restSpotsFetching ? (
+        <Loading className="h-full" />
       ) : (
-        <div className="flex w-full flex-col overflow-scroll">
-          {restAreaList?.map((value, index) => {
-            return (
-              <Fragment key={index}>
-                <RestAreaInfoContent
-                  key={value.restAreaId}
-                  type={value.type}
-                  restaurant={value.hasRestaurant}
-                  gasStation={value.hasGasStation}
-                  electricCar={value.hasElectricChargingStation}
-                  pharmacy={value.hasPharmacy}
-                  toilet={value.hasRestroom}
-                  name={value.name}
-                  routeName={value.routeName}
-                  naverMapUrl={value.naverMapUrl}
-                />
-                {index !== restAreaList.length - 1 && <hr />}
-              </Fragment>
-            )
-          })}
-        </div>
+        <>
+          {restAreaListData?.length === 0 ? (
+            <div className="relative flex w-full justify-center">
+              <h1 className="font-bold">보여줄 휴게소가 없습니다.</h1>
+            </div>
+          ) : (
+            <div className="flex w-full flex-col overflow-scroll">
+              {restAreaList?.map((value, index) => {
+                return (
+                  <Fragment key={index}>
+                    <RestAreaInfoContent
+                      key={value.restAreaId}
+                      type={value.type}
+                      restaurant={value.hasRestaurant}
+                      gasStation={value.hasGasStation}
+                      electricCar={value.hasElectricChargingStation}
+                      pharmacy={value.hasPharmacy}
+                      toilet={value.hasRestroom}
+                      name={value.name}
+                      routeName={value.routeName}
+                      naverMapUrl={value.naverMapUrl}
+                    />
+                    {index !== restAreaList.length - 1 && <hr />}
+                  </Fragment>
+                )
+              })}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

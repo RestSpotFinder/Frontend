@@ -2,6 +2,7 @@ import PathInfoContent from './pathInfoContent'
 import { Dispatch, SetStateAction } from 'react'
 import { useGetRoutes } from '@/apis/hooks'
 import { Route, SearchPlaceDataType } from '@/types'
+import { Loading } from '../'
 
 interface PathInfoProps {
   routeList: Route[]
@@ -26,11 +27,12 @@ const PathInfo = ({
   setClickedMorePath,
   setRestSpotModalOpen,
 }: PathInfoProps) => {
-  const { refetch: routesRefetch } = useGetRoutes({
-    start: [startPlace?.lng, startPlace?.lat].join(','),
-    goal: [goalPlace?.lng, goalPlace?.lat].join(','),
-    page: '2',
-  })
+  const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
+    useGetRoutes({
+      start: [startPlace?.lng, startPlace?.lat].join(','),
+      goal: [goalPlace?.lng, goalPlace?.lat].join(','),
+      page: '2',
+    })
 
   const handleClickMorePathData = () => {
     routesRefetch().then(
@@ -58,12 +60,16 @@ const PathInfo = ({
             </div>
           )
         })}
-        <button
-          className={`relative ml-8 mt-5 h-10 w-80 rounded-md bg-green-600 ${clickedMorePath && 'hidden'}`}
-          onClick={handleClickMorePathData}
-        >
-          <p className="text-white">더보기</p>
-        </button>
+        {isGetRoutesLoading && clickedMorePath ? (
+          <Loading className="mt-3" />
+        ) : (
+          <button
+            className={`relative ml-8 mt-5 h-10 w-80 rounded-md bg-green-600 ${clickedMorePath && 'hidden'}`}
+            onClick={handleClickMorePathData}
+          >
+            <p className="text-white">더보기</p>
+          </button>
+        )}
       </div>
     </div>
   )
