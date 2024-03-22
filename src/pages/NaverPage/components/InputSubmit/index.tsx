@@ -88,7 +88,7 @@ const InputSubmit = ({
           <p>다시 입력</p>
         </button>
         <button
-          className={`flex items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 ${isMax && 'hidden'}`}
+          className={`hidden items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 ${isMax && 'hidden'}`}
           onClick={handleWaypointClick}
         >
           <PlusIcon className="h-6 w-6" />
