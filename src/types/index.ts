@@ -13,7 +13,7 @@ export interface Route {
   duration: string
   fuelPrice: string
   optionText: string
-  routeId: number
+  routeId?: number
   routeOption: string
   searchId: number
   tollFare: string
@@ -21,16 +21,19 @@ export interface Route {
 
 export type PathInfoType = Omit<
   Route,
-  'coordinates' | 'createdDate' | 'searchId' | 'routeOption' | 'routeId'
+  'coordinates' | 'createdDate' | 'searchId' | 'routeOption'
 >
 
 export type RestAreaInfoType = {
-  restAreaType: number
+  type: string
   restaurant: boolean
   gasStation: boolean
   electricCar: boolean
   pharmacy: boolean
   toilet: boolean
+  name: string
+  routeName: string
+  naverMapUrl: string
 }
 
 export interface RestSpot {
@@ -56,6 +59,7 @@ export interface RestSpot {
   otherFacilities: string
   representativeFood: string
   phoneNumber: string
+  naverMapUrl: string
 }
 
 export type SearchPlaceDataType = {
