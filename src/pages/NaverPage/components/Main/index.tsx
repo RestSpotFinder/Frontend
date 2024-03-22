@@ -54,6 +54,7 @@ const Main = () => {
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
           handleClickSearchRoutes={handleClickSearchRoutes}
+          setRestSpotModalOpen={setRestSpotModalOpen}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />

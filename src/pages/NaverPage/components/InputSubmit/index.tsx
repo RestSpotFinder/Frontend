@@ -7,12 +7,14 @@ interface InputSubmitProps {
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   handleClickSearchRoutes: () => void
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const InputSubmit = ({
   setStartPlace,
   setGoalPlace,
   handleClickSearchRoutes,
+  setRestSpotModalOpen,
 }: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
@@ -42,6 +44,7 @@ const InputSubmit = ({
     setStartPlace(null)
     setGoalPlace(null)
     setIsReset(true)
+    setRestSpotModalOpen(false)
   }
 
   useEffect(() => {
