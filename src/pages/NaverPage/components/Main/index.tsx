@@ -76,6 +76,7 @@ const Main = () => {
         selectedRoute={selectedRoute}
         setSelectedRoute={setSelectedRoute}
         restSpotList={restSpotList}
+        restSpotModalOpen={restSpotModalOpen}
       />
     </div>
   )

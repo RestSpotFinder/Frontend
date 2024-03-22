@@ -16,6 +16,7 @@ interface NaverProps {
   selectedRoute?: Route
   setSelectedRoute: Dispatch<SetStateAction<Route | undefined>>
   restSpotList?: RestSpot[]
+  restSpotModalOpen: boolean
 }
 
 const Naver = ({
@@ -26,6 +27,7 @@ const Naver = ({
   selectedRoute,
   setSelectedRoute,
   restSpotList,
+  restSpotModalOpen,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
@@ -91,6 +93,7 @@ const Naver = ({
             )
           })}
         {restSpotList &&
+          restSpotModalOpen &&
           restSpotList.map(spot => {
             return (
               <RestSpotMarker
