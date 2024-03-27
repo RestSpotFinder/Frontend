@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
 import { SearchPlaceDataType } from '@/types'
+
 interface Request {
   searchTerm: string | undefined
 }

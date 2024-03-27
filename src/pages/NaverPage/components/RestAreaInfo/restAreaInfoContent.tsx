@@ -12,52 +12,82 @@ import {
 
 const RestAreaInfoContent = (props: RestAreaInfoType) => {
   const {
-    restAreaType,
+    type,
     restaurant,
     gasStation,
     electricCar,
     pharmacy,
     toilet,
+    name,
+    routeName,
+    naverMapUrl,
   } = props
   const typeMapping: {
-    [key: number]: {
-      title: string
-      icon: JSX.Element
+    [key: string]: {
+      restArea: JSX.Element
     }
   } = {
-    1: {
-      title: '일반 휴게소',
-      icon: <NormalIcon className="ml-14 h-16 w-16" />,
+    일반휴게소: {
+      restArea: <NormalIcon className="h-8 w-14" />,
     },
-    2: {
-      title: '간이 휴게소',
-      icon: <NatureIcon className="ml-14 h-16 w-16" />,
+    간이휴게소: {
+      restArea: <NatureIcon className="h-6 w-12" />,
     },
-    3: {
-      title: '화물 휴게소',
-      icon: <CargoIcon className="ml-14 h-16 w-16" />,
+    화물차휴게소: {
+      restArea: <CargoIcon className="h-6 w-12" />,
     },
   }
 
-  const { title, icon } = typeMapping[restAreaType] || {
-    title: '휴게소',
+  const Icon = typeMapping[type] || {
     icon: null,
   }
 
+  const handleNameClick = () => {
+    window.open(naverMapUrl, '_blank')
+  }
+
   return (
-    <div className="relative w-96 border-b border-gray-200 p-2">
-      <div className="grid grid-cols-2">
-        <div className="col-span-1">{icon && <div>{icon}</div>}</div>
-        <div className="col-span-1 mr-14">
-          <div>
-            <h1 className="flex justify-center text-xl font-bold">{title}</h1>
-          </div>
-          <div className="flex flex-row justify-around">
-            {electricCar && <ElectricCarIcon className="mt-2 h-7 w-7" />}
-            {restaurant && <RestaurantIcon className="mt-2 h-7 w-7" />}
-            {gasStation && <GasStationIcon className="mt-2 h-7 w-7" />}
-            {pharmacy && <PharmacyIcon className="mt-2 h-7 w-7" />}
-            {toilet && <ToiletIcon className="mt-2 h-7 w-7" />}
+    <div className="relative flex w-full gap-5 px-4 py-4">
+      <div className="flex h-12 w-12 shrink-0 items-center rounded-full bg-gray-100 ">
+        {Icon.restArea}
+      </div>
+      <div className="flex w-full flex-col items-center justify-center gap-3">
+        <div className="flex w-full items-center justify-between">
+          <h1
+            className="flex justify-center text-base font-semibold hover:text-blue-600"
+            onClick={handleNameClick}
+          >
+            {name}
+          </h1>
+          <p className="text-sm text-gray-600">{routeName}</p>
+        </div>
+        <div className="flex w-full items-center justify-center">
+          <div className=" flex w-full">
+            {restaurant && (
+              <div className="border-r border-gray-300 pr-2">
+                <RestaurantIcon className="h-4 w-4" />
+              </div>
+            )}
+            {gasStation && (
+              <div className="pr- border-r border-gray-300 px-2">
+                <GasStationIcon className="h-4 w-4" />
+              </div>
+            )}
+            {pharmacy && (
+              <div className="border-r border-gray-300 px-2">
+                <PharmacyIcon className="h-4 w-4" />
+              </div>
+            )}
+            {toilet && (
+              <div className="border-r border-gray-300 px-2">
+                <ToiletIcon className="h-4 w-4" />
+              </div>
+            )}
+            {electricCar && (
+              <div className="px-2">
+                <ElectricCarIcon className="h-4 w-4" />
+              </div>
+            )}
           </div>
         </div>
       </div>

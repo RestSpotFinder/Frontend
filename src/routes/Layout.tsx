@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
   return (
-    <div className="relative w-screen flex h-dvh flex-col overflow-hidden">
+    <div className="relative flex h-dvh w-screen flex-col">
       <Outlet />
     </div>
   )

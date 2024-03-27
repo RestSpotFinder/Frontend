@@ -1,105 +1,75 @@
 import PathInfoContent from './pathInfoContent'
-import { useState, useEffect } from 'react'
-import { clickMorePathDataActivate } from '@/store/click'
-import { useSelector, useDispatch } from 'react-redux'
+import { Dispatch, SetStateAction } from 'react'
 import { useGetRoutes } from '@/apis/hooks'
-import { Loading } from '..'
-import { StartState, EndState, ClickState, Route } from '@/types'
+import { Route, SearchPlaceDataType } from '@/types'
+import { Loading } from '../'
 
-const PathInfo = () => {
-  const dispatch = useDispatch()
-  const startLat = useSelector((state: StartState) => state.start.lat)
-  const startLng = useSelector((state: StartState) => state.start.lng)
-  const endLat = useSelector((state: EndState) => state.end.lat)
-  const endLng = useSelector((state: EndState) => state.end.lng)
-  const clickEvent = useSelector((state: ClickState) => state.click.findPath)
-  const clickEventMorePath = useSelector(
-    (state: ClickState) => state.click.morePathData,
-  )
+interface PathInfoProps {
+  routeList: Route[]
+  setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
+  selectedRoute: Route | undefined
+  setSelectedRoute: Dispatch<SetStateAction<Route | undefined>>
+  startPlace: SearchPlaceDataType | null
+  goalPlace: SearchPlaceDataType | null
+  clickedMorePath: boolean
+  setClickedMorePath: Dispatch<SetStateAction<boolean>>
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+}
 
-  const [result, setResult] = useState<Route[] | null>(null)
-  const [moreResult, setMoreResult] = useState<Route[] | null>(null)
+const PathInfo = ({
+  routeList,
+  setRouteList,
+  selectedRoute,
+  setSelectedRoute,
+  startPlace,
+  goalPlace,
+  clickedMorePath,
+  setClickedMorePath,
+  setRestSpotModalOpen,
+}: PathInfoProps) => {
+  const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
+    useGetRoutes({
+      start: [startPlace?.lng, startPlace?.lat].join(','),
+      goal: [goalPlace?.lng, goalPlace?.lat].join(','),
+      page: '2',
+    })
 
-  const start = [startLng, startLat].join(',')
-  const goal = [endLng, endLat].join(',')
-  const waypoints: string[] | null = []
-
-  const { data: firstRoutes, isLoading: firstRoutesLoading } = useGetRoutes({
-    start,
-    goal,
-    waypoints,
-    page: '1',
-  })
-
-  useEffect(() => {
-    if (firstRoutes && clickEvent) {
-      setResult(firstRoutes)
-    }
-  }, [firstRoutes, clickEvent])
-
-  const { data: secondRoutes, isLoading: secondRoutesLoading } = useGetRoutes({
-    start,
-    goal,
-    waypoints,
-    page: '2',
-  })
-
-  useEffect(() => {
-    if (secondRoutes && clickEventMorePath) {
-      setMoreResult(secondRoutes)
-    }
-  }, [secondRoutes, clickEventMorePath])
-
-  if (firstRoutesLoading && secondRoutesLoading) {
-    return <Loading />
-  }
-
-  const morePathDataButton = () => {
-    dispatch(clickMorePathDataActivate())
+  const handleClickMorePathData = () => {
+    routesRefetch().then(
+      routes => routes.data && setRouteList([...routeList, ...routes.data]),
+    )
+    setClickedMorePath(true)
   }
 
   return (
-    <div className={`${clickEvent ? '' : 'hidden'} `}>
-      <div className="top-30 sticky w-96 bg-white">
-        <h1 className="sticky ml-11 font-bold text-red-600">
-          더블 클릭시 경로상 휴게소 정보가 표시됩니다.
-        </h1>
-      </div>
-      <div className=" mb-10 mt-10 max-h-[calc(100vh-25rem)] overflow-y-auto ">
-        {result?.map((value, index) => {
+    <div className="relative flex h-full flex-col overflow-auto">
+      <h1 className="px-3 py-2 text-center font-bold text-red-600">
+        더블 클릭시 경로상 휴게소 정보가 표시됩니다.
+      </h1>
+      <div className="h-full overflow-y-scroll">
+        {routeList?.map((route, index) => {
           return (
-            <PathInfoContent
-              key={value.routeId}
-              ranking={index}
-              duration={value.duration}
-              distance={value.distance}
-              tollFare={value.tollFare}
-              fuelPrice={value.fuelPrice}
-              optionText={value.optionText}
-            />
+            <div
+              className={`flex flex-col ${route === selectedRoute && 'border-b border-t border-emerald-500 bg-emerald-100'}`}
+              key={route.routeId}
+              onClick={() => setSelectedRoute(route)}
+              onDoubleClick={() => setRestSpotModalOpen(true)}
+            >
+              <PathInfoContent ranking={index} route={route} />
+              {index !== routeList.length - 1 && <hr />}
+            </div>
           )
         })}
-        <div className={`${!clickEventMorePath && 'hidden'}`}>
-          {moreResult?.map((value, index) => {
-            return (
-              <PathInfoContent
-                key={value.routeId}
-                ranking={index + 3}
-                duration={value.duration}
-                distance={value.distance}
-                tollFare={value.tollFare}
-                fuelPrice={value.fuelPrice}
-                optionText={value.optionText}
-              />
-            )
-          })}
-        </div>
-        <button
-          className={`relative ml-8 mt-5 h-10 w-80 rounded-md bg-green-600 ${clickEventMorePath && 'hidden'}`}
-          onClick={morePathDataButton}
-        >
-          <h1 className="text-white">더보기</h1>
-        </button>
+        {isGetRoutesLoading && clickedMorePath ? (
+          <Loading className="mt-3" />
+        ) : (
+          <button
+            className={`relative ml-8 mt-5 h-10 w-80 rounded-md bg-green-600 ${clickedMorePath && 'hidden'}`}
+            onClick={handleClickMorePathData}
+          >
+            <p className="text-white">더보기</p>
+          </button>
+        )}
       </div>
     </div>
   )

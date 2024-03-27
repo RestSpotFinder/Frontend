@@ -6,26 +6,26 @@ interface Request {
   start: string
   goal: string
   waypoints?: string[]
-  page?: string
+  page: string
 }
 
 const useGetRoutes = ({ start, goal, waypoints, page }: Request) => {
   const getRoutes = async () => {
-    if (!(start && goal)) return
     const response = await apiClient.get(
-      `/route?start=${start}&goal=${goal}&waypoints=${waypoints?.join('%7c')}&page=${page}`,
+      `/route?start=${start}&goal=${goal}&page=${page}${
+        waypoints ? `&waypoints=${waypoints.join('%7c')}` : ''
+      }`,
     )
 
     return response.data.data
   }
 
-  const enabled = !!(start.length > 5 && goal.length > 5)
   const queryKey = ['routes', start, goal, waypoints, page]
 
   return useQuery<Route[], Error>({
     queryKey,
     queryFn: getRoutes,
-    enabled,
+    enabled: false,
   })
 }
 

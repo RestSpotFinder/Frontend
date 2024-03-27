@@ -1,141 +1,78 @@
 import PathInfoContent from '../PathInfo/pathInfoContent'
 import RestAreaInfoContent from './restAreaInfoContent'
+import { RestSpot, PathInfoType } from '@/types'
+import { useGetRestSpots } from '@/apis/hooks'
+import { Loading } from '..'
+import { useEffect, useState, Dispatch, SetStateAction, Fragment } from 'react'
+import { DoubleLeftArrowIcon } from '@/assets/Icons'
 
-const RestAreaInfo = () => {
-  const pathInfoMockData = [
-    {
-      optionText: '실시간 추천',
-      ranking: 0,
-      time: '8',
-      distance: '2',
-      tollFee: '1000',
-      fuleCost: '286',
-      id: 1,
-    },
-  ]
-  const restAreaInfoMockData = [
-    {
-      restAreaType: 1,
-      restaurant: true,
-      gasStaion: true,
-      electricCar: true,
-      pharmacy: true,
-      toilet: true,
-      id: '1',
-    },
-    {
-      restAreaType: 1,
-      restaurant: true,
-      gasStaion: false,
-      electricCar: false,
-      pharmacy: true,
-      toilet: true,
-      id: '2',
-    },
-    {
-      restAreaType: 2,
-      restaurant: false,
-      gasStaion: false,
-      electricCar: false,
-      pharmacy: true,
-      toilet: true,
-      id: '3',
-    },
-    {
-      restAreaType: 3,
-      restaurant: true,
-      gasStaion: false,
-      electricCar: false,
-      pharmacy: true,
-      toilet: true,
-      id: '4',
-    },
-    {
-      restAreaType: 1,
-      restaurant: false,
-      gasStaion: true,
-      electricCar: false,
-      pharmacy: true,
-      toilet: true,
-      id: '5',
-    },
-    {
-      restAreaType: 2,
-      restaurant: true,
-      gasStaion: true,
-      electricCar: true,
-      pharmacy: true,
-      toilet: true,
-      id: '6',
-    },
-    {
-      restAreaType: 1,
-      restaurant: true,
-      gasStaion: true,
-      electricCar: false,
-      pharmacy: false,
-      toilet: false,
-      id: '7',
-    },
-    {
-      restAreaType: 2,
-      restaurant: true,
-      gasStaion: true,
-      electricCar: true,
-      pharmacy: true,
-      toilet: true,
-      id: '8',
-    },
-    {
-      restAreaType: 1,
-      restaurant: false,
-      gasStaion: true,
-      electricCar: true,
-      pharmacy: false,
-      toilet: false,
-      id: '9',
-    },
-    {
-      restAreaType: 3,
-      restaurant: true,
-      gasStaion: false,
-      electricCar: true,
-      pharmacy: true,
-      toilet: false,
-      id: '10',
-    },
-  ]
+interface RestAreaInfoProps {
+  route: PathInfoType | undefined
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+}
+
+const RestAreaInfo = ({ route, setRestSpotModalOpen }: RestAreaInfoProps) => {
+  const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
+
+  const {
+    data: restAreaListData,
+    isFetching: restSpotsFetching,
+    isLoading: restSpotsLoading,
+    refetch: restSpotsRefetch,
+  } = useGetRestSpots({ routeId: route?.routeId })
+
+  useEffect(() => {
+    if (!restSpotsLoading) {
+      setRestAreaList(restAreaListData)
+      restSpotsRefetch()
+    }
+  }, [restAreaListData, setRestAreaList, restSpotsRefetch, restSpotsLoading])
 
   return (
-    <div className="z-50 flex w-96 flex-col border-l border-gray-300">
-      {pathInfoMockData.map(value => {
-        return (
-          <PathInfoContent
-            key={value.id}
-            ranking={value.ranking}
-            duration={value.time}
-            distance={value.distance}
-            tollFare={value.tollFee}
-            fuelPrice={value.fuleCost}
-            optionText={value.optionText}
-          />
-        )
-      })}
-      <div className="flex flex-col overflow-scroll">
-        {restAreaInfoMockData.map(value => {
-          return (
-            <RestAreaInfoContent
-              key={value.id}
-              restAreaType={value.restAreaType}
-              restaurant={value.restaurant}
-              gasStation={value.gasStaion}
-              electricCar={value.electricCar}
-              pharmacy={value.pharmacy}
-              toilet={value.toilet}
-            />
-          )
-        })}
-      </div>
+    <div
+      className={`relative z-50 flex w-96 shrink-0 flex-col border border-gray-300 `}
+    >
+      {route && <PathInfoContent ranking={-1} route={route} />}
+      <i
+        className="absolute right-3 top-3 rounded-lg hover:bg-emerald-100"
+        onClick={() => setRestSpotModalOpen(false)}
+      >
+        <DoubleLeftArrowIcon className="h-6 w-6 hover:stroke-green-800" />
+      </i>
+      <hr />
+      {restSpotsFetching ? (
+        <Loading className="h-full" />
+      ) : (
+        <>
+          {restAreaListData?.length === 0 ? (
+            <div className="relative flex w-full justify-center">
+              <h1 className="font-bold">보여줄 휴게소가 없습니다.</h1>
+            </div>
+          ) : (
+            <div className="flex w-full flex-col overflow-scroll">
+              {restAreaList?.map((value, index) => {
+                return (
+                  <Fragment key={index}>
+                    <RestAreaInfoContent
+                      key={value.restAreaId}
+                      type={value.type}
+                      restaurant={value.hasRestaurant}
+                      gasStation={value.hasGasStation}
+                      electricCar={value.hasElectricChargingStation}
+                      pharmacy={value.hasPharmacy}
+                      toilet={value.hasRestroom}
+                      name={value.name}
+                      routeName={value.routeName}
+                      naverMapUrl={value.naverMapUrl}
+                    />
+                    {index !== restAreaList.length - 1 && <hr />}
+                  </Fragment>
+                )
+              })}
+            </div>
+          )}
+        </>
+      )}
     </div>
   )
 }
