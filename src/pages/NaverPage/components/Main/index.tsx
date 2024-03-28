@@ -20,6 +20,8 @@ const Main = () => {
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
   const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false)
   const [routeListModalOpen, setRouteListModalOpen] = useState<boolean>(false)
+  const [restSpotName, setRestSpotName] = useState<string>('')
+  const [isMapping, setIsMapping] = useState<boolean>(false)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -88,6 +90,9 @@ const Main = () => {
         <RestAreaInfo
           route={selectedRoute}
           setRestSpotModalOpen={setRestSpotModalOpen}
+          restSpotName={restSpotName}
+          isMapping={isMapping}
+          setIsMapping={setIsMapping}
         />
       )}
       <NaverMap
@@ -98,6 +103,8 @@ const Main = () => {
         setSelectedRoute={setSelectedRoute}
         restSpotList={restSpotList}
         restSpotModalOpen={restSpotModalOpen}
+        setIsMapping={setIsMapping}
+        setRestSpotName={setRestSpotName}
       />
     </div>
   )

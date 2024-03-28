@@ -9,9 +9,17 @@ import { DoubleLeftArrowIcon } from '@/assets/Icons'
 interface RestAreaInfoProps {
   route: PathInfoType | undefined
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+  restSpotName: string
+  isMapping: boolean
+  setIsMapping: Dispatch<SetStateAction<boolean>>
 }
 
-const RestAreaInfo = ({ route, setRestSpotModalOpen }: RestAreaInfoProps) => {
+const RestAreaInfo = ({
+  route,
+  setRestSpotModalOpen,
+  restSpotName,
+  isMapping,
+}: RestAreaInfoProps) => {
   const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
 
   const {
@@ -64,6 +72,8 @@ const RestAreaInfo = ({ route, setRestSpotModalOpen }: RestAreaInfoProps) => {
                       name={value.name}
                       routeName={value.routeName}
                       naverMapUrl={value.naverMapUrl}
+                      restSpotName={restSpotName}
+                      isMapping={isMapping}
                     />
                     {index !== restAreaList.length - 1 && <hr />}
                   </Fragment>

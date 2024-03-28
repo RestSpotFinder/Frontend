@@ -4,16 +4,22 @@ interface RestSpotMarkerProps {
   position: { lat: number; lng: number }
   clicked?: boolean
   onClick?: () => void
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 }
 
 const RestSpotMarker = ({
   position,
   clicked,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
 }: RestSpotMarkerProps) => {
   return (
     <Marker
       onClick={onClick}
+      onMouseover={onMouseEnter}
+      onMouseout={onMouseLeave}
       defaultPosition={position}
       icon={{
         content: [
