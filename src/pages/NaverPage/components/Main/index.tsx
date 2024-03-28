@@ -18,6 +18,10 @@ const Main = () => {
   const [selectedRoute, setSelectedRoute] = useState<Route>()
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
+  const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false)
+  const [routeListModalOpen, setRouteListModalOpen] = useState<boolean>(false)
+  const [restSpotName, setRestSpotName] = useState<string>('')
+  const [isMapping, setIsMapping] = useState<boolean>(false)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -35,11 +39,11 @@ const Main = () => {
   const handleClickSearchRoutes = async () => {
     if (startPlace && goalPlace) {
       const routes = await routesRefetch()
-
+      setRouteListModalOpen(true)
       setClickedMorePath(false)
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
-    }
+    } else if (!startPlace || !goalPlace) setErrorModalOpen(true)
   }
 
   useEffect(() => {
@@ -55,12 +59,15 @@ const Main = () => {
           setGoalPlace={setGoalPlace}
           handleClickSearchRoutes={handleClickSearchRoutes}
           setRestSpotModalOpen={setRestSpotModalOpen}
+          errorModalOpen={errorModalOpen}
+          setErrorModalOpen={setErrorModalOpen}
+          setRouteListModalOpen={setRouteListModalOpen}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />
         ) : (
           <>
-            {routeList ? (
+            {routeList && routeListModalOpen ? (
               <PathInfo
                 routeList={routeList}
                 setRouteList={setRouteList}
@@ -71,6 +78,7 @@ const Main = () => {
                 clickedMorePath={clickedMorePath}
                 setClickedMorePath={setClickedMorePath}
                 setRestSpotModalOpen={setRestSpotModalOpen}
+                routeListModalOpen={routeListModalOpen}
               />
             ) : (
               <RecentSearch />
@@ -82,6 +90,9 @@ const Main = () => {
         <RestAreaInfo
           route={selectedRoute}
           setRestSpotModalOpen={setRestSpotModalOpen}
+          restSpotName={restSpotName}
+          isMapping={isMapping}
+          setIsMapping={setIsMapping}
         />
       )}
       <NaverMap
@@ -92,6 +103,8 @@ const Main = () => {
         setSelectedRoute={setSelectedRoute}
         restSpotList={restSpotList}
         restSpotModalOpen={restSpotModalOpen}
+        setIsMapping={setIsMapping}
+        setRestSpotName={setRestSpotName}
       />
     </div>
   )

@@ -14,6 +14,11 @@ interface InputContentProps {
   setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   type: 'start' | 'goal'
   isReset: boolean
+  setErrorModalOpen: Dispatch<SetStateAction<boolean>>
+  setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+  setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
 }
 
 const InputType = {
@@ -27,7 +32,16 @@ const InputType = {
   },
 }
 
-const InputContent = ({ setPlace, type, isReset }: InputContentProps) => {
+const InputContent = ({
+  setPlace,
+  type,
+  isReset,
+  setErrorModalOpen,
+  setRouteListModalOpen,
+  setRestSpotModalOpen,
+  setStartPlace,
+  setGoalPlace,
+}: InputContentProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
   )
@@ -41,6 +55,11 @@ const InputContent = ({ setPlace, type, isReset }: InputContentProps) => {
 
   const handleFocus = () => {
     setPlaceholder(InputType.ON_FOCUS[type])
+    setErrorModalOpen(false)
+    setRouteListModalOpen(false)
+    setRestSpotModalOpen(false)
+    if (type === 'start') setStartPlace(null)
+    else if (type === 'goal') setGoalPlace(null)
   }
 
   const handleBlur = () => {
