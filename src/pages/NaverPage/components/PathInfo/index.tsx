@@ -14,6 +14,7 @@ interface PathInfoProps {
   clickedMorePath: boolean
   setClickedMorePath: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+  routeListModalOpen: boolean
 }
 
 const PathInfo = ({
@@ -26,6 +27,7 @@ const PathInfo = ({
   clickedMorePath,
   setClickedMorePath,
   setRestSpotModalOpen,
+  routeListModalOpen,
 }: PathInfoProps) => {
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -42,7 +44,9 @@ const PathInfo = ({
   }
 
   return (
-    <div className="relative flex h-full flex-col overflow-auto">
+    <div
+      className={`relative flex h-full flex-col overflow-auto ${!routeListModalOpen && 'hidden'}`}
+    >
       <h1 className="px-3 py-2 text-center font-bold text-red-600">
         더블 클릭시 경로상 휴게소 정보가 표시됩니다.
       </h1>

@@ -15,6 +15,7 @@ interface InputContentProps {
   type: 'start' | 'goal'
   isReset: boolean
   setErrorModalOpen: Dispatch<SetStateAction<boolean>>
+  setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const InputType = {
@@ -33,6 +34,7 @@ const InputContent = ({
   type,
   isReset,
   setErrorModalOpen,
+  setRouteListModalOpen,
 }: InputContentProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
@@ -48,6 +50,7 @@ const InputContent = ({
   const handleFocus = () => {
     setPlaceholder(InputType.ON_FOCUS[type])
     setErrorModalOpen(false)
+    setRouteListModalOpen(false)
   }
 
   const handleBlur = () => {

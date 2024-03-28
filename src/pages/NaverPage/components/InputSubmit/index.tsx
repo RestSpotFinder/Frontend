@@ -10,6 +10,7 @@ interface InputSubmitProps {
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   setErrorModalOpen: Dispatch<SetStateAction<boolean>>
   errorModalOpen: boolean
+  setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const InputSubmit = ({
@@ -19,6 +20,7 @@ const InputSubmit = ({
   setRestSpotModalOpen,
   errorModalOpen,
   setErrorModalOpen,
+  setRouteListModalOpen,
 }: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
@@ -50,6 +52,7 @@ const InputSubmit = ({
     setIsReset(true)
     setRestSpotModalOpen(false)
     setErrorModalOpen(false)
+    setRouteListModalOpen(false)
   }
 
   useEffect(() => {
@@ -64,6 +67,7 @@ const InputSubmit = ({
           type={'start'}
           isReset={isReset}
           setErrorModalOpen={setErrorModalOpen}
+          setRouteListModalOpen={setRouteListModalOpen}
         />
 
         {wayPoints.map((waypoint, index) => (
@@ -94,6 +98,7 @@ const InputSubmit = ({
           type={'goal'}
           isReset={isReset}
           setErrorModalOpen={setErrorModalOpen}
+          setRouteListModalOpen={setRouteListModalOpen}
         />
       </div>
 
