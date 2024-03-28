@@ -68,6 +68,9 @@ const InputSubmit = ({
           isReset={isReset}
           setErrorModalOpen={setErrorModalOpen}
           setRouteListModalOpen={setRouteListModalOpen}
+          setRestSpotModalOpen={setRestSpotModalOpen}
+          setStartPlace={setStartPlace}
+          setGoalPlace={setGoalPlace}
         />
 
         {wayPoints.map((waypoint, index) => (
@@ -99,6 +102,9 @@ const InputSubmit = ({
           isReset={isReset}
           setErrorModalOpen={setErrorModalOpen}
           setRouteListModalOpen={setRouteListModalOpen}
+          setRestSpotModalOpen={setRestSpotModalOpen}
+          setStartPlace={setStartPlace}
+          setGoalPlace={setGoalPlace}
         />
       </div>
 

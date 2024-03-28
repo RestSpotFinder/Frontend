@@ -16,6 +16,9 @@ interface InputContentProps {
   isReset: boolean
   setErrorModalOpen: Dispatch<SetStateAction<boolean>>
   setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
+  setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+  setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
 }
 
 const InputType = {
@@ -35,6 +38,9 @@ const InputContent = ({
   isReset,
   setErrorModalOpen,
   setRouteListModalOpen,
+  setRestSpotModalOpen,
+  setStartPlace,
+  setGoalPlace,
 }: InputContentProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
@@ -51,6 +57,9 @@ const InputContent = ({
     setPlaceholder(InputType.ON_FOCUS[type])
     setErrorModalOpen(false)
     setRouteListModalOpen(false)
+    setRestSpotModalOpen(false)
+    if (type === 'start') setStartPlace(null)
+    else if (type === 'goal') setGoalPlace(null)
   }
 
   const handleBlur = () => {
