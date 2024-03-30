@@ -32,6 +32,7 @@ const PathInfo = ({
       start: [startPlace?.lng, startPlace?.lat].join(','),
       goal: [goalPlace?.lng, goalPlace?.lat].join(','),
       page: '2',
+      isTest: true,
     })
 
   const handleClickMorePathData = () => {
@@ -42,7 +43,7 @@ const PathInfo = ({
   }
 
   return (
-    <div className="relative flex h-full flex-col overflow-auto">
+    <div className={`relative flex h-full flex-col overflow-auto`}>
       <h1 className="px-3 py-2 text-center font-bold text-red-600">
         더블 클릭시 경로상 휴게소 정보가 표시됩니다.
       </h1>

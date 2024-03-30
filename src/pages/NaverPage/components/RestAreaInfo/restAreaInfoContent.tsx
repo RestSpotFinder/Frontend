@@ -21,6 +21,7 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     name,
     routeName,
     naverMapUrl,
+    hoveredRestSpot,
   } = props
   const typeMapping: {
     [key: string]: {
@@ -31,10 +32,10 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
       restArea: <NormalIcon className="h-8 w-14" />,
     },
     간이휴게소: {
-      restArea: <NatureIcon className="h-6 w-12" />,
+      restArea: <NatureIcon className="h-8 w-14" />,
     },
     화물차휴게소: {
-      restArea: <CargoIcon className="h-6 w-12" />,
+      restArea: <CargoIcon className="h-8 w-14" />,
     },
   }
 
@@ -42,21 +43,21 @@ const RestAreaInfoContent = (props: RestAreaInfoType) => {
     icon: null,
   }
 
-  const handleNameClick = () => {
+  const handleUrlClick = () => {
     window.open(naverMapUrl, '_blank')
   }
 
   return (
-    <div className="relative flex w-full gap-5 px-4 py-4">
+    <div
+      className={`relative flex w-full gap-5 px-4 py-4 hover:bg-emerald-100 ${hoveredRestSpot === name && 'bg-emerald-100'}`}
+      onClick={handleUrlClick}
+    >
       <div className="flex h-12 w-12 shrink-0 items-center rounded-full bg-gray-100 ">
         {Icon.restArea}
       </div>
       <div className="flex w-full flex-col items-center justify-center gap-3">
         <div className="flex w-full items-center justify-between">
-          <h1
-            className="flex justify-center text-base font-semibold hover:text-blue-600"
-            onClick={handleNameClick}
-          >
+          <h1 className="flex justify-center text-base font-semibold hover:text-blue-600">
             {name}
           </h1>
           <p className="text-sm text-gray-600">{routeName}</p>

@@ -8,6 +8,9 @@ interface InputSubmitProps {
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   handleClickSearchRoutes: () => void
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+  setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
+  hasStartAndGoal: boolean
+  setShowRouteList: Dispatch<SetStateAction<boolean>>
 }
 
 const InputSubmit = ({
@@ -15,6 +18,9 @@ const InputSubmit = ({
   setGoalPlace,
   handleClickSearchRoutes,
   setRestSpotModalOpen,
+  hasStartAndGoal,
+  setHasStartAndGoal,
+  setShowRouteList,
 }: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
@@ -45,6 +51,8 @@ const InputSubmit = ({
     setGoalPlace(null)
     setIsReset(true)
     setRestSpotModalOpen(false)
+    setHasStartAndGoal(true)
+    setShowRouteList(false)
   }
 
   useEffect(() => {
@@ -54,7 +62,16 @@ const InputSubmit = ({
   return (
     <div className={`relative flex w-96 flex-col gap-3 bg-white px-8 py-6`}>
       <div className="flex w-full flex-col">
-        <Input setPlace={setStartPlace} type={'start'} isReset={isReset} />
+        <Input
+          setPlace={setStartPlace}
+          type={'start'}
+          isReset={isReset}
+          setHasStartAndGoal={setHasStartAndGoal}
+          setShowRouteList={setShowRouteList}
+          setRestSpotModalOpen={setRestSpotModalOpen}
+          setStartPlace={setStartPlace}
+          setGoalPlace={setGoalPlace}
+        />
 
         {wayPoints.map((waypoint, index) => (
           <div key={index} className="relative">
@@ -79,7 +96,16 @@ const InputSubmit = ({
           </div>
         ))}
 
-        <Input setPlace={setGoalPlace} type={'goal'} isReset={isReset} />
+        <Input
+          setPlace={setGoalPlace}
+          type={'goal'}
+          isReset={isReset}
+          setHasStartAndGoal={setHasStartAndGoal}
+          setShowRouteList={setShowRouteList}
+          setRestSpotModalOpen={setRestSpotModalOpen}
+          setStartPlace={setStartPlace}
+          setGoalPlace={setGoalPlace}
+        />
       </div>
 
       <div className="flex w-full justify-between bg-white">
@@ -105,6 +131,13 @@ const InputSubmit = ({
           <RightIcon className="h-6 w-6" />
         </button>
       </div>
+      {!hasStartAndGoal && (
+        <div className=" flex justify-center  ">
+          <h1 className="mt-3 font-bold text-red-600">
+            출발지와 도착지를 모두 입력하세요!
+          </h1>
+        </div>
+      )}
     </div>
   )
 }

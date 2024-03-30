@@ -17,7 +17,11 @@ const Main = () => {
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
+  const [hasStartAndGoal, setHasStartAndGoal] = useState<boolean>(true)
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
+  const [showRouteList, setShowRouteList] = useState<boolean>(false)
+  const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
+  const [clickedFindRoute, setClickedFindRoute] = useState<boolean>(false)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -27,6 +31,7 @@ const Main = () => {
       //   [waypoint.lng, waypoint.lat].join(','),
       // ),
       page: '1',
+      isTest: true,
     })
   const { data: restSpotList, refetch: restSpotsRefetch } = useGetRestSpots({
     routeId: selectedRoute?.routeId,
@@ -36,9 +41,14 @@ const Main = () => {
     if (startPlace && goalPlace) {
       const routes = await routesRefetch()
 
+      setShowRouteList(true)
       setClickedMorePath(false)
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
+      setHasStartAndGoal(true)
+      setClickedFindRoute(true)
+    } else {
+      setHasStartAndGoal(false)
     }
   }
 
@@ -55,12 +65,15 @@ const Main = () => {
           setGoalPlace={setGoalPlace}
           handleClickSearchRoutes={handleClickSearchRoutes}
           setRestSpotModalOpen={setRestSpotModalOpen}
+          hasStartAndGoal={hasStartAndGoal}
+          setHasStartAndGoal={setHasStartAndGoal}
+          setShowRouteList={setShowRouteList}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />
         ) : (
           <>
-            {routeList ? (
+            {routeList && showRouteList ? (
               <PathInfo
                 routeList={routeList}
                 setRouteList={setRouteList}
@@ -82,6 +95,7 @@ const Main = () => {
         <RestAreaInfo
           route={selectedRoute}
           setRestSpotModalOpen={setRestSpotModalOpen}
+          hoveredRestSpot={hoveredRestSpot}
         />
       )}
       <NaverMap
@@ -92,6 +106,9 @@ const Main = () => {
         setSelectedRoute={setSelectedRoute}
         restSpotList={restSpotList}
         restSpotModalOpen={restSpotModalOpen}
+        setHoveredRestSpot={setHoveredRestSpot}
+        clickedFindRoute={clickedFindRoute}
+        setClickedFindRoute={setClickedFindRoute}
       />
     </div>
   )
