@@ -18,6 +18,8 @@ interface NaverProps {
   restSpotList?: RestSpot[]
   restSpotModalOpen: boolean
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
+  clickedFindRoute: boolean
+  setClickedFindRoute: Dispatch<SetStateAction<boolean>>
 }
 
 const Naver = ({
@@ -30,6 +32,8 @@ const Naver = ({
   restSpotList,
   restSpotModalOpen,
   setHoveredRestSpot,
+  clickedFindRoute,
+  setClickedFindRoute,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
@@ -48,6 +52,14 @@ const Naver = ({
         new naver.maps.LatLng(parseFloat(goal.lat), parseFloat(goal.lng)),
       )
   }, [goal, mapRef])
+
+  useEffect(() => {
+    if (clickedFindRoute) {
+      mapRef.current?.setZoom(8)
+      mapRef.current?.setCenter(new naver.maps.LatLng(36.5, 127.9))
+      setClickedFindRoute(false)
+    }
+  }, [clickedFindRoute, setClickedFindRoute])
 
   const handleClickRoute = (routeOption: string) => {
     setSelectedRoute(

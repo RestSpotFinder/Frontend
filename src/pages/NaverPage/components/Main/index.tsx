@@ -21,6 +21,7 @@ const Main = () => {
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
   const [showRouteList, setShowRouteList] = useState<boolean>(false)
   const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
+  const [clickedFindRoute, setClickedFindRoute] = useState<boolean>(false)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -45,6 +46,7 @@ const Main = () => {
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
       setHasStartAndGoal(true)
+      setClickedFindRoute(true)
     } else {
       setHasStartAndGoal(false)
     }
@@ -105,6 +107,8 @@ const Main = () => {
         restSpotList={restSpotList}
         restSpotModalOpen={restSpotModalOpen}
         setHoveredRestSpot={setHoveredRestSpot}
+        clickedFindRoute={clickedFindRoute}
+        setClickedFindRoute={setClickedFindRoute}
       />
     </div>
   )
