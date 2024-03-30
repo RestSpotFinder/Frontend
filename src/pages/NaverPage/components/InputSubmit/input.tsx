@@ -4,6 +4,7 @@ import {
   useEffect,
   SetStateAction,
   Dispatch,
+  MouseEvent,
 } from 'react'
 import { useDebounce } from '@/hooks'
 import { SearchPlaceDataType } from '@/types'
@@ -55,10 +56,12 @@ const Input = ({
 
   const handleFocus = () => {
     setPlaceholder(InputType.ON_FOCUS[type])
+    setModalIsOpen(true)
   }
 
   const handleBlur = () => {
     setPlaceholder(InputType.PLACEHOLDER[type])
+    setModalIsOpen(false)
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +76,14 @@ const Input = ({
     }
   }
 
-  const handleClickPlace = (place: SearchPlaceDataType) => {
+  const handleClickPlace = ({
+    e,
+    place,
+  }: {
+    e: MouseEvent<HTMLDivElement>
+    place: SearchPlaceDataType
+  }) => {
+    e.stopPropagation()
     setPlace(place)
     setSearchedPlace(place.name)
     setPlaceList([])
@@ -113,7 +123,7 @@ const Input = ({
                 className={
                   'flex w-full items-center gap-4 px-4 py-3 hover:bg-gray-300 hover:bg-opacity-30'
                 }
-                onClick={() => handleClickPlace(place)}
+                onMouseDown={e => handleClickPlace({ e, place })}
               >
                 <LocationIcon className="h-5 w-5 shrink-0" />
                 <div className="flex w-full flex-col items-center gap-2">
