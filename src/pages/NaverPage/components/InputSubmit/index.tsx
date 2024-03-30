@@ -10,7 +10,7 @@ interface InputSubmitProps {
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
   hasStartAndGoal: boolean
-  setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
+  setShowRouteList: Dispatch<SetStateAction<boolean>>
 }
 
 const InputSubmit = ({
@@ -20,7 +20,7 @@ const InputSubmit = ({
   setRestSpotModalOpen,
   hasStartAndGoal,
   setHasStartAndGoal,
-  setRouteListModalOpen,
+  setShowRouteList,
 }: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   const [wayPoints, setWayPoints] = useState<string[]>([])
@@ -52,7 +52,7 @@ const InputSubmit = ({
     setIsReset(true)
     setRestSpotModalOpen(false)
     setHasStartAndGoal(true)
-    setRouteListModalOpen(false)
+    setShowRouteList(false)
   }
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const InputSubmit = ({
           type={'start'}
           isReset={isReset}
           setHasStartAndGoal={setHasStartAndGoal}
-          setRouteListModalOpen={setRouteListModalOpen}
+          setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
@@ -101,7 +101,7 @@ const InputSubmit = ({
           type={'goal'}
           isReset={isReset}
           setHasStartAndGoal={setHasStartAndGoal}
-          setRouteListModalOpen={setRouteListModalOpen}
+          setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
