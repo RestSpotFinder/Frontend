@@ -10,7 +10,7 @@ import { SearchPlaceDataType } from '@/types'
 import { useGetSearchSpot } from '@/apis/hooks'
 import { LocationIcon } from '@/assets/Icons'
 
-interface InputContentProps {
+interface InputProps {
   setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   type: 'start' | 'goal'
   isReset: boolean
@@ -32,7 +32,7 @@ const InputType = {
   },
 }
 
-const InputContent = ({
+const Input = ({
   setPlace,
   type,
   isReset,
@@ -41,7 +41,7 @@ const InputContent = ({
   setRestSpotModalOpen,
   setStartPlace,
   setGoalPlace,
-}: InputContentProps) => {
+}: InputProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
   )
@@ -137,4 +137,4 @@ const InputContent = ({
   )
 }
 
-export default InputContent
+export default Input
