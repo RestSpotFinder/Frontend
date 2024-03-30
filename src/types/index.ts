@@ -34,8 +34,7 @@ export type RestAreaInfoType = {
   name: string
   routeName: string
   naverMapUrl: string
-  restSpotName: string
-  isMapping: boolean
+  hoveredRestSpot: string
 }
 
 export interface RestSpot {

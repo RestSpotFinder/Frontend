@@ -20,8 +20,7 @@ const Main = () => {
   const [hasStartAndGoal, setHasStartAndGoal] = useState<boolean>(true)
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
   const [showRouteList, setShowRouteList] = useState<boolean>(false)
-  const [restSpotName, setRestSpotName] = useState<string>('')
-  const [isMapping, setIsMapping] = useState<boolean>(false)
+  const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -93,9 +92,7 @@ const Main = () => {
         <RestAreaInfo
           route={selectedRoute}
           setRestSpotModalOpen={setRestSpotModalOpen}
-          restSpotName={restSpotName}
-          isMapping={isMapping}
-          setIsMapping={setIsMapping}
+          hoveredRestSpot={hoveredRestSpot}
         />
       )}
       <NaverMap
@@ -106,8 +103,7 @@ const Main = () => {
         setSelectedRoute={setSelectedRoute}
         restSpotList={restSpotList}
         restSpotModalOpen={restSpotModalOpen}
-        setIsMapping={setIsMapping}
-        setRestSpotName={setRestSpotName}
+        setHoveredRestSpot={setHoveredRestSpot}
       />
     </div>
   )
