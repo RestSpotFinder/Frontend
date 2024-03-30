@@ -14,7 +14,7 @@ interface InputContentProps {
   setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   type: 'start' | 'goal'
   isReset: boolean
-  setErrorModalOpen: Dispatch<SetStateAction<boolean>>
+  setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
   setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
@@ -36,7 +36,7 @@ const InputContent = ({
   setPlace,
   type,
   isReset,
-  setErrorModalOpen,
+  setHasStartAndGoal,
   setRouteListModalOpen,
   setRestSpotModalOpen,
   setStartPlace,
@@ -55,7 +55,6 @@ const InputContent = ({
 
   const handleFocus = () => {
     setPlaceholder(InputType.ON_FOCUS[type])
-    setErrorModalOpen(false)
     setRouteListModalOpen(false)
     setRestSpotModalOpen(false)
     if (type === 'start') setStartPlace(null)
@@ -68,6 +67,7 @@ const InputContent = ({
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.value === '' ? setPlaceList([]) : setModalIsOpen(true)
+    e.target.value !== '' && setHasStartAndGoal(true)
     setSearchedPlace(e.target.value)
   }
 

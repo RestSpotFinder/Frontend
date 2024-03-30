@@ -17,8 +17,8 @@ const Main = () => {
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
+  const [hasStartAndGoal, setHasStartAndGoal] = useState<boolean>(true)
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
-  const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false)
   const [routeListModalOpen, setRouteListModalOpen] = useState<boolean>(false)
   const [restSpotName, setRestSpotName] = useState<string>('')
   const [isMapping, setIsMapping] = useState<boolean>(false)
@@ -39,11 +39,15 @@ const Main = () => {
   const handleClickSearchRoutes = async () => {
     if (startPlace && goalPlace) {
       const routes = await routesRefetch()
+
       setRouteListModalOpen(true)
       setClickedMorePath(false)
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
-    } else if (!startPlace || !goalPlace) setErrorModalOpen(true)
+      setHasStartAndGoal(true)
+    } else {
+      setHasStartAndGoal(false)
+    }
   }
 
   useEffect(() => {
@@ -59,8 +63,8 @@ const Main = () => {
           setGoalPlace={setGoalPlace}
           handleClickSearchRoutes={handleClickSearchRoutes}
           setRestSpotModalOpen={setRestSpotModalOpen}
-          errorModalOpen={errorModalOpen}
-          setErrorModalOpen={setErrorModalOpen}
+          hasStartAndGoal={hasStartAndGoal}
+          setHasStartAndGoal={setHasStartAndGoal}
           setRouteListModalOpen={setRouteListModalOpen}
         />
         {isGetRoutesLoading ? (

@@ -8,8 +8,8 @@ interface InputSubmitProps {
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   handleClickSearchRoutes: () => void
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
-  setErrorModalOpen: Dispatch<SetStateAction<boolean>>
-  errorModalOpen: boolean
+  setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
+  hasStartAndGoal: boolean
   setRouteListModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -18,8 +18,8 @@ const InputSubmit = ({
   setGoalPlace,
   handleClickSearchRoutes,
   setRestSpotModalOpen,
-  errorModalOpen,
-  setErrorModalOpen,
+  hasStartAndGoal,
+  setHasStartAndGoal,
   setRouteListModalOpen,
 }: InputSubmitProps) => {
   const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
@@ -51,7 +51,7 @@ const InputSubmit = ({
     setGoalPlace(null)
     setIsReset(true)
     setRestSpotModalOpen(false)
-    setErrorModalOpen(false)
+    setHasStartAndGoal(false)
     setRouteListModalOpen(false)
   }
 
@@ -66,7 +66,7 @@ const InputSubmit = ({
           setPlace={setStartPlace}
           type={'start'}
           isReset={isReset}
-          setErrorModalOpen={setErrorModalOpen}
+          setHasStartAndGoal={setHasStartAndGoal}
           setRouteListModalOpen={setRouteListModalOpen}
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
@@ -100,7 +100,7 @@ const InputSubmit = ({
           setPlace={setGoalPlace}
           type={'goal'}
           isReset={isReset}
-          setErrorModalOpen={setErrorModalOpen}
+          setHasStartAndGoal={setHasStartAndGoal}
           setRouteListModalOpen={setRouteListModalOpen}
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
@@ -131,7 +131,7 @@ const InputSubmit = ({
           <RightIcon className="h-6 w-6" />
         </button>
       </div>
-      {errorModalOpen && (
+      {!hasStartAndGoal && (
         <div className=" flex justify-center  ">
           <h1 className="mt-3 font-bold text-red-600">
             출발지와 도착지를 모두 입력하세요!
