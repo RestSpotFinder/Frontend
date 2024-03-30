@@ -51,7 +51,7 @@ const InputSubmit = ({
     setGoalPlace(null)
     setIsReset(true)
     setRestSpotModalOpen(false)
-    setHasStartAndGoal(false)
+    setHasStartAndGoal(true)
     setRouteListModalOpen(false)
   }
 

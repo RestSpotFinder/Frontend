@@ -55,10 +55,6 @@ const Input = ({
 
   const handleFocus = () => {
     setPlaceholder(InputType.ON_FOCUS[type])
-    setRouteListModalOpen(false)
-    setRestSpotModalOpen(false)
-    if (type === 'start') setStartPlace(null)
-    else if (type === 'goal') setGoalPlace(null)
   }
 
   const handleBlur = () => {
@@ -69,6 +65,12 @@ const Input = ({
     e.target.value === '' ? setPlaceList([]) : setModalIsOpen(true)
     e.target.value !== '' && setHasStartAndGoal(true)
     setSearchedPlace(e.target.value)
+    if (e.target.value !== searchedPlace) {
+      setRouteListModalOpen(false)
+      setRestSpotModalOpen(false)
+      if (type === 'start') setStartPlace(null)
+      else if (type === 'goal') setGoalPlace(null)
+    }
   }
 
   const handleClickPlace = (place: SearchPlaceDataType) => {
