@@ -1,0 +1,116 @@
+/* index.css */
+
+.inputBox {
+    border: 1px solid crimson;
+}
+
+.enterBtn,
+.reenterBtn {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    padding: 0.3em 0.8em;
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+    border-radius: 0.25em;
+}
+
+.enterBtn:hover,
+.reenterBtn:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.enterBtn > p {
+    font-weight: 700;
+    font-size: 0.8em;
+    color: rgb(4, 117, 244);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 추가 */
+}
+
+.reenterBtn > p {
+    font-size: 0.75rem/* 12px */;
+    color: #222222;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 텍스트 그림자 추가 */
+}
+
+.enterBtn p::after {
+    content: '\f054'; /* Font Awesome 아이콘 코드 (예: fa-sync-alt) */
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
+    margin-left: 0.5em; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+.reenterBtn > p::before {
+    content: '\f2f1'; /* Font Awesome 아이콘 코드 (예: fa-sync-alt) */
+    color: rgb(4, 117, 244);
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
+    margin-right: 0.5em; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+.placeBox,
+.routeBox {
+    margin-top: 2em;
+}
+
+.placeBox > p,
+.routeBox > p {
+    font-weight: 600;
+    font-size: 0.8em;
+    padding-left: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+}
+
+.placeBox > p > span,
+.routeBox > p > span {
+    font-size: 0.7em;
+    padding-left: 1em;
+}
+
+.placeList,
+.routeList {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.8em;
+    color: rgba(51, 51, 51);
+}
+
+.placeList p,
+.routeList p {
+    font-size: 1.1em;
+    line-height: 1.1em;
+    font-weight: 500; /* 필요에 따라 가중치를 조정합니다 */
+    margin: 1em 0.6em; /* 아이콘과 텍스트 사이의 간격 */
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 추가 */
+}
+
+.placeList p::before {
+    content: '\f3c5'; /* Font Awesome 아이콘 코드 (예: fa-sync-alt) */
+    font-family: 'Font Awesome 5 Free', serif;
+    font-size: 1.2em;
+    color: rgb(51, 51, 51, 0.5);
+    font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
+    margin: 0 0.5em; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+.routeList p::before {
+    content: '\f4d7'; /* Font Awesome 아이콘 코드 (예: fa-sync-alt) */
+    font-family: 'Font Awesome 5 Free', serif;
+    font-size: 1.2em;
+    color: rgb(51, 51, 51, 0.5);
+    font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
+    margin: 0 0.5em; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+.errText {
+    display: flex;
+    justify-content: center;
+}
+
+.errText > p {
+    margin-top: 0.75em;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: crimson;
+}

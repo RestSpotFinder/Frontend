@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState, Dispatch } from 'react'
-import { RestartIcon, PlusIcon, RightIcon } from '@/assets/Icons'
 import { SearchPlaceDataType } from '@/types'
-import Input from './input'
+import InputBox from './inputBox.tsx'
+import './index.css'
 
 interface InputSubmitProps {
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
@@ -22,26 +22,26 @@ const InputSubmit = ({
   setHasStartAndGoal,
   setShowRouteList,
 }: InputSubmitProps) => {
-  const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
-  const [wayPoints, setWayPoints] = useState<string[]>([])
-  const [isMax, setIsMax] = useState(false)
+  // const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
+  // const [wayPoints, setWayPoints] = useState<string[]>([])
+  // const [isMax, setIsMax] = useState(false)
 
-  const handleDeleteWaypoint = (index: number) => {
-    const updatedWaypoints = wayPoints.filter((_, i) => i !== index)
-    setWayPoints(updatedWaypoints)
-    setIsMax(false)
-  }
+  // const handleDeleteWaypoint = (index: number) => {
+  //   const updatedWaypoints = wayPoints.filter((_, i) => i !== index)
+  //   setWayPoints(updatedWaypoints)
+  //   setIsMax(false)
+  // }
 
-  const handleWaypointChange = (index: number, value: string) => {
-    const updatedWaypoints = [...wayPoints]
-    updatedWaypoints[index] = value
-    setWayPoints(updatedWaypoints)
-  }
+  // const handleWaypointChange = (index: number, value: string) => {
+  //   const updatedWaypoints = [...wayPoints]
+  //   updatedWaypoints[index] = value
+  //   setWayPoints(updatedWaypoints)
+  // }
 
-  const handleWaypointClick = () => {
-    setWayPoints([...wayPoints, ''])
-    if (wayPoints.length === 4) setIsMax(true)
-  }
+  // const handleWaypointClick = () => {
+  //   setWayPoints([...wayPoints, ''])
+  //   if (wayPoints.length === 4) setIsMax(true)
+  // }
 
   //////
   const [isReset, setIsReset] = useState<boolean>(false)
@@ -60,9 +60,9 @@ const InputSubmit = ({
   }, [setIsReset, isReset])
 
   return (
-    <div className={`relative flex w-96 flex-col gap-3 bg-white px-8 py-6`}>
+    <div className={`inputBox relative flex w-96 flex-col gap-3 bg-white px-8 py-6`}>
       <div className="flex w-full flex-col">
-        <Input
+        <InputBox
           setPlace={setStartPlace}
           type={'start'}
           isReset={isReset}
@@ -73,30 +73,30 @@ const InputSubmit = ({
           setGoalPlace={setGoalPlace}
         />
 
-        {wayPoints.map((waypoint, index) => (
-          <div key={index} className="relative">
-            <input
-              type="text"
-              name="waySearchTerm"
-              className="h-10 w-80 border border-l border-r border-black border-b-zinc-100 border-t-zinc-50 p-4 placeholder-gray-400 placeholder-opacity-50"
-              placeholder={wayPointPlaceholder}
-              onFocus={() => setWayPointPlaceholder('경유지를 입력하세요')}
-              value={waypoint}
-              onChange={e => handleWaypointChange(index, e.target.value)}
-            />
-            {/* {waypoint && (
-            <StartSearchList result={result} setSearch={setSearch} />
-          )} */}
-            <button
-              className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-transparent text-gray-300"
-              onClick={() => handleDeleteWaypoint(index)}
-            >
-              -
-            </button>
-          </div>
-        ))}
+        {/*{wayPoints.map((waypoint, index) => (*/}
+        {/*  <div key={index} className="relative">*/}
+        {/*    <input*/}
+        {/*      type="text"*/}
+        {/*      name="waySearchTerm"*/}
+        {/*      className="h-10 w-80 border border-l border-r border-black border-b-zinc-100 border-t-zinc-50 p-4 placeholder-gray-400 placeholder-opacity-50"*/}
+        {/*      placeholder={wayPointPlaceholder}*/}
+        {/*      onFocus={() => setWayPointPlaceholder('경유지를 입력하세요')}*/}
+        {/*      value={waypoint}*/}
+        {/*      onChange={e => handleWaypointChange(index, e.target.value)}*/}
+        {/*    />*/}
+        {/*    /!* {waypoint && (*/}
+        {/*    <StartSearchList result={result} setSearch={setSearch} />*/}
+        {/*  )} *!/*/}
+        {/*    <button*/}
+        {/*      className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-transparent text-gray-300"*/}
+        {/*      onClick={() => handleDeleteWaypoint(index)}*/}
+        {/*    >*/}
+        {/*      -*/}
+        {/*    </button>*/}
+        {/*  </div>*/}
+        {/*))}*/}
 
-        <Input
+        <InputBox
           setPlace={setGoalPlace}
           type={'goal'}
           isReset={isReset}
@@ -109,35 +109,41 @@ const InputSubmit = ({
       </div>
 
       <div className="flex w-full justify-between bg-white">
-        <button
-          className="flex items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 hover:bg-gray-300 hover:bg-opacity-30"
-          onClick={handleClickReset}
-        >
-          <RestartIcon className="h-6 w-6" />
-          <p>다시 입력</p>
+        <button className="reenterBtn" onClick={handleClickReset}>
+          <p className="reenter-btn text-xs">다시입력</p>
         </button>
-        <button
-          className={`hidden items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 ${isMax && 'hidden'}`}
-          onClick={handleWaypointClick}
-        >
-          <PlusIcon className="h-6 w-6" />
-          <p>경유지</p>
-        </button>
-        <button
-          className="flex items-center gap-2 rounded border border-gray-400 bg-green-600 py-1.5 pl-3 pr-1 text-white"
-          onClick={handleClickSearchRoutes}
-        >
+
+        {/*<button*/}
+        {/*  className={`hidden items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 ${isMax && 'hidden'}`}*/}
+        {/*  onClick={handleWaypointClick}*/}
+        {/*>*/}
+        {/*  <PlusIcon className="h-6 w-6" />*/}
+        {/*  <p>경유지</p>*/}
+        {/*</button>*/}
+
+        <button className="enterBtn" onClick={handleClickSearchRoutes}>
           <p>길찾기</p>
-          <RightIcon className="h-6 w-6" />
         </button>
       </div>
       {!hasStartAndGoal && (
-        <div className=" flex justify-center  ">
-          <h1 className="mt-3 font-bold text-red-600">
-            출발지와 도착지를 모두 입력하세요!
-          </h1>
-        </div>
+        <div className="errText"><p>출발지와 도착지를 모두 입력하세요!</p></div>
       )}
+
+      <div className="placeBox">
+        <p>최근 검색 <span> (아직 기능 구현중입니다.)</span></p>
+        <div className="placeList">
+          <p> 서귀피안 본점</p>
+          <p> 서울삼겹살 모란점</p>
+          <p> 오뚜기식당 모란맛집</p>
+        </div>
+      </div>
+
+      <div className="routeBox">
+        <p>최근 검색한 경로 <span> (아직 기능 구현중입니다.)</span></p>
+        <div className="routeList">
+          <p> 모란역 8호선 -> 대전역(고속철도) </p>
+        </div>
+      </div>
     </div>
   )
 }

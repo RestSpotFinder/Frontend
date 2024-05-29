@@ -33,7 +33,7 @@ const InputType = {
   },
 }
 
-const Input = ({
+const InputBox = ({
   setPlace,
   type,
   isReset,
@@ -149,4 +149,4 @@ const Input = ({
   )
 }
 
-export default Input
+export default InputBox
