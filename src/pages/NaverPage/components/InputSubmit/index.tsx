@@ -1,6 +1,6 @@
 import { SetStateAction, useEffect, useState, Dispatch } from 'react'
 import { SearchPlaceDataType } from '@/types'
-import InputBox from './inputBox.tsx'
+import InputText from './inputText.tsx'
 import './index.css'
 
 interface InputSubmitProps {
@@ -60,9 +60,9 @@ const InputSubmit = ({
   }, [setIsReset, isReset])
 
   return (
-    <div className={`inputBox relative flex w-96 flex-col gap-3 bg-white px-8 py-6`}>
-      <div className="flex w-full flex-col">
-        <InputBox
+    <div className="inputSubmit">
+    <div className="inputBox">
+        <InputText
           setPlace={setStartPlace}
           type={'start'}
           isReset={isReset}
@@ -96,7 +96,7 @@ const InputSubmit = ({
         {/*  </div>*/}
         {/*))}*/}
 
-        <InputBox
+        <InputText
           setPlace={setGoalPlace}
           type={'goal'}
           isReset={isReset}
@@ -108,11 +108,8 @@ const InputSubmit = ({
         />
       </div>
 
-      <div className="flex w-full justify-between bg-white">
-        <button className="reenterBtn" onClick={handleClickReset}>
-          <p className="reenter-btn text-xs">다시입력</p>
-        </button>
-
+      <div className="btnBox">
+        <button onClick={handleClickReset}><p>다시입력</p></button>
         {/*<button*/}
         {/*  className={`hidden items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 ${isMax && 'hidden'}`}*/}
         {/*  onClick={handleWaypointClick}*/}
@@ -120,28 +117,23 @@ const InputSubmit = ({
         {/*  <PlusIcon className="h-6 w-6" />*/}
         {/*  <p>경유지</p>*/}
         {/*</button>*/}
-
-        <button className="enterBtn" onClick={handleClickSearchRoutes}>
-          <p>길찾기</p>
-        </button>
+        <button onClick={handleClickSearchRoutes}><p>길찾기</p></button>
       </div>
+
       {!hasStartAndGoal && (
         <div className="errText"><p>출발지와 도착지를 모두 입력하세요!</p></div>
       )}
 
-      <div className="placeBox">
+      <div className="recentBox">
+        <p>최근 검색한 경로 <span> (아직 기능 구현중입니다.)</span></p>
+        <div className="recentList">
+          <p> 모란역 8호선 -> 대전역(고속철도) </p>
+        </div>
         <p>최근 검색 <span> (아직 기능 구현중입니다.)</span></p>
-        <div className="placeList">
+        <div className="recentList">
           <p> 서귀피안 본점</p>
           <p> 서울삼겹살 모란점</p>
           <p> 오뚜기식당 모란맛집</p>
-        </div>
-      </div>
-
-      <div className="routeBox">
-        <p>최근 검색한 경로 <span> (아직 기능 구현중입니다.)</span></p>
-        <div className="routeList">
-          <p> 모란역 8호선 -> 대전역(고속철도) </p>
         </div>
       </div>
     </div>
