@@ -11,6 +11,7 @@ interface InputSubmitProps {
   setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
   hasStartAndGoal: boolean
   setShowRouteList: Dispatch<SetStateAction<boolean>>
+  showRouteList: boolean
 }
 
 const InputSubmit = ({
@@ -21,6 +22,7 @@ const InputSubmit = ({
   hasStartAndGoal,
   setHasStartAndGoal,
   setShowRouteList,
+  showRouteList,
 }: InputSubmitProps) => {
   // const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   // const [wayPoints, setWayPoints] = useState<string[]>([])
@@ -124,18 +126,20 @@ const InputSubmit = ({
         <div className="errText"><p>출발지와 도착지를 모두 입력하세요!</p></div>
       )}
 
-      <div className="recentBox">
-        <p>최근 검색한 경로 <span> (아직 기능 구현중입니다.)</span></p>
-        <div className="recentList">
-          <p> 모란역 8호선 -> 대전역(고속철도) </p>
+      {!showRouteList && (
+        <div className="recentBox">
+          <p>최근 검색한 경로 <span> (아직 기능 구현중입니다.)</span></p>
+          <div className="recentList">
+            <p> 모란역 8호선 -> 대전역(고속철도) </p>
+          </div>
+          <p>최근 검색 <span> (아직 기능 구현중입니다.)</span></p>
+          <div className="recentList">
+            <p> 서귀피안 본점</p>
+            <p> 서울삼겹살 모란점</p>
+            <p> 오뚜기식당 모란맛집</p>
+          </div>
         </div>
-        <p>최근 검색 <span> (아직 기능 구현중입니다.)</span></p>
-        <div className="recentList">
-          <p> 서귀피안 본점</p>
-          <p> 서울삼겹살 모란점</p>
-          <p> 오뚜기식당 모란맛집</p>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

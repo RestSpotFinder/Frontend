@@ -70,6 +70,7 @@ const Main = () => {
           hasStartAndGoal={hasStartAndGoal}
           setHasStartAndGoal={setHasStartAndGoal}
           setShowRouteList={setShowRouteList}
+          showRouteList={showRouteList}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />
@@ -100,18 +101,20 @@ const Main = () => {
           hoveredRestSpot={hoveredRestSpot}
         />
       )}
-      <NaverMap
-        start={startPlace}
-        goal={goalPlace}
-        routeList={routeList}
-        selectedRoute={selectedRoute}
-        setSelectedRoute={setSelectedRoute}
-        restSpotList={restSpotList}
-        restSpotModalOpen={restSpotModalOpen}
-        setHoveredRestSpot={setHoveredRestSpot}
-        clickedFindRoute={clickedFindRoute}
-        setClickedFindRoute={setClickedFindRoute}
-      />
+      <div className="map">
+        <NaverMap
+          start={startPlace}
+          goal={goalPlace}
+          routeList={routeList}
+          selectedRoute={selectedRoute}
+          setSelectedRoute={setSelectedRoute}
+          restSpotList={restSpotList}
+          restSpotModalOpen={restSpotModalOpen}
+          setHoveredRestSpot={setHoveredRestSpot}
+          clickedFindRoute={clickedFindRoute}
+          setClickedFindRoute={setClickedFindRoute}
+        />
+      </div>
     </div>
   )
 }
