@@ -1,9 +1,8 @@
-import { Logos, Main } from './components'
+import { Main } from './components'
 
 const NaverPage = () => {
   return (
-    <div className="flex h-full">
-      <Logos />
+    <div>
       <Main />
     </div>
   )
