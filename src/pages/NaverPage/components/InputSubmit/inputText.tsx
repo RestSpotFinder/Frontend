@@ -9,7 +9,7 @@ import {
 import { useDebounce } from '@/hooks'
 import { SearchPlaceDataType } from '@/types'
 import { useGetSearchSpot } from '@/apis/hooks'
-import { LocationIcon } from '@/assets/Icons'
+import './inputText.css'
 
 interface InputProps {
   setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
@@ -105,42 +105,22 @@ const InputText = ({
   }, [isReset])
 
   return (
-    <div className="relative w-full">
+    <div className="inputText">
       <input
         type="text"
         value={searchedPlace}
         onChange={handleChange}
-        className={`h-10 w-80 border border-black p-4 placeholder-gray-400 placeholder-opacity-50 ${type === 'start' ? 'rounded-t border-t border-b-gray-200' : 'rounded-b border-b border-t-0'}`}
         placeholder={placeholder}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
       {placeList && placeList.length > 0 && searchedPlace && modalIsOpen && (
-        <div className="absolute z-50  w-80 rounded-b border border-black border-t-white bg-white">
+        <div className="resultBox">
           {placeList?.map((place, index) => (
-            <div key={index}>
-              <div
-                className={
-                  'flex w-full items-center gap-4 px-4 py-3 hover:bg-gray-300 hover:bg-opacity-30'
-                }
-                onMouseDown={e => handleClickPlace({ e, place })}
-              >
-                <LocationIcon className="h-5 w-5 shrink-0" />
-                <div className="flex w-full flex-col items-center gap-2">
-                  <div className="flex w-full items-center justify-between">
-                    <p className="text-sm">{place.name}</p>
-                    <p className="text-[0.7rem] text-gray-400">
-                      {place.category}
-                    </p>
-                  </div>
-                  <p className="w-full text-xs text-slate-600">
-                    {place.address}
-                  </p>
-                </div>
-              </div>
-              {index !== placeList.length - 1 && (
-                <hr className="border-gray-200" />
-              )}
+            <div key={index} onMouseDown={e => handleClickPlace({ e, place })}>
+              <p>{place.name}</p>
+              <p>{place.category}</p>
+              <p className="w-full text-xs text-slate-600">{place.address}</p>
             </div>
           ))}
         </div>
