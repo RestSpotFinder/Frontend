@@ -1,0 +1,64 @@
+/* index.css */
+.main {
+    /*display: inline-block;*/
+    display: flex;
+    /*overflow: hidden;*/
+
+}
+.nav {
+    position: relative;
+    z-index: 1;
+    box-shadow: 2px 0 15px rgb(0, 0, 0, 0.2);
+}
+
+.slideBtn {
+    position: absolute;
+    width: 22px;
+    height: 50px;
+    border: 1px solid rgb(0, 0, 0, 0.1);
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    background-color: white;
+    cursor: pointer;
+
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+}
+
+.slideBtn:hover {
+    box-shadow: 1px 0 5px rgb(0, 0, 0, 0.1);
+}
+
+.slideBtn:hover:after {
+    color: dodgerblue;
+}
+
+.slideBtn:after {
+    content: '\f053'; /* < */
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
+    font-size: 0.9em;
+    color: rgb(51, 51, 51, 0.8);
+    box-shadow: 1px 0 20px rgb(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.slideBtn:before {
+    display: none;
+    content:'\f054'; /* > */
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
+    font-size: 0.9em;
+    color: rgb(51, 51, 51, 0.8);
+    box-shadow: 1px 0 20px rgb(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

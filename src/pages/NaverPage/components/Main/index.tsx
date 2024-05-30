@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from 'react'
 import { SearchPlaceDataType, Route } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
+import './index.css'
 
 const Main = () => {
   const [startPlace, setStartPlace] = useState<SearchPlaceDataType | null>(null)
@@ -57,8 +58,9 @@ const Main = () => {
   }, [selectedRoute, restSpotsRefetch])
 
   return (
-    <div className="flex h-full w-full">
-      <div className="flex h-full flex-col">
+    <div className="main">
+      <div className="nav">
+        <div className="slideBtn"></div>
         <Title />
         <InputSubmit
           setStartPlace={setStartPlace}
