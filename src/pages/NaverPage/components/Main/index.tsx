@@ -17,6 +17,7 @@ const Main = () => {
   const [goalPlace, setGoalPlace] = useState<SearchPlaceDataType | null>(null)
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
+  const [clickedRouteIndex, setClickedRouteIndex] = useState<number>(0)
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
   const [hasStartAndGoal, setHasStartAndGoal] = useState<boolean>(true)
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
@@ -82,6 +83,8 @@ const Main = () => {
                 setRouteList={setRouteList}
                 selectedRoute={selectedRoute}
                 setSelectedRoute={setSelectedRoute}
+                clickedRouteIndex={clickedRouteIndex}
+                setClickedRouteIndex={setClickedRouteIndex}
                 startPlace={startPlace}
                 goalPlace={goalPlace}
                 clickedMorePath={clickedMorePath}
@@ -95,11 +98,14 @@ const Main = () => {
         )}
       </div>
       {selectedRoute && restSpotModalOpen && (
-        <RestAreaInfo
-          route={selectedRoute}
-          setRestSpotModalOpen={setRestSpotModalOpen}
-          hoveredRestSpot={hoveredRestSpot}
-        />
+        <div className="nav">
+          <RestAreaInfo
+            route={selectedRoute}
+            setRestSpotModalOpen={setRestSpotModalOpen}
+            hoveredRestSpot={hoveredRestSpot}
+            clickedRouteIndex={clickedRouteIndex}
+          />
+        </div>
       )}
       <div className="map">
         <NaverMap

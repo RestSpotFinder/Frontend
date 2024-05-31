@@ -1,0 +1,111 @@
+/* RestAreaInfo.css */
+
+.restAreaInfoContent {
+    border-top: 1px solid rgb(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    cursor: pointer;
+}
+
+.restAreaInfoContent:hover {
+    background-color: rgb(154, 205, 50, 0.1);
+    border-top: 1px solid rgb(154, 205, 50, 0.5);
+    border-bottom: 1px solid rgb(154, 205, 50, 0.5);
+}
+
+.restAreaInfoContent > header {
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+
+    padding-bottom: 1rem;
+    margin-right: 2rem;
+}
+
+.restAreaInfoContent > header:before {
+    font-family: 'Font Awesome 5 Free', serif;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: rgb(52, 52, 52, 0.9);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+}
+
+.restAreaInfoContent > header:after {
+    /*content: '일반휴게소'; !* < *!*/
+    font-size: 0.525rem;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(0, 0, 0, 1);
+    text-shadow:0 0 1px rgb(0, 0, 0, 0.7);
+    width: 100%;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.restAreaInfoContent > section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    margin-left: -1rem;
+}
+
+.restAreaInfoContent > section > div {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: rgb(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.1);
+}
+
+
+.restAreaInfoContent > section > aside {
+    display: flex;
+}
+
+.restAreaInfoContent > section > aside > span {
+    position: relative;
+    font-weight: 600;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-left: 0.4rem;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 50%;
+
+}
+
+.restAreaInfoContent > section > aside > span:before {
+    font-size: 0.75rem;
+    font-family: 'Font Awesome 5 Free', serif;
+    color: rgb(52, 52, 52, 0.7);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-right: 1px;
+}
+
+.normal:before {content: '\f2e7';}
+.normal:after {content: '일반휴게소';}
+.truck:before {content: '\f0d1';}
+.truck:after {content: '화물차휴게소';}
+.temporary:before {content: '\f015';}
+.temporary:after {content: '간이휴게소';}
+.gasStation:before {content: '\f2e7';}
+.pharmacy:before {content: '\f486';}
+.toilet:before {content: '\f7bd';}
+.chargingStation:before {content: '\f5e7';}
