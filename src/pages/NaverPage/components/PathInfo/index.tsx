@@ -1,8 +1,9 @@
 import PathInfoContent from './pathInfoContent'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { useGetRoutes } from '@/apis/hooks'
 import { Route, SearchPlaceDataType } from '@/types'
 import { Loading } from '../'
+import './index.css'
 
 interface PathInfoProps {
   routeList: Route[]
@@ -17,16 +18,16 @@ interface PathInfoProps {
 }
 
 const PathInfo = ({
-  routeList,
-  setRouteList,
-  selectedRoute,
-  setSelectedRoute,
-  startPlace,
-  goalPlace,
-  clickedMorePath,
-  setClickedMorePath,
-  setRestSpotModalOpen,
-}: PathInfoProps) => {
+                    routeList,
+                    setRouteList,
+                    // selectedRoute,
+                    setSelectedRoute,
+                    startPlace,
+                    goalPlace,
+                    clickedMorePath,
+                    setClickedMorePath,
+                    setRestSpotModalOpen,
+                  }: PathInfoProps) => {
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
       start: [startPlace?.lng, startPlace?.lat].join(','),
@@ -42,38 +43,39 @@ const PathInfo = ({
     setClickedMorePath(true)
   }
 
-  return (
-    <div className={`relative flex h-full flex-col overflow-auto`}>
-      <h1 className="px-3 py-2 text-center font-bold text-red-600">
-        더블 클릭시 경로상 휴게소 정보가 표시됩니다.
-      </h1>
-      <div className="h-full overflow-y-scroll">
-        {routeList?.map((route, index) => {
-          return (
-            <div
-              className={`flex flex-col ${route === selectedRoute && 'border-b border-t border-emerald-500 bg-emerald-100'}`}
-              key={route.routeId}
-              onClick={() => setSelectedRoute(route)}
-              onDoubleClick={() => setRestSpotModalOpen(true)}
-            >
-              <PathInfoContent ranking={index} route={route} />
-              {index !== routeList.length - 1 && <hr />}
-            </div>
-          )
-        })}
-        {isGetRoutesLoading && clickedMorePath ? (
-          <Loading className="mt-3" />
-        ) : (
-          <button
-            className={`relative ml-8 mt-5 h-10 w-80 rounded-md bg-green-600 ${clickedMorePath && 'hidden'}`}
-            onClick={handleClickMorePathData}
-          >
-            <p className="text-white">더보기</p>
-          </button>
-        )}
-      </div>
+  const [clickedId, setClickedId] = useState<number>(0);
+  const handleClick = (route: Route, clickedId: number) => {
+    setClickedId(clickedId);
+    setSelectedRoute(route)
+  }
+
+return (
+  <div className={`pathInfo`}>
+    <p className="noticeText">
+      <span>더블 클릭시</span> 경로상 휴게소 정보가 표시됩니다.
+    </p>
+    <div className="routeBox">
+      {routeList?.map((route, index) => {
+        return (
+          <div
+            key={route.routeId}
+            onClick={() => handleClick(route, index + 1)}
+            onDoubleClick={() => setRestSpotModalOpen(true)}>
+            <PathInfoContent ranking={index + 1} route={route} clickedId={clickedId} />
+            <hr />
+          </div>
+        )
+      })}
+
+      {isGetRoutesLoading && clickedMorePath ? (
+        <Loading className="mt-3" />
+      ) : (
+        <div className={`moreBtn  ${clickedMorePath && 'hidden'}`} onClick={handleClickMorePathData}>더보기</div>
+      )}
     </div>
-  )
+    <p className="searchInfo">{startPlace?.name} -> {goalPlace?.name}</p>
+  </div>
+)
 }
 
 export default PathInfo
