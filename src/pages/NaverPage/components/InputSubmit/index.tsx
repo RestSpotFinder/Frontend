@@ -99,6 +99,9 @@ const InputSubmit = ({
 
   return (
     <div className="inputSubmit">
+      {showRouteList && (
+        <div className="slideBtn" onClick={() => handleClickReset()} />
+      )}
       <div className="inputBox">
         <InputText
           setPlace={setStartPlace}
