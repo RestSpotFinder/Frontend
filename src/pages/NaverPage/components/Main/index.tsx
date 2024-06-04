@@ -24,6 +24,7 @@ const Main = () => {
   const [showRouteList, setShowRouteList] = useState<boolean>(false)
   const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
   const [clickedFindRoute, setClickedFindRoute] = useState<boolean>(false)
+  const [routeHistory, setRouteHistory] = useState<string[]>([])
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -49,9 +50,26 @@ const Main = () => {
       routes.data && setSelectedRoute(routes.data[0])
       setHasStartAndGoal(true)
       setClickedFindRoute(true)
+      addRouteHistory()
     } else {
       setHasStartAndGoal(false)
     }
+  }
+
+  const addRouteHistory = () => {
+    const storedData = localStorage.getItem('routeHistory')
+    const history: string[] = storedData ? JSON.parse(storedData) : []
+
+    if (history.length >= 10) history.shift()
+
+    history.push(startPlace?.name + ' -> ' + goalPlace?.name)
+    localStorage.setItem('routeHistory', JSON.stringify(history))
+    setRouteHistory(history)
+  }
+
+  const clearRouteHistory = () => {
+    localStorage.removeItem('routeHistory')
+    setRouteHistory([])
   }
 
   useEffect(() => {
@@ -72,6 +90,9 @@ const Main = () => {
           setHasStartAndGoal={setHasStartAndGoal}
           setShowRouteList={setShowRouteList}
           showRouteList={showRouteList}
+          setRouteHistory={setRouteHistory}
+          routeHistory={routeHistory}
+          clearRouteHistory={clearRouteHistory}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />

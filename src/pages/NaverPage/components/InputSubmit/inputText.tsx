@@ -20,6 +20,7 @@ interface InputProps {
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  addPlaceHistory: (place: string) => void
 }
 
 const InputType = {
@@ -42,6 +43,7 @@ const InputText = ({
   setRestSpotModalOpen,
   setStartPlace,
   setGoalPlace,
+  addPlaceHistory,
 }: InputProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
@@ -88,6 +90,7 @@ const InputText = ({
     setSearchedPlace(place.name)
     setPlaceList([])
     setModalIsOpen(false)
+    addPlaceHistory(place.name)
   }
 
   useEffect(() => {

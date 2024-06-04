@@ -12,6 +12,9 @@ interface InputSubmitProps {
   hasStartAndGoal: boolean
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   showRouteList: boolean
+  setRouteHistory: Dispatch<SetStateAction<string[]>>
+  routeHistory: string[]
+  clearRouteHistory: () => void
 }
 
 const InputSubmit = ({
@@ -23,6 +26,9 @@ const InputSubmit = ({
   setHasStartAndGoal,
   setShowRouteList,
   showRouteList,
+  setRouteHistory,
+  routeHistory,
+  clearRouteHistory,
 }: InputSubmitProps) => {
   // const [wayPointPlaceholder, setWayPointPlaceholder] = useState('경유지 입력')
   // const [wayPoints, setWayPoints] = useState<string[]>([])
@@ -47,6 +53,9 @@ const InputSubmit = ({
 
   //////
   const [isReset, setIsReset] = useState<boolean>(false)
+  useEffect(() => {
+    isReset && setIsReset(false)
+  }, [setIsReset, isReset])
 
   const handleClickReset = () => {
     setStartPlace(null)
@@ -57,13 +66,40 @@ const InputSubmit = ({
     setShowRouteList(false)
   }
 
+  const [placeHistory, setPlaceHistory] = useState<string[]>([])
+
   useEffect(() => {
-    isReset && setIsReset(false)
-  }, [setIsReset, isReset])
+    const storedPlaceHistory = JSON.parse(
+      localStorage.getItem('placeHistory') || '[]',
+    )
+    const storedRouteHistory = JSON.parse(
+      localStorage.getItem('routeHistory') || '[]',
+    )
+
+    setPlaceHistory(storedPlaceHistory)
+    setRouteHistory(storedRouteHistory)
+  }, [])
+
+  const addPlaceHistory = (place: string) => {
+    const storedData = localStorage.getItem('placeHistory')
+    const history: string[] = storedData ? JSON.parse(storedData) : []
+
+    if (history.length >= 10) {
+      history.shift()
+    }
+    history.push(place)
+    localStorage.setItem('placeHistory', JSON.stringify(history))
+    setPlaceHistory(history)
+  }
+
+  const clearPlaceHistory = () => {
+    localStorage.removeItem('placeHistory')
+    setPlaceHistory([])
+  }
 
   return (
     <div className="inputSubmit">
-    <div className="inputBox">
+      <div className="inputBox">
         <InputText
           setPlace={setStartPlace}
           type={'start'}
@@ -73,6 +109,7 @@ const InputSubmit = ({
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
+          addPlaceHistory={addPlaceHistory}
         />
 
         {/*{wayPoints.map((waypoint, index) => (*/}
@@ -107,11 +144,14 @@ const InputSubmit = ({
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
+          addPlaceHistory={addPlaceHistory}
         />
       </div>
 
       <div className="btnBox">
-        <button onClick={handleClickReset}><p>다시입력</p></button>
+        <button onClick={handleClickReset}>
+          <p>다시입력</p>
+        </button>
         {/*<button*/}
         {/*  className={`hidden items-center gap-2 rounded border border-gray-400 py-1.5 pl-2 pr-3 ${isMax && 'hidden'}`}*/}
         {/*  onClick={handleWaypointClick}*/}
@@ -119,24 +159,41 @@ const InputSubmit = ({
         {/*  <PlusIcon className="h-6 w-6" />*/}
         {/*  <p>경유지</p>*/}
         {/*</button>*/}
-        <button onClick={handleClickSearchRoutes}><p>길찾기</p></button>
+        <button onClick={handleClickSearchRoutes}>
+          <p>길찾기</p>
+        </button>
       </div>
 
       {!hasStartAndGoal && (
-        <div className="errText"><p>출발지와 도착지를 모두 입력하세요!</p></div>
+        <div className="errText">
+          <p>출발지와 도착지를 모두 입력하세요!</p>
+        </div>
       )}
 
       {!showRouteList && (
-        <div className="recentBox">
-          <p>최근 검색한 경로 <span> (아직 기능 구현중입니다.)</span></p>
-          <div className="recentList">
-            <p> 모란역 8호선 -> 대전역(고속철도) </p>
+        <div>
+          <div className="recentTitle">
+            <p>최근 검색한 장소</p>
+            <span onClick={clearPlaceHistory}>검색 기록 삭제</span>
           </div>
-          <p>최근 검색 <span> (아직 기능 구현중입니다.)</span></p>
-          <div className="recentList">
-            <p> 서귀피안 본점</p>
-            <p> 서울삼겹살 모란점</p>
-            <p> 오뚜기식당 모란맛집</p>
+          <div className="recentList place">
+            {placeHistory.length > 0 ? (
+              placeHistory.map(search => <p>{search}</p>)
+            ) : (
+              <span>검색 기록이 없습니다.</span>
+            )}
+          </div>
+
+          <div className="recentTitle">
+            <p>최근 검색한 경로</p>
+            <span onClick={clearRouteHistory}>검색 기록 삭제</span>
+          </div>
+          <div className="recentList route">
+            {routeHistory.length > 0 ? (
+              routeHistory.map(search => <p>{search}</p>)
+            ) : (
+              <span>검색 기록이 없습니다.</span>
+            )}
           </div>
         </div>
       )}

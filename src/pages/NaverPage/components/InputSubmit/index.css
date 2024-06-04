@@ -56,32 +56,42 @@
     margin-left: 0.5em; /* 아이콘과 텍스트 사이의 간격 */
 }
 
-.recentBox {
-    margin-top: 2em;
-}
 
-.recentBox > p {
+.recentTitle {
     margin-top: 2em;
     font-weight: 600;
     font-size: 0.8em;
     padding-left: 0.5em;
     padding-bottom: 0.5em;
     border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.recentBox > p > span {
+.recentTitle > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
     font-size: 0.7em;
-    padding-left: 1em;
+    color: crimson;
+    cursor: pointer;
 }
 
-.recentBox div {
+.recentTitle > span:hover {
+    text-shadow: 1px 1px 2px rgb(0,0,0,0.2);
+}
+
+.recentList{
     margin: 1em 0 3em 0;
     font-weight: 600;
     font-size: 0.8em;
     color: rgba(51, 51, 51);
 }
 
-.recentBox div p {
+.recentList > p {
     /*글자간격 줄이기*/
     letter-spacing: -0.05em;
     font-size: 1.1em;
@@ -91,7 +101,7 @@
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 추가 */
 }
 
-.recentBox div p::before {
+.recentList > p::before {
     font-family: 'Font Awesome 5 Free', serif;
     font-size: 1.2em;
     color: rgb(51, 51, 51, 0.5);
@@ -99,12 +109,22 @@
     margin: 0 0.5em; /* 아이콘과 텍스트 사이의 간격 */
 }
 
-.recentBox div:nth-of-type(1) p::before {
-    content: '\f4d7'; /* Font Awesome 아이콘 코드 (예: fa-sync-alt) */
+/*검색 기록이 없습니다*/
+.recentList > span {
+    letter-spacing: -0.05em;
+    font-size: 1.1em;
+    line-height: 1.1em;
+    font-weight: 500; /* 필요에 따라 가중치를 조정합니다 */
+    margin: 1em 0.6em; /* 아이콘과 텍스트 사이의 간격 */
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 추가 */
 }
 
-.recentBox div:nth-of-type(2) p::before {
-    content: '\f3c5'; /* Font Awesome 아이콘 코드 (예: fa-sync-alt) */
+.recentList.route p::before {
+    content: '\f4d7';
+}
+
+.recentList.place > p::before {
+    content: '\f3c5';
 }
 
 .errText {
