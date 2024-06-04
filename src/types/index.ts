@@ -28,7 +28,7 @@ export type RestAreaInfoType = {
   type: string
   restaurant: boolean
   gasStation: boolean
-  electricCar: boolean
+  chargingStation: boolean
   pharmacy: boolean
   toilet: boolean
   name: string
