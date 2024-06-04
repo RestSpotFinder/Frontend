@@ -60,7 +60,7 @@ const Main = () => {
     const storedData = localStorage.getItem('routeHistory')
     const history: string[] = storedData ? JSON.parse(storedData) : []
 
-    if (history.length >= 10) history.shift()
+    if (history.length >= 5) history.shift()
 
     history.push(startPlace?.name + ' -> ' + goalPlace?.name)
     localStorage.setItem('routeHistory', JSON.stringify(history))
@@ -84,6 +84,7 @@ const Main = () => {
         <InputSubmit
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
+          setRouteList={setRouteList}
           handleClickSearchRoutes={handleClickSearchRoutes}
           setRestSpotModalOpen={setRestSpotModalOpen}
           hasStartAndGoal={hasStartAndGoal}

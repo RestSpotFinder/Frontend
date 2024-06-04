@@ -1,11 +1,12 @@
 import { SetStateAction, useEffect, useState, Dispatch } from 'react'
-import { SearchPlaceDataType } from '@/types'
+import { Route, SearchPlaceDataType } from '@/types'
 import InputText from './inputText.tsx'
 import './index.css'
 
 interface InputSubmitProps {
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
   handleClickSearchRoutes: () => void
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
@@ -20,6 +21,7 @@ interface InputSubmitProps {
 const InputSubmit = ({
   setStartPlace,
   setGoalPlace,
+  setRouteList,
   handleClickSearchRoutes,
   setRestSpotModalOpen,
   hasStartAndGoal,
@@ -64,6 +66,7 @@ const InputSubmit = ({
     setRestSpotModalOpen(false)
     setHasStartAndGoal(true)
     setShowRouteList(false)
+    setRouteList([])
   }
 
   const [placeHistory, setPlaceHistory] = useState<string[]>([])
@@ -84,7 +87,7 @@ const InputSubmit = ({
     const storedData = localStorage.getItem('placeHistory')
     const history: string[] = storedData ? JSON.parse(storedData) : []
 
-    if (history.length >= 10) {
+    if (history.length >= 8) {
       history.shift()
     }
     history.push(place)
