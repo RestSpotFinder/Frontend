@@ -1,0 +1,15 @@
+.map .test {
+    color: white;
+    font-size: 0.9rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+
+    border:1px solid black;
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-color:rgb(25, 82, 138);
+}
