@@ -6,6 +6,7 @@ import {
   RecentSearch,
   RestAreaInfo,
   Loading,
+  Survey,
 } from '../'
 import { useState, useEffect } from 'react'
 import { SearchPlaceDataType, Route } from '@/types'
@@ -129,11 +130,14 @@ const Main = () => {
                 setRestSpotModalOpen={setRestSpotModalOpen}
               />
             ) : (
-              <RecentSearch
-                routeHistory={routeHistory}
-                placeHistory={placeHistory}
-                clearHistory={clearHistory}
-              />
+              <div>
+                <RecentSearch
+                  routeHistory={routeHistory}
+                  placeHistory={placeHistory}
+                  clearHistory={clearHistory}
+                />
+                <Survey />
+              </div>
             )}
           </>
         )}
