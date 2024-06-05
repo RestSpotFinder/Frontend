@@ -82,7 +82,9 @@ const Main = () => {
         <div className="slideBtn"></div>
         <Title />
         <InputSubmit
+          startPlace={startPlace}
           setStartPlace={setStartPlace}
+          goalPlace={goalPlace}
           setGoalPlace={setGoalPlace}
           setRouteList={setRouteList}
           handleClickSearchRoutes={handleClickSearchRoutes}

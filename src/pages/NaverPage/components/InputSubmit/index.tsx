@@ -5,7 +5,9 @@ import './index.css'
 import postSurvey from '@/apis/hooks/postSurvey.ts'
 
 interface InputSubmitProps {
+  startPlace: SearchPlaceDataType | null
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  goalPlace: SearchPlaceDataType | null
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
   handleClickSearchRoutes: () => void
@@ -20,7 +22,9 @@ interface InputSubmitProps {
 }
 
 const InputSubmit = ({
+  startPlace,
   setStartPlace,
+  goalPlace,
   setGoalPlace,
   setRouteList,
   handleClickSearchRoutes,
@@ -124,6 +128,7 @@ const InputSubmit = ({
       )}
       <div className="inputBox">
         <InputText
+          place={startPlace}
           setPlace={setStartPlace}
           type={'start'}
           isReset={isReset}
@@ -159,6 +164,7 @@ const InputSubmit = ({
         {/*))}*/}
 
         <InputText
+          place={goalPlace}
           setPlace={setGoalPlace}
           type={'goal'}
           isReset={isReset}

@@ -12,6 +12,7 @@ import { useGetSearchSpot } from '@/apis/hooks'
 import './inputText.css'
 
 interface InputProps {
+  place: SearchPlaceDataType | null
   setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   type: 'start' | 'goal'
   isReset: boolean
@@ -35,6 +36,7 @@ const InputType = {
 }
 
 const InputText = ({
+  place,
   setPlace,
   type,
   isReset,
@@ -108,7 +110,7 @@ const InputText = ({
   }, [isReset])
 
   return (
-    <div className="inputText">
+    <div className={`inputText ${type === 'start' ? 'start' : 'goal'} ${place ? 'selected' : ''}`}>
       <input
         type="text"
         value={searchedPlace}
