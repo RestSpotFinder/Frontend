@@ -11,11 +11,10 @@ interface InputSubmitProps {
   setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
   handleClickSearchRoutes: () => void
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
-  setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
   hasStartAndGoal: boolean
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   showRouteList: boolean
-  addPlaceHistory: (place: string) => void
+  addHistory: (type: string, place: string) => void
 }
 
 const InputSubmit = ({
@@ -27,10 +26,9 @@ const InputSubmit = ({
   handleClickSearchRoutes,
   setRestSpotModalOpen,
   hasStartAndGoal,
-  setHasStartAndGoal,
   setShowRouteList,
   showRouteList,
-  addPlaceHistory,
+  addHistory,
 }: InputSubmitProps) => {
   const [isReset, setIsReset] = useState<boolean>(false)
   useEffect(() => {
@@ -42,7 +40,6 @@ const InputSubmit = ({
     setGoalPlace(null)
     setIsReset(true)
     setRestSpotModalOpen(false)
-    setHasStartAndGoal(true)
     setShowRouteList(false)
     setRouteList([])
   }
@@ -58,12 +55,11 @@ const InputSubmit = ({
           setPlace={setStartPlace}
           type={'start'}
           isReset={isReset}
-          setHasStartAndGoal={setHasStartAndGoal}
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
-          addPlaceHistory={addPlaceHistory}
+          addHistory={addHistory}
         />
 
         <InputText
@@ -71,12 +67,11 @@ const InputSubmit = ({
           setPlace={setGoalPlace}
           type={'goal'}
           isReset={isReset}
-          setHasStartAndGoal={setHasStartAndGoal}
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           setStartPlace={setStartPlace}
           setGoalPlace={setGoalPlace}
-          addPlaceHistory={addPlaceHistory}
+          addHistory={addHistory}
         />
       </div>
 

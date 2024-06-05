@@ -24,7 +24,6 @@ const Main = () => {
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
   const [showRouteList, setShowRouteList] = useState<boolean>(false)
   const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
-  const [clickedFindRoute, setClickedFindRoute] = useState<boolean>(false)
   const [routeHistory, setRouteHistory] = useState<string[]>([])
   const [placeHistory, setPlaceHistory] = useState<string[]>([])
 
@@ -50,36 +49,28 @@ const Main = () => {
       setClickedMorePath(false)
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
-      setHasStartAndGoal(true)
-      setClickedFindRoute(true)
-      addRouteHistory()
+      addHistory('route', startPlace?.name + ' -> ' + goalPlace?.name)
+      setHasStartAndGoal(true) // errText
     } else {
       setHasStartAndGoal(false)
     }
   }
 
-  const addRouteHistory = () => {
-    const history: string[] = JSON.parse(localStorage.getItem('route') || '[]');
+  const addHistory = (type: string, data: string) => {
+    const history: string[] = JSON.parse(localStorage.getItem(type) || '[]')
     if (history.length >= 5) history.shift()
 
-    history.push(startPlace?.name + ' -> ' + goalPlace?.name)
-    localStorage.setItem('route', JSON.stringify(history))
-    setRouteHistory(history)
-  }
-
-  const addPlaceHistory = (place: string) => {
-    const history: string[] = JSON.parse(localStorage.getItem('place') || '[]');
-    if (history.length >= 5) history.shift()
-
-    history.push(place)
-    localStorage.setItem('place', JSON.stringify(history))
-    setPlaceHistory(history)
+    history.push(data)
+    localStorage.setItem(type, JSON.stringify(history))
+    if (type === 'route') setRouteHistory(history)
+    if (type === 'place') setPlaceHistory(history)
   }
 
   const clearHistory = (type: string) => {
     if (type) {
       localStorage.removeItem(type)
-      type === 'route' ? setRouteHistory([]) : setPlaceHistory([]);
+      if (type === 'route') setRouteHistory([])
+      if (type === 'place') setPlaceHistory([])
     }
   }
 
@@ -106,10 +97,9 @@ const Main = () => {
           handleClickSearchRoutes={handleClickSearchRoutes}
           setRestSpotModalOpen={setRestSpotModalOpen}
           hasStartAndGoal={hasStartAndGoal}
-          setHasStartAndGoal={setHasStartAndGoal}
           setShowRouteList={setShowRouteList}
           showRouteList={showRouteList}
-          addPlaceHistory={addPlaceHistory}
+          addHistory={addHistory}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />
@@ -162,8 +152,6 @@ const Main = () => {
           restSpotList={restSpotList}
           restSpotModalOpen={restSpotModalOpen}
           setHoveredRestSpot={setHoveredRestSpot}
-          clickedFindRoute={clickedFindRoute}
-          setClickedFindRoute={setClickedFindRoute}
         />
       </div>
     </div>

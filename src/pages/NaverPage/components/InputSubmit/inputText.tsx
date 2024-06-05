@@ -16,12 +16,11 @@ interface InputProps {
   setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   type: 'start' | 'goal'
   isReset: boolean
-  setHasStartAndGoal: Dispatch<SetStateAction<boolean>>
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
   setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
-  addPlaceHistory: (place: string) => void
+  addHistory: (type: string, place: string) => void
 }
 
 const InputType = {
@@ -40,39 +39,26 @@ const InputText = ({
   setPlace,
   type,
   isReset,
-  setHasStartAndGoal,
   setShowRouteList,
   setRestSpotModalOpen,
   setStartPlace,
   setGoalPlace,
-  addPlaceHistory,
+  addHistory,
 }: InputProps) => {
-  const [placeholder, setPlaceholder] = useState<string>(
-    InputType.PLACEHOLDER[type],
-  )
-  const [searchedPlace, setSearchedPlace] = useState<string>('')
-  const [placeList, setPlaceList] = useState<SearchPlaceDataType[] | undefined>(
-    [],
-  )
+  const [placeholder, setPlaceholder] = useState<string>(InputType.PLACEHOLDER[type])
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const [placeList, setPlaceList] = useState<SearchPlaceDataType[] | undefined>([])
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const debouncedPlace = useDebounce(searchedPlace || '')
+  const debouncedPlace = useDebounce(searchKeyword || '')
   const { refetch } = useGetSearchSpot({ searchTerm: debouncedPlace })
 
-  const handleFocus = () => {
-    setPlaceholder(InputType.ON_FOCUS[type])
-    setModalIsOpen(true)
-  }
-
-  const handleBlur = () => {
-    setPlaceholder(InputType.PLACEHOLDER[type])
-    setModalIsOpen(false)
-  }
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.value === '' ? setPlaceList([]) : setModalIsOpen(true)
-    e.target.value !== '' && setHasStartAndGoal(true)
-    setSearchedPlace(e.target.value)
-    if (e.target.value !== searchedPlace) {
+    const inputValue = e.target.value
+    inputValue === '' ? setPlaceList([]) : setModalIsOpen(true)
+    // inputValue !== '' && setHasStartAndGoal(true)
+    setSearchKeyword(inputValue)
+
+    if (inputValue !== searchKeyword) {
       setShowRouteList(false)
       setRestSpotModalOpen(false)
       if (type === 'start') setStartPlace(null)
@@ -89,43 +75,58 @@ const InputText = ({
   }) => {
     e.stopPropagation()
     setPlace(place)
-    setSearchedPlace(place.name)
+    setSearchKeyword(place.name)
     setPlaceList([])
     setModalIsOpen(false)
-    addPlaceHistory(place.name)
+    addHistory('place', place.name)
+  }
+
+  // 초성일 때는 refetch 호출 X ex) 'ㄷ', 'ㅁ'
+  const isSingleConsonant = (char: string) => {
+    const koreanConsonantRange = /[\u3131-\u3163]/
+
+    return koreanConsonantRange.test(char)
   }
 
   useEffect(() => {
-    debouncedPlace
+    !isSingleConsonant(debouncedPlace) && debouncedPlace
       ? refetch().then(res => setPlaceList(res.data))
       : setPlaceList([])
   }, [debouncedPlace, refetch])
 
   useEffect(() => {
     if (isReset) {
-      setSearchedPlace('')
+      setSearchKeyword('')
       setPlaceList([])
       setModalIsOpen(false)
     }
   }, [isReset])
 
   return (
-    <div className={`inputText ${type === 'start' ? 'start' : 'goal'} ${place ? 'selected' : ''}`}>
+    <div
+      className={`inputText ${type === 'start' ? 'start' : 'goal'} ${place ? 'selected' : ''}`}
+    >
       <input
         type="text"
-        value={searchedPlace}
-        onChange={handleChange}
+        value={searchKeyword}
         placeholder={placeholder}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onChange={handleChange}
+        onFocus={() => {
+          setPlaceholder(InputType.ON_FOCUS[type])
+          setModalIsOpen(true)
+        }}
+        onBlur={() => {
+          setPlaceholder(InputType.PLACEHOLDER[type])
+          setModalIsOpen(false)
+        }}
       />
-      {placeList && placeList.length > 0 && searchedPlace && modalIsOpen && (
+      {placeList && placeList.length > 0 && searchKeyword && modalIsOpen && (
         <div className="resultBox">
           {placeList?.map((place, index) => (
             <div key={index} onMouseDown={e => handleClickPlace({ e, place })}>
               <p>{place.name}</p>
               <p>{place.category}</p>
-              <p className="w-full text-xs text-slate-600">{place.address}</p>
+              <p>{place.address}</p>
             </div>
           ))}
         </div>
