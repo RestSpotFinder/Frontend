@@ -25,6 +25,7 @@ const Main = () => {
   const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
   const [clickedFindRoute, setClickedFindRoute] = useState<boolean>(false)
   const [routeHistory, setRouteHistory] = useState<string[]>([])
+  const [placeHistory, setPlaceHistory] = useState<string[]>([])
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -57,24 +58,38 @@ const Main = () => {
   }
 
   const addRouteHistory = () => {
-    const storedData = localStorage.getItem('routeHistory')
-    const history: string[] = storedData ? JSON.parse(storedData) : []
-
+    const history: string[] = JSON.parse(localStorage.getItem('route') || '[]');
     if (history.length >= 5) history.shift()
 
     history.push(startPlace?.name + ' -> ' + goalPlace?.name)
-    localStorage.setItem('routeHistory', JSON.stringify(history))
+    localStorage.setItem('route', JSON.stringify(history))
     setRouteHistory(history)
   }
 
-  const clearRouteHistory = () => {
-    localStorage.removeItem('routeHistory')
-    setRouteHistory([])
+  const addPlaceHistory = (place: string) => {
+    const history: string[] = JSON.parse(localStorage.getItem('place') || '[]');
+    if (history.length >= 5) history.shift()
+
+    history.push(place)
+    localStorage.setItem('place', JSON.stringify(history))
+    setPlaceHistory(history)
+  }
+
+  const clearHistory = (type: string) => {
+    if (type) {
+      localStorage.removeItem(type)
+      type === 'route' ? setRouteHistory([]) : setPlaceHistory([]);
+    }
   }
 
   useEffect(() => {
     selectedRoute && restSpotsRefetch()
   }, [selectedRoute, restSpotsRefetch])
+
+  useEffect(() => {
+    setPlaceHistory(JSON.parse(localStorage.getItem('place') || '[]'))
+    setRouteHistory(JSON.parse(localStorage.getItem('route') || '[]'))
+  }, [])
 
   return (
     <div className="main">
@@ -93,9 +108,7 @@ const Main = () => {
           setHasStartAndGoal={setHasStartAndGoal}
           setShowRouteList={setShowRouteList}
           showRouteList={showRouteList}
-          setRouteHistory={setRouteHistory}
-          routeHistory={routeHistory}
-          clearRouteHistory={clearRouteHistory}
+          addPlaceHistory={addPlaceHistory}
         />
         {isGetRoutesLoading ? (
           <Loading className="h-full" />
@@ -116,7 +129,11 @@ const Main = () => {
                 setRestSpotModalOpen={setRestSpotModalOpen}
               />
             ) : (
-              <RecentSearch />
+              <RecentSearch
+                routeHistory={routeHistory}
+                placeHistory={placeHistory}
+                clearHistory={clearHistory}
+              />
             )}
           </>
         )}

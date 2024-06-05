@@ -1,33 +1,40 @@
-import { LocationIcon } from '@/assets/Icons'
+import './index.css'
 
-const RecentSearch = () => {
+interface RecentSearchProps {
+  routeHistory: string[]
+  placeHistory: string[]
+  clearHistory: (type: string) => void
+}
+
+const RecentSearch = ({
+  clearHistory,
+  routeHistory,
+  placeHistory,
+}: RecentSearchProps) => {
   return (
-    <div className={`mt-12 hidden w-80 bg-white`}>
-      <div>
-        <h1 className="text-xm  font-bold">최근 검색</h1>
-        <hr className="mx-auto mt-3 w-80 border-gray-200" />
+    <div className="recentSearch">
+      <div className="title">
+        <p>최근 검색한 장소</p>
+        <span onClick={() => clearHistory('place')}>검색 기록 삭제</span>
       </div>
-      <div className="flex flex-col">
-        <div className="flex flex-row">
-          <LocationIcon className="mr-2 mt-2" />
-          <p className="mt-2 text-slate-800">가천대학교 글로벌 캠퍼스</p>
-        </div>
-        <div className="flex flex-row">
-          <LocationIcon className="mr-2 mt-2" />
-          <p className="mt-2 ">모란역</p>
-        </div>
-        <div className="flex flex-row">
-          <LocationIcon className="mr-2 mt-2" />
-          <p className="mt-2">판교역</p>
-        </div>
-        <div className="flex flex-row">
-          <LocationIcon className="mr-2 mt-2" />
-          <p className="mt-2">강남역</p>
-        </div>
-        <div className="flex flex-row">
-          <LocationIcon className="mr-2 mt-2" />
-          <p className="mt-2">잠실역</p>
-        </div>
+      <div className="list place">
+        {placeHistory.length > 0 ? (
+          placeHistory.map(search => <p>{search}</p>)
+        ) : (
+          <span>검색 기록이 없습니다.</span>
+        )}
+      </div>
+
+      <div className="title">
+        <p>최근 검색한 경로</p>
+        <span onClick={() => clearHistory('route')}>검색 기록 삭제</span>
+      </div>
+      <div className="list route">
+        {routeHistory.length > 0 ? (
+          routeHistory.map(search => <p>{search}</p>)
+        ) : (
+          <span>검색 기록이 없습니다.</span>
+        )}
       </div>
     </div>
   )
