@@ -70,7 +70,7 @@ const PathInfo = ({
         })}
 
         {isGetRoutesLoading && clickedMorePath ? (
-          <Loading className="mt-3" />
+          <Loading className="bottom" />
         ) : (
           <div className={`moreBtn  ${clickedMorePath && 'hidden'}`} onClick={handleClickMorePathData}>더보기</div>
         )}

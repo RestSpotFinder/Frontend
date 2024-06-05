@@ -102,7 +102,7 @@ const Main = () => {
           addHistory={addHistory}
         />
         {isGetRoutesLoading ? (
-          <Loading className="h-full" />
+          <Loading />
         ) : (
           <>
             {routeList && showRouteList ? (

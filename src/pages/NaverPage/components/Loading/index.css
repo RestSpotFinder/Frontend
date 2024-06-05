@@ -1,0 +1,73 @@
+/* Google Web Font */
+
+.loading {
+  /*border: 1px solid red;*/
+  width: 2.5rem;
+  height:2.5rem;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%, -50%)
+}
+.loading.top {
+  top: 25%;
+}
+
+.loading.middle {
+  top: 50%;
+}
+
+.loading.bottom {
+  top: 75%;
+}
+
+.loading span {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  background-color: gray;
+  top: 0;
+  left: 0;
+  animation: loading 1.2s infinite;
+}
+.loading span:nth-child(1) {
+  background-color: crimson;
+}
+.loading span:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+@keyframes loading {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  25% {
+    top: 0;
+    /*right: 0;*/
+    left: calc(100% - 10px);
+    background-color: dodgerblue;
+  }
+  50% {
+    /*bottom: 0;*/
+    top: calc(100% - 10px);
+    left: calc(100% - 10px);
+    background-color: orange;
+  }
+  75% {
+    top: calc(100% - 10px);
+    left: 0;
+    background-color: yellowgreen;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
+
+
+
+
+
+

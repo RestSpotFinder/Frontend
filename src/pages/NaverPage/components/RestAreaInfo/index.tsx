@@ -40,7 +40,7 @@ const RestAreaInfo = ({
       {route && <PathInfoContent ranking={clickedRouteIndex} route={route} />}
       <div className="slideBtn" onClick={() => setRestSpotModalOpen(false)} />
       {restSpotsFetching ? (
-        <Loading className="h-full" />
+        <Loading />
       ) : (
         <>
           {restAreaListData?.length === 0 ? (
