@@ -52,7 +52,7 @@
 
 .recentSearch .list > p::before {
     font-family: 'Font Awesome 5 Free', serif;
-    font-size: 1.2em;
+    font-size: 1em;
     color: rgb(51, 51, 51, 0.5);
     font-weight: 600; /* 필요에 따라 가중치를 조정합니다 */
     margin: 0 0.5em; /* 아이콘과 텍스트 사이의 간격 */
@@ -69,7 +69,7 @@
 }
 
 .recentSearch .list.route p::before {
-    content: '\f4d7';
+    content: '\f1b9';
 }
 
 .recentSearch .list.place > p::before {
