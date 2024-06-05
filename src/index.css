@@ -1,16 +1,11 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css);
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 
 @tailwind base;
 
-/* Google Fonts에서 Raleway 폰트를 불러오기 위한 import 구문 */
-body {
-    font-family: "Raleway", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    line-height: 1.5em;
-    margin: 0;
+html, body {
+    letter-spacing: -0.05em;
+    font-family: "Apple SD Gothic Neo", "Apple SD Gothic", notosanskr, "Malgun Gothic", "맑은 고딕", Dotum, 돋움, sans-serif;
 }
 
 @tailwind components;
