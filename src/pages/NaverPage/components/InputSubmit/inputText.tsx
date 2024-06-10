@@ -7,20 +7,18 @@ import {
   MouseEvent,
 } from 'react'
 import { useDebounce } from '@/hooks'
-import { SearchPlaceDataType } from '@/types'
+import { Place } from '@/types'
 import { useGetSearchSpot } from '@/apis/hooks'
 import './inputText.css'
 
 interface InputProps {
-  place: SearchPlaceDataType | null
-  setPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  place: Place | null
+  setPlace: Dispatch<SetStateAction<Place | null>>
   type: 'start' | 'goal'
   isReset: boolean
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
-  setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
-  setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
-  addHistory: (type: string, place: string) => void
+  addPlaceHistory: (place: Place) => void
 }
 
 const InputType = {
@@ -41,13 +39,11 @@ const InputText = ({
   isReset,
   setShowRouteList,
   setRestSpotModalOpen,
-  setStartPlace,
-  setGoalPlace,
-  addHistory,
+  addPlaceHistory,
 }: InputProps) => {
   const [placeholder, setPlaceholder] = useState<string>(InputType.PLACEHOLDER[type])
   const [searchKeyword, setSearchKeyword] = useState<string>('')
-  const [placeList, setPlaceList] = useState<SearchPlaceDataType[] | undefined>([])
+  const [placeList, setPlaceList] = useState<Place[] | undefined>([])
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const debouncedPlace = useDebounce(searchKeyword || '')
   const { refetch } = useGetSearchSpot({ searchTerm: debouncedPlace })
@@ -55,14 +51,13 @@ const InputText = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
     inputValue === '' ? setPlaceList([]) : setModalIsOpen(true)
-    // inputValue !== '' && setHasStartAndGoal(true)
     setSearchKeyword(inputValue)
 
+    // inputText 변경 시 화면 초기화
     if (inputValue !== searchKeyword) {
       setShowRouteList(false)
       setRestSpotModalOpen(false)
-      if (type === 'start') setStartPlace(null)
-      else if (type === 'goal') setGoalPlace(null)
+      setPlace(null)
     }
   }
 
@@ -71,14 +66,13 @@ const InputText = ({
     place,
   }: {
     e: MouseEvent<HTMLDivElement>
-    place: SearchPlaceDataType
+    place: Place
   }) => {
     e.stopPropagation()
     setPlace(place)
-    setSearchKeyword(place.name)
     setPlaceList([])
     setModalIsOpen(false)
-    addHistory('place', place.name)
+    addPlaceHistory(place)
   }
 
   // 초성일 때는 refetch 호출 X ex) 'ㄷ', 'ㅁ'
@@ -108,7 +102,7 @@ const InputText = ({
     >
       <input
         type="text"
-        value={searchKeyword}
+        value={place?.name || searchKeyword || ''}
         placeholder={placeholder}
         onChange={handleChange}
         onFocus={() => {

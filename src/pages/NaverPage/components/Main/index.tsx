@@ -9,23 +9,26 @@ import {
   Survey,
 } from '../'
 import { useState, useEffect } from 'react'
-import { SearchPlaceDataType, Route } from '@/types'
+import { Place, Route, RouteHistory } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import './index.css'
+import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
 
 const Main = () => {
-  const [startPlace, setStartPlace] = useState<SearchPlaceDataType | null>(null)
-  const [goalPlace, setGoalPlace] = useState<SearchPlaceDataType | null>(null)
+  const [startPlace, setStartPlace] = useState<Place | null>(null)
+  const [goalPlace, setGoalPlace] = useState<Place | null>(null)
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
+  const [selectedRouteHistory, setSelectedRouteHistory] = useState<RouteHistory | undefined>()
   const [clickedRouteIndex, setClickedRouteIndex] = useState<number>(0)
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
   const [hasStartAndGoal, setHasStartAndGoal] = useState<boolean>(true)
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
   const [showRouteList, setShowRouteList] = useState<boolean>(false)
   const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
-  const [routeHistory, setRouteHistory] = useState<string[]>([])
-  const [placeHistory, setPlaceHistory] = useState<string[]>([])
+  const [routeHistory, setRouteHistory] = useState<RouteHistory[]>([])
+  const [placeHistory, setPlaceHistory] = useState<Place[]>([])
+  const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -41,6 +44,10 @@ const Main = () => {
     routeId: selectedRoute?.routeId,
   })
 
+  const { refetch: routesBySearchIdRefetch } = useGetRoutesBySearchId({
+    searchId: selectedRouteHistory?.searchId,
+  })
+
   const handleClickSearchRoutes = async () => {
     if (startPlace && goalPlace) {
       const routes = await routesRefetch()
@@ -49,21 +56,46 @@ const Main = () => {
       setClickedMorePath(false)
       setRouteList(routes.data)
       routes.data && setSelectedRoute(routes.data[0])
-      addHistory('route', startPlace?.name + ' -> ' + goalPlace?.name)
+
+      const name = startPlace?.name + ' -> ' + goalPlace?.name
+      const searchId = routes.data ? routes.data[0].searchId : 0
+      addRouteHistory({ name, searchId, startPlace, goalPlace })
       setHasStartAndGoal(true) // errText
+      setClickedPlaceHistory(false) // 최근 검색 장소 클릭 초기화
     } else {
       setHasStartAndGoal(false)
     }
   }
 
-  const addHistory = (type: string, data: string) => {
-    const history: string[] = JSON.parse(localStorage.getItem(type) || '[]')
+  const handleClickRecentSearch = async () => {
+    if (selectedRouteHistory != null && selectedRouteHistory.searchId > 0) {
+      const routes = await routesBySearchIdRefetch()
+
+      setShowRouteList(true)
+      setClickedMorePath(false)
+      setRouteList(routes.data)
+      routes.data && setSelectedRoute(routes.data[0])
+      setStartPlace(selectedRouteHistory.startPlace)
+      setGoalPlace(selectedRouteHistory.goalPlace)
+    }
+  }
+
+  const addRouteHistory = (routeHistoryItem: RouteHistory) => {
+    const history: RouteHistory[] = JSON.parse(localStorage.getItem('route') || '[]',)
     if (history.length >= 5) history.shift()
 
-    history.push(data)
-    localStorage.setItem(type, JSON.stringify(history))
-    if (type === 'route') setRouteHistory(history)
-    if (type === 'place') setPlaceHistory(history)
+    history.push(routeHistoryItem)
+    localStorage.setItem('route', JSON.stringify(history))
+    setRouteHistory(history)
+  }
+
+  const addPlaceHistory = (place: Place) => {
+    const history: Place[] = JSON.parse(localStorage.getItem('place') || '[]')
+    if (history.length >= 5) history.shift()
+
+    history.push(place)
+    localStorage.setItem('place', JSON.stringify(history))
+    setPlaceHistory(history)
   }
 
   const clearHistory = (type: string) => {
@@ -83,6 +115,18 @@ const Main = () => {
     setRouteHistory(JSON.parse(localStorage.getItem('route') || '[]'))
   }, [])
 
+  // 최근 검색한 경로 클릭 이벤트 처리
+  useEffect(() => {
+    handleClickRecentSearch()
+  }, [selectedRouteHistory])
+
+  // 최근 검색한 장소 클릭 이벤트 처리
+  useEffect(() => {
+    if (startPlace && goalPlace && clickedPlaceHistory) {
+      handleClickSearchRoutes()
+    }
+  }, [startPlace, goalPlace, clickedPlaceHistory])
+
   return (
     <div className="main">
       <div className="nav">
@@ -99,7 +143,7 @@ const Main = () => {
           hasStartAndGoal={hasStartAndGoal}
           setShowRouteList={setShowRouteList}
           showRouteList={showRouteList}
-          addHistory={addHistory}
+          addPlaceHistory={addPlaceHistory}
         />
         {isGetRoutesLoading ? (
           <Loading />
@@ -122,9 +166,16 @@ const Main = () => {
             ) : (
               <div>
                 <RecentSearch
+                  startPlace={startPlace}
+                  goalPlace={goalPlace}
+                  setStartPlace={setStartPlace}
+                  setGoalPlace={setGoalPlace}
                   routeHistory={routeHistory}
                   placeHistory={placeHistory}
                   clearHistory={clearHistory}
+                  setSelectedRouteHistory={setSelectedRouteHistory}
+                  handleClickRecentSearch={handleClickRecentSearch}
+                  setClickedPlaceHistory={setClickedPlaceHistory}
                 />
                 <Survey />
               </div>

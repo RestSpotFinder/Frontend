@@ -50,6 +50,14 @@
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 추가 */
 }
 
+.recentSearch .list > p {
+    cursor: pointer;
+}
+.recentSearch .list > p:hover {
+    color: rgba(4, 117, 244);
+    text-shadow: 1px 1px 3px rgba(4, 117, 244, 0.2); /* 텍스트 그림자 추가 */
+}
+
 .recentSearch .list > p::before {
     font-family: 'Font Awesome 5 Free', serif;
     font-size: 1em;
@@ -70,6 +78,11 @@
 
 .recentSearch .list.route p::before {
     content: '\f1b9';
+}
+
+.recentSearch .list.route > p:hover::before {
+    color: rgba(4, 117, 244);
+    text-shadow: 1px 1px 3px rgba(4, 117, 244, 0.2); /* 텍스트 그림자 추가 */
 }
 
 .recentSearch .list.place > p::before {

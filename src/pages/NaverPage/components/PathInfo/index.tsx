@@ -1,7 +1,7 @@
 import PathInfoContent from './pathInfoContent'
 import { Dispatch, SetStateAction } from 'react'
 import { useGetRoutes } from '@/apis/hooks'
-import { Route, SearchPlaceDataType } from '@/types'
+import { Route, Place } from '@/types'
 import { Loading } from '../'
 import './index.css'
 
@@ -12,8 +12,8 @@ interface PathInfoProps {
   setSelectedRoute: Dispatch<SetStateAction<Route | undefined>>
   clickedRouteIndex: number
   setClickedRouteIndex: Dispatch<SetStateAction<number>>
-  startPlace: SearchPlaceDataType | null
-  goalPlace: SearchPlaceDataType | null
+  startPlace: Place | null
+  goalPlace: Place | null
   clickedMorePath: boolean
   setClickedMorePath: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>

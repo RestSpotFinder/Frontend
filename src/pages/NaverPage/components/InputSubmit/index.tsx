@@ -1,20 +1,20 @@
 import { SetStateAction, useEffect, useState, Dispatch } from 'react'
-import { Route, SearchPlaceDataType } from '@/types'
+import { Route, Place } from '@/types'
 import InputText from './inputText.tsx'
 import './index.css'
 
 interface InputSubmitProps {
-  startPlace: SearchPlaceDataType | null
-  setStartPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
-  goalPlace: SearchPlaceDataType | null
-  setGoalPlace: Dispatch<SetStateAction<SearchPlaceDataType | null>>
+  startPlace: Place | null
+  setStartPlace: Dispatch<SetStateAction<Place | null>>
+  goalPlace: Place | null
+  setGoalPlace: Dispatch<SetStateAction<Place | null>>
   setRouteList: Dispatch<SetStateAction<Route[] | undefined>>
   handleClickSearchRoutes: () => void
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   hasStartAndGoal: boolean
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   showRouteList: boolean
-  addHistory: (type: string, place: string) => void
+  addPlaceHistory: (place: Place) => void
 }
 
 const InputSubmit = ({
@@ -28,7 +28,7 @@ const InputSubmit = ({
   hasStartAndGoal,
   setShowRouteList,
   showRouteList,
-  addHistory,
+  addPlaceHistory,
 }: InputSubmitProps) => {
   const [isReset, setIsReset] = useState<boolean>(false)
   useEffect(() => {
@@ -57,9 +57,7 @@ const InputSubmit = ({
           isReset={isReset}
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
-          setStartPlace={setStartPlace}
-          setGoalPlace={setGoalPlace}
-          addHistory={addHistory}
+          addPlaceHistory={addPlaceHistory}
         />
 
         <InputText
@@ -69,9 +67,7 @@ const InputSubmit = ({
           isReset={isReset}
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
-          setStartPlace={setStartPlace}
-          setGoalPlace={setGoalPlace}
-          addHistory={addHistory}
+          addPlaceHistory={addPlaceHistory}
         />
       </div>
 

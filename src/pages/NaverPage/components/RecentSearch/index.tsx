@@ -1,15 +1,31 @@
 import './index.css'
+import { Place, RouteHistory } from '@/types'
+import { Dispatch, SetStateAction } from 'react'
 
 interface RecentSearchProps {
-  routeHistory: string[]
-  placeHistory: string[]
+  startPlace: Place | null
+  goalPlace: Place | null
+  setStartPlace: Dispatch<SetStateAction<Place | null>>
+  setGoalPlace: Dispatch<SetStateAction<Place | null>>
+  routeHistory: RouteHistory[]
+  placeHistory: Place[]
   clearHistory: (type: string) => void
+  setSelectedRouteHistory: Dispatch<SetStateAction<RouteHistory | undefined>>
+  handleClickRecentSearch: () => void
+  setClickedPlaceHistory: Dispatch<SetStateAction<boolean>>
 }
 
 const RecentSearch = ({
+  startPlace,
+  goalPlace,
+  setStartPlace,
+  setGoalPlace,
   clearHistory,
   routeHistory,
   placeHistory,
+  setSelectedRouteHistory,
+  handleClickRecentSearch,
+  setClickedPlaceHistory,
 }: RecentSearchProps) => {
   return (
     <div className="recentSearch">
@@ -19,7 +35,20 @@ const RecentSearch = ({
       </div>
       <div className="list place">
         {placeHistory.length > 0 ? (
-          placeHistory.map(search => <p>{search}</p>)
+          placeHistory
+            .slice()
+            .reverse()
+            .map(place => (
+              <p
+                onClick={() => {
+                  setClickedPlaceHistory(true)
+                  if (startPlace == null) setStartPlace(place)
+                  else if (goalPlace == null) setGoalPlace(place)
+                }}
+              >
+                {place.name}
+              </p>
+            ))
         ) : (
           <span>검색 기록이 없습니다.</span>
         )}
@@ -31,7 +60,20 @@ const RecentSearch = ({
       </div>
       <div className="list route">
         {routeHistory.length > 0 ? (
-          routeHistory.map(search => <p>{search}</p>)
+          routeHistory
+            .slice()
+            .reverse()
+            .map(routeHistory => (
+              <p
+                key={routeHistory.searchId}
+                onClick={() => {
+                  setSelectedRouteHistory(routeHistory)
+                  handleClickRecentSearch()
+                }}
+              >
+                {routeHistory.name}
+              </p>
+            ))
         ) : (
           <span>검색 기록이 없습니다.</span>
         )}
