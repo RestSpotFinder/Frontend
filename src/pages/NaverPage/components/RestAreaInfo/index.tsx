@@ -8,15 +8,23 @@ import './index.css'
 
 interface RestAreaInfoProps {
   route: PathInfoType | undefined
+  restSpotModalOpen: boolean
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   hoveredRestSpot: string
+  setHoveredRestSpot: Dispatch<SetStateAction<string>>
+  clickedRestSpot: string
+  setClickedRestSpot: Dispatch<SetStateAction<string>>
   clickedRouteIndex: number
 }
 
 const RestAreaInfo = ({
   route,
+  restSpotModalOpen,
   setRestSpotModalOpen,
   hoveredRestSpot,
+  setHoveredRestSpot,
+  clickedRestSpot,
+  setClickedRestSpot,
   clickedRouteIndex,
 }: RestAreaInfoProps) => {
   const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
@@ -31,14 +39,23 @@ const RestAreaInfo = ({
   useEffect(() => {
     if (!restSpotsLoading) {
       setRestAreaList(restAreaListData)
+      setClickedRestSpot('')
       restSpotsRefetch()
     }
   }, [restAreaListData, setRestAreaList, restSpotsRefetch, restSpotsLoading])
+
+  // 초기화 시 RestSpotList 초기화
+  useEffect(() => {
+    if (!restSpotModalOpen) setRestAreaList([])
+  }, [restSpotModalOpen])
 
   return (
     <div className={`restAreaInfo`}>
       {route && <PathInfoContent ranking={clickedRouteIndex} route={route} />}
       <div className="slideBtn" onClick={() => setRestSpotModalOpen(false)} />
+      <p>
+        <span>더블 클릭시 </span> 휴게소 정보 페이지로 이동합니다.
+      </p>
       {restSpotsFetching ? (
         <Loading />
       ) : (
@@ -63,6 +80,9 @@ const RestAreaInfo = ({
                     routeName={value.routeName}
                     naverMapUrl={value.naverMapUrl}
                     hoveredRestSpot={hoveredRestSpot}
+                    setHoveredRestSpot={setHoveredRestSpot}
+                    clickedRestSpot={clickedRestSpot}
+                    setClickedRestSpot={setClickedRestSpot}
                   />
                 )
               })}

@@ -26,6 +26,7 @@ const Main = () => {
   const [restSpotModalOpen, setRestSpotModalOpen] = useState<boolean>(false)
   const [showRouteList, setShowRouteList] = useState<boolean>(false)
   const [hoveredRestSpot, setHoveredRestSpot] = useState<string>('')
+  const [clickedRestSpot, setClickedRestSpot] = useState<string>('')
   const [routeHistory, setRouteHistory] = useState<RouteHistory[]>([])
   const [placeHistory, setPlaceHistory] = useState<Place[]>([])
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
@@ -62,6 +63,7 @@ const Main = () => {
       addRouteHistory({ name, searchId, startPlace, goalPlace })
       setHasStartAndGoal(true) // errText
       setClickedPlaceHistory(false) // 최근 검색 장소 클릭 초기화
+      setClickedRestSpot('') // 휴게소 클릭 초기화
     } else {
       setHasStartAndGoal(false)
     }
@@ -162,6 +164,7 @@ const Main = () => {
                 clickedMorePath={clickedMorePath}
                 setClickedMorePath={setClickedMorePath}
                 setRestSpotModalOpen={setRestSpotModalOpen}
+                setClickedRestSpot={setClickedRestSpot}
               />
             ) : (
               <div>
@@ -187,8 +190,12 @@ const Main = () => {
         <div className="nav">
           <RestAreaInfo
             route={selectedRoute}
+            restSpotModalOpen={restSpotModalOpen}
             setRestSpotModalOpen={setRestSpotModalOpen}
             hoveredRestSpot={hoveredRestSpot}
+            setHoveredRestSpot={setHoveredRestSpot}
+            clickedRestSpot={clickedRestSpot}
+            setClickedRestSpot={setClickedRestSpot}
             clickedRouteIndex={clickedRouteIndex}
           />
         </div>
@@ -203,6 +210,8 @@ const Main = () => {
           restSpotList={restSpotList}
           restSpotModalOpen={restSpotModalOpen}
           setHoveredRestSpot={setHoveredRestSpot}
+          setClickedRestSpot={setClickedRestSpot}
+          clickedRestSpot={clickedRestSpot}
         />
       </div>
     </div>

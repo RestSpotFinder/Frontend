@@ -17,6 +17,7 @@ interface PathInfoProps {
   clickedMorePath: boolean
   setClickedMorePath: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
+  setClickedRestSpot: Dispatch<SetStateAction<string>>
 }
 
 const PathInfo = ({
@@ -30,6 +31,7 @@ const PathInfo = ({
   clickedMorePath,
   setClickedMorePath,
   setRestSpotModalOpen,
+  setClickedRestSpot,
 }: PathInfoProps) => {
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -62,7 +64,11 @@ const PathInfo = ({
             <div
               key={route.routeId}
               onClick={() => handleClick(route, index + 1)}
-              onDoubleClick={() => setRestSpotModalOpen(true)}>
+              onDoubleClick={() => {
+                setRestSpotModalOpen(true)
+                setClickedRestSpot('')
+              }}
+            >
               <PathInfoContent ranking={index + 1} route={route} clickedId={clickedRouteIndex} />
               <hr />
             </div>
@@ -72,10 +78,17 @@ const PathInfo = ({
         {isGetRoutesLoading && clickedMorePath ? (
           <Loading className="bottom" />
         ) : (
-          <div className={`moreBtn  ${clickedMorePath && 'hidden'}`} onClick={handleClickMorePathData}>더보기</div>
+          <div
+            className={`moreBtn  ${clickedMorePath && 'hidden'}`}
+            onClick={handleClickMorePathData}
+          >
+            더보기
+          </div>
         )}
       </div>
-      <p className="searchInfo">{startPlace?.name} {`->`} {goalPlace?.name}</p>
+      <p className="searchInfo">
+        {startPlace?.name} {`->`} {goalPlace?.name}
+      </p>
     </div>
   )
 }

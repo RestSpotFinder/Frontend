@@ -5,6 +5,7 @@ interface RestSpotMarkerProps {
   position: { lat: number; lng: number }
   clicked?: boolean
   onClick?: () => void
+  onDoubleClick?: () => void
   onMouseEnter: () => void
   onMouseLeave: () => void
 }
@@ -12,17 +13,20 @@ interface RestSpotMarkerProps {
 const RestSpotMarker = ({
   position,
   onClick,
+  onDoubleClick,
   onMouseEnter,
   onMouseLeave,
+  clicked,
 }: RestSpotMarkerProps) => {
   return (
     <Marker
       onClick={onClick}
+      onDblclick={onDoubleClick}
       onMouseover={onMouseEnter}
       onMouseout={onMouseLeave}
       defaultPosition={position}
       icon={{
-        content: ['<i class="test fa-solid fa-house"/>'].join(''),
+        content: `<i class="${clicked ? 'clicked' : ''} marker fa-solid fa-house"></i>`,
       }}
     />
   )
