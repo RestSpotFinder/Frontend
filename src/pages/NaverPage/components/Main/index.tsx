@@ -39,7 +39,6 @@ const Main = () => {
       //   [waypoint.lng, waypoint.lat].join(','),
       // ),
       page: '1',
-      isTest: true,
     })
   const { data: restSpotList, refetch: restSpotsRefetch } = useGetRestSpots({
     routeId: selectedRoute?.routeId,
