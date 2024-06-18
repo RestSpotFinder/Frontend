@@ -7,15 +7,13 @@ interface Request {
   goal: string
   waypoints?: string[]
   page: string
-  isTest: boolean
 }
 
-const useGetRoutes = ({ start, goal, waypoints, page, isTest }: Request) => {
+const useGetRoutes = ({ start, goal, waypoints, page }: Request) => {
   const getRoutes = async () => {
     const response = await apiClient.get(
-      `/route?start=${start}&goal=${goal}&page=${page}&isTest=${isTest}${
-        waypoints ? `&waypoints=${waypoints.join('%7c')}` : ''
-      }`,
+      `/route?start=${start}&goal=${goal}&page=${page}
+      ${waypoints ? `&waypoints=${waypoints.join('%7c')}` : ''}`,
     )
 
     return response.data.data

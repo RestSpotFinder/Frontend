@@ -38,7 +38,6 @@ const PathInfo = ({
       start: [startPlace?.lng, startPlace?.lat].join(','),
       goal: [goalPlace?.lng, goalPlace?.lat].join(','),
       page: '2',
-      isTest: true,
     })
 
   const handleClickMorePathData = () => {
