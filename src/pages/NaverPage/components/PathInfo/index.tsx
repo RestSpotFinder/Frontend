@@ -77,12 +77,13 @@ const PathInfo = ({
         {isGetRoutesLoading && clickedMorePath ? (
           <Loading className="bottom" />
         ) : (
-          <div
-            className={`moreBtn  ${clickedMorePath && 'hidden'}`}
-            onClick={handleClickMorePathData}
-          >
-            더보기
-          </div>
+          // <div
+          //   className={`moreBtn  ${clickedMorePath && 'hidden'}`}
+          //   onClick={handleClickMorePathData}
+          // >
+          //   더보기
+          // </div>
+          <></>
         )}
       </div>
       <p className="searchInfo">
