@@ -35,6 +35,8 @@ const Main = () => {
     useGetRoutes({
       start: [startPlace?.lng, startPlace?.lat].join(','),
       goal: [goalPlace?.lng, goalPlace?.lat].join(','),
+      startName: startPlace?.name,
+      goalName: goalPlace?.name,
       // waypoints: waypoints.map(waypoint =>
       //   [waypoint.lng, waypoint.lat].join(','),
       // ),
