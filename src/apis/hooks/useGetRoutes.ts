@@ -5,21 +5,30 @@ import { Route } from '@/types'
 interface Request {
   start: string
   goal: string
+  startName?: string
+  goalName?: string
   waypoints?: string[]
   page: string
 }
 
-const useGetRoutes = ({ start, goal, waypoints, page }: Request) => {
+const useGetRoutes = ({
+  start,
+  goal,
+  startName,
+  goalName,
+  waypoints,
+  page,
+}: Request) => {
   const getRoutes = async () => {
     const response = await apiClient.get(
-      `/route?start=${start}&goal=${goal}&page=${page}
+      `/route?start=${start}&goal=${goal}&startName=${startName}&goalName=${goalName}&page=${page}
       ${waypoints ? `&waypoints=${waypoints.join('%7c')}` : ''}`,
     )
 
     return response.data.data
   }
 
-  const queryKey = ['routes', start, goal, waypoints, page]
+  const queryKey = ['routes', start, goal, startName, goalName, waypoints, page]
 
   return useQuery<Route[], Error>({
     queryKey,

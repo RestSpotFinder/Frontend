@@ -1,6 +1,6 @@
 import PathInfoContent from './pathInfoContent'
 import { Dispatch, SetStateAction } from 'react'
-import { useGetRoutes } from '@/apis/hooks'
+// import { useGetRoutes } from '@/apis/hooks'
 import { Route, Place } from '@/types'
 import { Loading } from '../'
 import './index.css'
@@ -22,30 +22,30 @@ interface PathInfoProps {
 
 const PathInfo = ({
   routeList,
-  setRouteList,
+  // setRouteList,
   setSelectedRoute,
   clickedRouteIndex,
   setClickedRouteIndex,
   startPlace,
   goalPlace,
   clickedMorePath,
-  setClickedMorePath,
+  // setClickedMorePath,
   setRestSpotModalOpen,
   setClickedRestSpot,
 }: PathInfoProps) => {
-  const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
-    useGetRoutes({
-      start: [startPlace?.lng, startPlace?.lat].join(','),
-      goal: [goalPlace?.lng, goalPlace?.lat].join(','),
-      page: '2',
-    })
+  // const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
+  //   useGetRoutes({
+  //     start: [startPlace?.lng, startPlace?.lat].join(','),
+  //     goal: [goalPlace?.lng, goalPlace?.lat].join(','),
+  //     page: '2',
+  //   })
 
-  const handleClickMorePathData = () => {
-    routesRefetch().then(
-      routes => routes.data && setRouteList([...routeList, ...routes.data]),
-    )
-    setClickedMorePath(true)
-  }
+  // const handleClickMorePathData = () => {
+  //   routesRefetch().then(
+  //     routes => routes.data && setRouteList([...routeList, ...routes.data]),
+  //   )
+  //   setClickedMorePath(true)
+  // }
 
   const handleClick = (route: Route, index: number) => {
     setClickedRouteIndex(index)
@@ -74,15 +74,16 @@ const PathInfo = ({
           )
         })}
 
-        {isGetRoutesLoading && clickedMorePath ? (
+        {clickedMorePath ? (
           <Loading className="bottom" />
         ) : (
-          <div
-            className={`moreBtn  ${clickedMorePath && 'hidden'}`}
-            onClick={handleClickMorePathData}
-          >
-            더보기
-          </div>
+          // <div
+          //   className={`moreBtn  ${clickedMorePath && 'hidden'}`}
+          //   onClick={handleClickMorePathData}
+          // >
+          //   더보기
+          // </div>
+          <></>
         )}
       </div>
       <p className="searchInfo">
