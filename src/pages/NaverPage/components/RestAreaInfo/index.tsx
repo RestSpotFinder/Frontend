@@ -3,19 +3,29 @@ import RestAreaInfoContent from './restAreaInfoContent'
 import { RestSpot, PathInfoType } from '@/types'
 import { useGetRestSpots } from '@/apis/hooks'
 import { Loading } from '..'
-import { useEffect, useState, Dispatch, SetStateAction, Fragment } from 'react'
-import { DoubleLeftArrowIcon } from '@/assets/Icons'
+import { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import './index.css'
 
 interface RestAreaInfoProps {
   route: PathInfoType | undefined
+  restSpotModalOpen: boolean
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   hoveredRestSpot: string
+  setHoveredRestSpot: Dispatch<SetStateAction<string>>
+  clickedRestSpot: string
+  setClickedRestSpot: Dispatch<SetStateAction<string>>
+  clickedRouteIndex: number
 }
 
 const RestAreaInfo = ({
   route,
+  restSpotModalOpen,
   setRestSpotModalOpen,
   hoveredRestSpot,
+  setHoveredRestSpot,
+  clickedRestSpot,
+  setClickedRestSpot,
+  clickedRouteIndex,
 }: RestAreaInfoProps) => {
   const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
 
@@ -29,50 +39,51 @@ const RestAreaInfo = ({
   useEffect(() => {
     if (!restSpotsLoading) {
       setRestAreaList(restAreaListData)
+      setClickedRestSpot('')
       restSpotsRefetch()
     }
   }, [restAreaListData, setRestAreaList, restSpotsRefetch, restSpotsLoading])
 
+  // 초기화 시 RestSpotList 초기화
+  useEffect(() => {
+    if (!restSpotModalOpen) setRestAreaList([])
+  }, [restSpotModalOpen])
+
   return (
-    <div
-      className={`relative z-50 flex w-96 shrink-0 flex-col border border-gray-300 `}
-    >
-      {route && <PathInfoContent ranking={-1} route={route} />}
-      <i
-        className="absolute right-3 top-3 rounded-lg hover:bg-emerald-100"
-        onClick={() => setRestSpotModalOpen(false)}
-      >
-        <DoubleLeftArrowIcon className="h-6 w-6 hover:stroke-green-800" />
-      </i>
-      <hr />
+    <div className={`restAreaInfo`}>
+      {route && <PathInfoContent ranking={clickedRouteIndex} route={route} />}
+      <div className="slideBtn" onClick={() => setRestSpotModalOpen(false)} />
+      <p>
+        <span>더블 클릭시 </span> 휴게소 정보 페이지로 이동합니다.
+      </p>
       {restSpotsFetching ? (
-        <Loading className="h-full" />
+        <Loading />
       ) : (
         <>
           {restAreaListData?.length === 0 ? (
-            <div className="relative flex w-full justify-center">
-              <h1 className="font-bold">보여줄 휴게소가 없습니다.</h1>
-            </div>
+            <p>
+              <span>조회 데이터</span>가 없습니다.
+            </p>
           ) : (
-            <div className="flex w-full flex-col overflow-scroll">
-              {restAreaList?.map((value, index) => {
+            <div>
+              {restAreaList?.map(value => {
                 return (
-                  <Fragment key={index}>
-                    <RestAreaInfoContent
-                      key={value.restAreaId}
-                      type={value.type}
-                      restaurant={value.hasRestaurant}
-                      gasStation={value.hasGasStation}
-                      electricCar={value.hasElectricChargingStation}
-                      pharmacy={value.hasPharmacy}
-                      toilet={value.hasRestroom}
-                      name={value.name}
-                      routeName={value.routeName}
-                      naverMapUrl={value.naverMapUrl}
-                      hoveredRestSpot={hoveredRestSpot}
-                    />
-                    {index !== restAreaList.length - 1 && <hr />}
-                  </Fragment>
+                  <RestAreaInfoContent
+                    key={value.restAreaId}
+                    type={value.type}
+                    restaurant={value.hasRestaurant}
+                    gasStation={value.hasGasStation}
+                    chargingStation={value.hasElectricChargingStation}
+                    pharmacy={value.hasPharmacy}
+                    toilet={value.hasRestroom}
+                    name={value.name}
+                    routeName={value.routeName}
+                    naverMapUrl={value.naverMapUrl}
+                    hoveredRestSpot={hoveredRestSpot}
+                    setHoveredRestSpot={setHoveredRestSpot}
+                    clickedRestSpot={clickedRestSpot}
+                    setClickedRestSpot={setClickedRestSpot}
+                  />
                 )
               })}
             </div>

@@ -1,13 +1,18 @@
 import { PathInfoType } from '@/types'
+import './pathInfoContent.css'
 
 interface PathInfoContentProps {
   ranking: number
+  clickedId?: number
   route: PathInfoType
 }
 
-const PathInfoContent = ({ route, ranking }: PathInfoContentProps) => {
+const PathInfoContent = ({
+  route,
+  ranking,
+  clickedId,
+}: PathInfoContentProps) => {
   const { duration, distance, tollFare, fuelPrice, optionText } = route
-
   const convertTimeToHoursMinutes = (milliseconds: number) => {
     const hours = Math.floor(milliseconds / 3600000)
     const minutes = Math.floor((milliseconds % 3600000) / 60000)
@@ -28,36 +33,29 @@ const PathInfoContent = ({ route, ranking }: PathInfoContentProps) => {
   const formattedDistance = convertMeterToKilometer(Number(distance))
 
   return (
-    <div className="relative flex flex-col gap-2 px-8 py-6">
-      <div className="flex gap-2">
-        <span
-          className={`flex h-6 w-6 items-center justify-center rounded-full bg-green-600 ${ranking < 0 && 'hidden'}`}
-        >
-          <p className="text-white">{ranking + 1}</p>
-        </span>
-        <h1 className="font-bold text-green-600">{optionText}</h1>
+    <div
+      className={`pathInfoContent ${clickedId === ranking ? 'clicked' : ''}`}
+    >
+      <div className="firstLine" data-order={ranking}>
+        {optionText}
       </div>
-      <div className="flex items-end gap-2">
-        <h2 className="flex items-end gap-1">
-          {formattedTime.hours !== 0 && (
-            <>
-              <p className={`text-3xl font-bold`}>{formattedTime.hours}</p>
-              <p className={`text-lg`}>시간</p>
-            </>
-          )}
-          {formattedTime.minutes !== 0 && (
-            <>
-              <p className={`text-3xl font-bold`}>{formattedTime.minutes}</p>
-              <p className={`text-lg`}>분</p>
-            </>
-          )}
-        </h2>
-        <div className="mb-1 h-5 w-[0.1rem] bg-gray-300" />
-        <p className="font-bold">{formattedDistance}km</p>
+      <div className="secondLine">
+        {formattedTime.hours !== 0 && (
+          <p>
+            <span>{formattedTime.hours}</span>시간
+          </p>
+        )}
+        {formattedTime.minutes !== 0 && (
+          <p>
+            <span>{formattedTime.minutes}</span>분
+          </p>
+        )}
+        <div className="separatorLine" />
+        <span>{formattedDistance}km</span>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="thirdLine">
         <p>{`통행료 ${tollInfo}`}</p>
-        <div className="mb-1 h-4 w-[0.1rem] bg-gray-300" />
+        <div className="separatorLine" />
         <p>{`연료비 ${parseFloat(fuelPrice).toLocaleString()}원`}</p>
       </div>
     </div>

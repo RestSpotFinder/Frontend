@@ -1,0 +1,92 @@
+/* index.css */
+
+.pathInfoContent {
+    padding: 1rem;
+}
+
+.pathInfoContent div {
+    cursor: pointer;
+    margin-bottom: 0.1rem;
+}
+
+.pathInfoContent.clicked {
+    background-color: rgb(4, 117, 244,0.1);
+    border-top: 1px solid rgb(4, 117, 244, 0.5);
+    border-bottom: 1px solid rgb(4, 117, 244, 0.5);
+}
+
+.firstLine {
+    position: relative;
+    /*border: 1px solid red;*/
+    letter-spacing: -0.1em;
+    font-size: 0.8em;
+    color: rgb(4, 117, 244);
+    font-weight: 800;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.1);
+    padding-left: 1.75rem;
+}
+
+.firstLine:before {
+    content: attr(data-order);
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    width: 1.5em;
+    transform: translateY(-50%);
+
+    padding-left: 0.35rem;
+    color: white;
+    border-radius: 100%;
+    font-weight: 600;
+    background-color: rgb(4, 117, 244);
+}
+
+.secondLine {
+    display: flex;
+    align-items: flex-end;
+}
+
+.secondLine p {
+    letter-spacing: -0.2em;
+    /*border: 1px solid red;*/
+    font-size: 0.8rem;
+    margin: 0 0.3rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+.secondLine p span {
+    font-size: 1.5rem;
+}
+
+.secondLine .separatorLine {
+    margin: 0 0.3rem 0.3rem 0.3rem;
+    width: 1px;
+    height: 0.8rem;
+    border: 1px solid rgb(0, 0, 0, 0.1);
+}
+
+
+.thirdLine {
+    display: flex;
+    align-items: center;
+}
+
+.thirdLine p {
+    letter-spacing: -0.1em;
+    font-size: 0.9rem;
+    margin: 0 0.3rem;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    color: #333333;
+}
+
+.thirdLine p span {
+    font-size: 1.5rem;
+}
+
+.thirdLine .separatorLine {
+    margin: 0.2rem 0.3rem 0 0.3rem;
+    width: 1px;
+    height: 0.8rem;
+    border: 1px solid rgb(0, 0, 0, 0.1);
+}

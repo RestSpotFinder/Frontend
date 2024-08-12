@@ -1,0 +1,48 @@
+/* index.css */
+
+.pathInfo {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.pathInfo > p {
+    letter-spacing: -0.1em;
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: rgb(0, 0, 0, 0.8);
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgb(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+}
+
+.pathInfo > p span {
+    font-size: 0.83rem;
+    text-shadow: 0 0 1px rgb(220, 20, 60, 0.1);
+    color: rgb(220, 20, 60);
+}
+
+
+.routeBox {
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-width: none; /* 스크롤바 안 보이게 설정 */
+    flex-grow: 1;
+}
+
+.moreBtn {
+    cursor: pointer;
+    background-color: rgb(34, 139, 34, 0.7);
+    box-shadow: 1px 1px 2px rgb(0,0,0,0.2);
+    color: white;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgb(0,0,0,0.2);
+
+    width:70%;
+    margin: 1rem auto;
+    border-radius: 10px;
+    text-align: center;
+    padding: 0.75em 1.5em;
+}

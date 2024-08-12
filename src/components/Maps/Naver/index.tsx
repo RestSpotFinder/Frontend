@@ -4,7 +4,7 @@ import {
   useNavermaps,
   Polyline,
 } from 'react-naver-maps'
-import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
+import { useEffect, Dispatch, SetStateAction, useRef } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
 import { Place, Route, RestSpot } from '@/types'
 
@@ -18,8 +18,8 @@ interface NaverProps {
   restSpotList?: RestSpot[]
   restSpotModalOpen: boolean
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
-  clickedFindRoute: boolean
-  setClickedFindRoute: Dispatch<SetStateAction<boolean>>
+  setClickedRestSpot: Dispatch<SetStateAction<string>>
+  clickedRestSpot: string
 }
 
 const Naver = ({
@@ -32,12 +32,11 @@ const Naver = ({
   restSpotList,
   restSpotModalOpen,
   setHoveredRestSpot,
-  clickedFindRoute,
-  setClickedFindRoute,
+  setClickedRestSpot,
+  clickedRestSpot,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
-  const [restSpotClicked, setRestSpotClicked] = useState<RestSpot>()
 
   useEffect(() => {
     start &&
@@ -54,12 +53,11 @@ const Naver = ({
   }, [goal, mapRef])
 
   useEffect(() => {
-    if (clickedFindRoute) {
+    if (selectedRoute) {
       mapRef.current?.setZoom(8)
       mapRef.current?.setCenter(new naver.maps.LatLng(36.5, 127.9))
-      setClickedFindRoute(false)
     }
-  }, [clickedFindRoute, setClickedFindRoute])
+  }, [selectedRoute])
 
   const handleClickRoute = (routeOption: string) => {
     setSelectedRoute(
@@ -118,17 +116,20 @@ const Naver = ({
           restSpotModalOpen &&
           restSpotList.map(spot => {
             return (
-              <RestSpotMarker
-                position={{
-                  lat: spot.lat,
-                  lng: spot.lng,
-                }}
-                onClick={() => setRestSpotClicked(spot)}
-                onMouseEnter={() => handleEnterRestSpotMarker(spot)}
-                onMouseLeave={handleLeaveRestSpotMarker}
-                clicked={restSpotClicked?.restAreaId === spot.restAreaId}
-                key={spot.restAreaId}
-              />
+              <div>
+                <RestSpotMarker
+                  position={{
+                    lat: spot.lat,
+                    lng: spot.lng,
+                  }}
+                  onClick={() => setClickedRestSpot(spot.name)}
+                  onDoubleClick={() => window.open(spot.naverMapUrl, '_blank')}
+                  onMouseEnter={() => handleEnterRestSpotMarker(spot)}
+                  onMouseLeave={handleLeaveRestSpotMarker}
+                  key={spot.restAreaId}
+                  clicked={clickedRestSpot == spot.name}
+                />
+              </div>
             )
           })}
         {start &&

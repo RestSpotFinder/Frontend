@@ -1,3 +1,12 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css);
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
 @tailwind base;
+
+html, body {
+    letter-spacing: -0.05em;
+    font-family: "Apple SD Gothic Neo", "Apple SD Gothic", notosanskr, "Malgun Gothic", "맑은 고딕", Dotum, 돋움, sans-serif;
+}
+
 @tailwind components;
 @tailwind utilities;
