@@ -1,6 +1,7 @@
 import { SetStateAction, useEffect, useState, Dispatch } from 'react'
 import { Route, Place } from '@/types'
 import InputText from './inputText.tsx'
+import { debounce } from 'lodash'
 import './index.css'
 
 interface InputSubmitProps {
@@ -75,7 +76,7 @@ const InputSubmit = ({
         <button onClick={handleClickReset}>
           <p>다시입력</p>
         </button>
-        <button onClick={handleClickSearchRoutes}>
+        <button onClick={debounce(handleClickSearchRoutes, 500)}>
           <p>길찾기</p>
         </button>
       </div>
