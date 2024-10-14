@@ -31,7 +31,7 @@ const Main = () => {
   const [routeHistory, setRouteHistory] = useState<RouteHistory[]>([])
   const [placeHistory, setPlaceHistory] = useState<Place[]>([])
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
-  const [isMenuActive, setIsMenuActive] = useState(false)
+  const [isMenuActive, setIsMenuActive] = useState(true)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
