@@ -20,7 +20,9 @@ const Main = () => {
   const [goalPlace, setGoalPlace] = useState<Place | null>(null)
   const [routeList, setRouteList] = useState<Route[]>()
   const [selectedRoute, setSelectedRoute] = useState<Route>()
-  const [selectedRouteHistory, setSelectedRouteHistory] = useState<RouteHistory | undefined>()
+  const [selectedRouteHistory, setSelectedRouteHistory] = useState<
+    RouteHistory | undefined
+  >()
   const [clickedRouteIndex, setClickedRouteIndex] = useState<number>(0)
   const [clickedMorePath, setClickedMorePath] = useState<boolean>(false)
   const [hasStartAndGoal, setHasStartAndGoal] = useState<boolean>(true)
@@ -86,7 +88,9 @@ const Main = () => {
   }
 
   const addRouteHistory = (routeHistoryItem: RouteHistory) => {
-    const history: RouteHistory[] = JSON.parse(localStorage.getItem('route') || '[]',)
+    const history: RouteHistory[] = JSON.parse(
+      localStorage.getItem('route') || '[]',
+    )
     if (history.length >= 5) history.shift()
 
     history.push(routeHistoryItem)
@@ -112,7 +116,7 @@ const Main = () => {
   }
 
   const handleClickSlideButton = () => {
-    setIsMenuActive(!isMenuActive);
+    setIsMenuActive(!isMenuActive)
   }
 
   useEffect(() => {
@@ -138,75 +142,85 @@ const Main = () => {
 
   return (
     <div className="main">
-      <div className={classNames("nav", isMenuActive && 'active')}>
-        <div className={classNames("slideBtn", isMenuActive && 'active')} onClick={handleClickSlideButton}></div>
-        <Title />
-        <InputSubmit
-          startPlace={startPlace}
-          setStartPlace={setStartPlace}
-          goalPlace={goalPlace}
-          setGoalPlace={setGoalPlace}
-          setRouteList={setRouteList}
-          handleClickSearchRoutes={handleClickSearchRoutes}
-          setRestSpotModalOpen={setRestSpotModalOpen}
-          hasStartAndGoal={hasStartAndGoal}
-          setShowRouteList={setShowRouteList}
-          showRouteList={showRouteList}
-          addPlaceHistory={addPlaceHistory}
-        />
-        {isGetRoutesLoading ? (
-          <Loading />
-        ) : (
-          <>
-            {routeList && showRouteList ? (
-              <PathInfo
-                routeList={routeList}
-                setRouteList={setRouteList}
-                selectedRoute={selectedRoute}
-                setSelectedRoute={setSelectedRoute}
-                clickedRouteIndex={clickedRouteIndex}
-                setClickedRouteIndex={setClickedRouteIndex}
-                startPlace={startPlace}
-                goalPlace={goalPlace}
-                clickedMorePath={clickedMorePath}
-                setClickedMorePath={setClickedMorePath}
-                setRestSpotModalOpen={setRestSpotModalOpen}
-                setClickedRestSpot={setClickedRestSpot}
-              />
-            ) : (
-              <div>
-                <RecentSearch
+      <div className={classNames('navContainer', isMenuActive && 'active')}>
+        <div className={classNames('nav', isMenuActive && 'active')}>
+          <Title />
+          <InputSubmit
+            startPlace={startPlace}
+            setStartPlace={setStartPlace}
+            goalPlace={goalPlace}
+            setGoalPlace={setGoalPlace}
+            setRouteList={setRouteList}
+            handleClickSearchRoutes={handleClickSearchRoutes}
+            setRestSpotModalOpen={setRestSpotModalOpen}
+            hasStartAndGoal={hasStartAndGoal}
+            setShowRouteList={setShowRouteList}
+            showRouteList={showRouteList}
+            addPlaceHistory={addPlaceHistory}
+          />
+          {isGetRoutesLoading ? (
+            <Loading />
+          ) : (
+            <>
+              {routeList && showRouteList ? (
+                <PathInfo
+                  routeList={routeList}
+                  setRouteList={setRouteList}
+                  selectedRoute={selectedRoute}
+                  setSelectedRoute={setSelectedRoute}
+                  clickedRouteIndex={clickedRouteIndex}
+                  setClickedRouteIndex={setClickedRouteIndex}
                   startPlace={startPlace}
                   goalPlace={goalPlace}
-                  setStartPlace={setStartPlace}
-                  setGoalPlace={setGoalPlace}
-                  routeHistory={routeHistory}
-                  placeHistory={placeHistory}
-                  clearHistory={clearHistory}
-                  setSelectedRouteHistory={setSelectedRouteHistory}
-                  handleClickRecentSearch={handleClickRecentSearch}
-                  setClickedPlaceHistory={setClickedPlaceHistory}
+                  clickedMorePath={clickedMorePath}
+                  setClickedMorePath={setClickedMorePath}
+                  setRestSpotModalOpen={setRestSpotModalOpen}
+                  setClickedRestSpot={setClickedRestSpot}
                 />
-                {/* <Survey /> */}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      {selectedRoute && restSpotModalOpen && (
-        <div className="nav">
-          <RestAreaInfo
-            route={selectedRoute}
-            restSpotModalOpen={restSpotModalOpen}
-            setRestSpotModalOpen={setRestSpotModalOpen}
-            hoveredRestSpot={hoveredRestSpot}
-            setHoveredRestSpot={setHoveredRestSpot}
-            clickedRestSpot={clickedRestSpot}
-            setClickedRestSpot={setClickedRestSpot}
-            clickedRouteIndex={clickedRouteIndex}
-          />
+              ) : (
+                <div>
+                  <RecentSearch
+                    startPlace={startPlace}
+                    goalPlace={goalPlace}
+                    setStartPlace={setStartPlace}
+                    setGoalPlace={setGoalPlace}
+                    routeHistory={routeHistory}
+                    placeHistory={placeHistory}
+                    clearHistory={clearHistory}
+                    setSelectedRouteHistory={setSelectedRouteHistory}
+                    handleClickRecentSearch={handleClickRecentSearch}
+                    setClickedPlaceHistory={setClickedPlaceHistory}
+                  />
+                  {/* <Survey /> */}
+                </div>
+              )}
+            </>
+          )}
         </div>
-      )}
+        {selectedRoute && restSpotModalOpen && (
+          <div className="nav">
+            <RestAreaInfo
+              isActive={isMenuActive}
+              route={selectedRoute}
+              restSpotModalOpen={restSpotModalOpen}
+              setRestSpotModalOpen={setRestSpotModalOpen}
+              hoveredRestSpot={hoveredRestSpot}
+              setHoveredRestSpot={setHoveredRestSpot}
+              clickedRestSpot={clickedRestSpot}
+              setClickedRestSpot={setClickedRestSpot}
+              clickedRouteIndex={clickedRouteIndex}
+            />
+          </div>
+        )}
+        <div className="slideBtnContainer">
+          <div
+            className={classNames('slideBtn', isMenuActive && 'active')}
+            onClick={handleClickSlideButton}
+          >
+          </div>
+        </div>
+      </div>
+
       <div className="map">
         <NaverMap
           start={startPlace}

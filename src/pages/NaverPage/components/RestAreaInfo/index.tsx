@@ -5,6 +5,7 @@ import { useGetRestSpots } from '@/apis/hooks'
 import { Loading } from '..'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import './index.css'
+import classNames from 'classnames'
 
 interface RestAreaInfoProps {
   route: PathInfoType | undefined
@@ -15,6 +16,7 @@ interface RestAreaInfoProps {
   clickedRestSpot: string
   setClickedRestSpot: Dispatch<SetStateAction<string>>
   clickedRouteIndex: number
+  isActive: boolean
 }
 
 const RestAreaInfo = ({
@@ -26,6 +28,7 @@ const RestAreaInfo = ({
   clickedRestSpot,
   setClickedRestSpot,
   clickedRouteIndex,
+  isActive
 }: RestAreaInfoProps) => {
   const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
 
@@ -52,7 +55,7 @@ const RestAreaInfo = ({
   return (
     <div className={`restAreaInfo`}>
       {route && <PathInfoContent ranking={clickedRouteIndex} route={route} />}
-      <div className="slideBtn" onClick={() => setRestSpotModalOpen(false)} />
+      <div className={classNames("slideBtn", isActive && 'active')} onClick={() => setRestSpotModalOpen(false)} />
       <p>
         <span>더블 클릭시 </span> 휴게소 정보 페이지로 이동합니다.
       </p>
