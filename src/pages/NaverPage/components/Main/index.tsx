@@ -13,6 +13,7 @@ import { Place, Route, RouteHistory } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import './index.css'
 import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
+import classNames from 'classnames'
 
 const Main = () => {
   const [startPlace, setStartPlace] = useState<Place | null>(null)
@@ -30,6 +31,7 @@ const Main = () => {
   const [routeHistory, setRouteHistory] = useState<RouteHistory[]>([])
   const [placeHistory, setPlaceHistory] = useState<Place[]>([])
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
+  const [isMenuActive, setIsMenuActive] = useState(false)
 
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
@@ -109,6 +111,10 @@ const Main = () => {
     }
   }
 
+  const handleClickSlideButton = () => {
+    setIsMenuActive(!isMenuActive);
+  }
+
   useEffect(() => {
     selectedRoute && restSpotsRefetch()
   }, [selectedRoute, restSpotsRefetch])
@@ -132,8 +138,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      <div className="nav">
-        <div className="slideBtn"></div>
+      <div className={classNames("nav", isMenuActive && 'active')}>
+        <div className={classNames("slideBtn", isMenuActive && 'active')} onClick={handleClickSlideButton}></div>
         <Title />
         <InputSubmit
           startPlace={startPlace}
@@ -181,7 +187,7 @@ const Main = () => {
                   handleClickRecentSearch={handleClickRecentSearch}
                   setClickedPlaceHistory={setClickedPlaceHistory}
                 />
-                <Survey />
+                {/* <Survey /> */}
               </div>
             )}
           </>
