@@ -1,6 +1,5 @@
 import PathInfoContent from './pathInfoContent'
 import { Dispatch, SetStateAction } from 'react'
-// import { useGetRoutes } from '@/apis/hooks'
 import { Route, Place } from '@/types'
 import { Loading } from '../'
 import './index.css'
@@ -62,8 +61,8 @@ const PathInfo = ({
           return (
             <div
               key={route.routeId}
-              onClick={() => handleClick(route, index + 1)}
-              onDoubleClick={() => {
+              onClick={() => {
+                handleClick(route, index + 1)
                 setRestSpotModalOpen(true)
                 setClickedRestSpot('')
               }}

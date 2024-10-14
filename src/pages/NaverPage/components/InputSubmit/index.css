@@ -22,7 +22,7 @@
 }
 
 .inputSubmit .slideBtn:after {
-    content: '\f00d'; /* < */
+    content: '\f00d'; 
     font-family: 'Font Awesome 5 Free', serif;
     font-size: 1.4em;
     color: rgb(51, 51, 51, 0.6);

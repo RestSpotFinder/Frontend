@@ -9,7 +9,7 @@
     scrollbar-width: none; /* 스크롤바 안 보이게 설정 */
 }
 
-.restAreaInfo .slideBtn {
+.restAreaInfo .slideBtn.active {
     position: absolute;
     width: 2.75rem;
     height: 2.75rem;
@@ -23,7 +23,7 @@
     left: 100%;
 }
 
-.restAreaInfo .slideBtn:after {
+.restAreaInfo .slideBtn.active:after {
     content: '\f00d'; /* < */
     font-family: 'Font Awesome 5 Free', serif;
     font-size: 1.4em;
@@ -37,12 +37,12 @@
     height: inherit;
 }
 
-.restAreaInfo .slideBtn:hover:after {
+/* .restAreaInfo .slideBtn:hover:after {
     background-color: rgb(4, 117, 244, 0.1);
     border: 1px solid rgb(4, 117, 244, 0.5);
     border-left: none;
     border-radius: 0 5px 5px 0;
-}
+} */
 
 .restAreaInfo > p {
     /*letter-spacing: -0.1em;*/
