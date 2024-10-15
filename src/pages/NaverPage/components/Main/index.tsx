@@ -6,7 +6,6 @@ import {
   RecentSearch,
   RestAreaInfo,
   Loading,
-  Survey,
 } from '../'
 import { useState, useEffect } from 'react'
 import { Place, Route, RouteHistory } from '@/types'

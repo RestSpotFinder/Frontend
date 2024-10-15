@@ -28,7 +28,6 @@ const InputSubmit = ({
   setRestSpotModalOpen,
   hasStartAndGoal,
   setShowRouteList,
-  showRouteList,
   addPlaceHistory,
 }: InputSubmitProps) => {
   const [isReset, setIsReset] = useState<boolean>(false)
