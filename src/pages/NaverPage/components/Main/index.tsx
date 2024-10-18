@@ -13,6 +13,7 @@ import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import './index.css'
 import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
 import classNames from 'classnames'
+import Notice from '../Notice'
 
 const Main = () => {
   const [startPlace, setStartPlace] = useState<Place | null>(null)
@@ -157,6 +158,8 @@ const Main = () => {
             showRouteList={showRouteList}
             addPlaceHistory={addPlaceHistory}
           />
+          <Notice />
+          
           {isGetRoutesLoading ? (
             <Loading />
           ) : (
