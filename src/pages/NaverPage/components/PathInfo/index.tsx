@@ -51,6 +51,15 @@ const PathInfo = ({
     setSelectedRoute(route)
   }
 
+  const trackRouteSelection = (index: number) => {
+    gtag('event', `route_selected${index}`, {
+      method: 'button_click',
+      page_location: window.location.href,
+    })
+  }
+
+  console.log(``)
+
   return (
     <div className={`pathInfo`}>
       <p className="noticeText">
@@ -65,9 +74,14 @@ const PathInfo = ({
                 handleClick(route, index + 1)
                 setRestSpotModalOpen(true)
                 setClickedRestSpot('')
+                trackRouteSelection(index + 1)
               }}
             >
-              <PathInfoContent ranking={index + 1} route={route} clickedId={clickedRouteIndex} />
+              <PathInfoContent
+                ranking={index + 1}
+                route={route}
+                clickedId={clickedRouteIndex}
+              />
               <hr />
             </div>
           )

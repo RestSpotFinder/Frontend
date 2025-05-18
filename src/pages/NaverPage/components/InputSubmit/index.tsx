@@ -44,6 +44,15 @@ const InputSubmit = ({
     setRouteList([])
   }
 
+  const trackSearchRoutes = () => {
+    gtag('event', 'get_directions', {
+      method: 'button_click',
+      page_location: window.location.href,
+    })
+
+    handleClickSearchRoutes()
+  }
+
   return (
     <div className="inputSubmit">
       {/* {showRouteList && (
@@ -75,7 +84,7 @@ const InputSubmit = ({
         <button onClick={handleClickReset}>
           <p>다시입력</p>
         </button>
-        <button onClick={debounce(handleClickSearchRoutes, 500)}>
+        <button onClick={debounce(trackSearchRoutes, 500)}>
           <p>길찾기</p>
         </button>
       </div>
