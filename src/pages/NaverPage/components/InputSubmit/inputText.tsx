@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { useDebounce } from '@/hooks'
 import { Place } from '@/types'
-import { useGetSearchSpot } from '@/apis/hooks'
+import { useGetSearchSpot, useGetSearchSportsByAdress } from '@/apis/hooks'
 import './inputText.css'
 
 interface InputProps {
@@ -19,6 +19,11 @@ interface InputProps {
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   addPlaceHistory: (place: Place) => void
+}
+
+const isAddress = (input: string): boolean => {
+  const roadAddressPattern = /[가-힣]{2,}(로|길|읍|면|동|리|가|구|시)/
+  return roadAddressPattern.test(input)
 }
 
 const InputType = {
@@ -41,12 +46,19 @@ const InputText = ({
   setRestSpotModalOpen,
   addPlaceHistory,
 }: InputProps) => {
-  const [placeholder, setPlaceholder] = useState<string>(InputType.PLACEHOLDER[type])
+  const [placeholder, setPlaceholder] = useState<string>(
+    InputType.PLACEHOLDER[type],
+  )
   const [searchKeyword, setSearchKeyword] = useState<string>('')
   const [placeList, setPlaceList] = useState<Place[] | undefined>([])
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const debouncedPlace = useDebounce(searchKeyword || '')
-  const { refetch } = useGetSearchSpot({ searchTerm: debouncedPlace })
+  const { refetch: refetchByKeyword } = useGetSearchSpot({
+    searchTerm: debouncedPlace,
+  })
+  const { refetch: refetchByAddress } = useGetSearchSportsByAdress({
+    addressSearchTerm: debouncedPlace,
+  })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
@@ -83,10 +95,17 @@ const InputText = ({
   }
 
   useEffect(() => {
-    !isSingleConsonant(debouncedPlace) && debouncedPlace
-      ? refetch().then(res => setPlaceList(res.data))
-      : setPlaceList([])
-  }, [debouncedPlace, refetch])
+    if (isSingleConsonant(debouncedPlace) || debouncedPlace === '') {
+      setPlaceList([])
+      return
+    }
+
+    if (isAddress(debouncedPlace)) {
+      refetchByAddress().then(res => setPlaceList(res.data))
+    } else {
+      refetchByKeyword().then(res => setPlaceList(res.data))
+    }
+  }, [debouncedPlace, refetchByAddress, refetchByKeyword])
 
   useEffect(() => {
     if (isReset) {
