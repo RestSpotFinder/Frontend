@@ -62,6 +62,16 @@ export interface RestSpot {
   representativeFood: string
   phoneNumber: string
   naverMapUrl: string
+  nextRestAreaDistance: number
+}
+
+export interface DetailRestSpot {
+  mainPngUrl: string
+  name: string
+  category: string
+  addresss: string
+  phoneNumber: string
+  naverMapUrl: string
 }
 
 export type RouteHistory = {

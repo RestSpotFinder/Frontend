@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.DEV
-    ? 'https://www.restspotfinder.kr/api'
+    ? 'http://101.101.208.202:8080/api'
     : 'https://www.restspotfinder.kr/api',
 })
 

@@ -11,6 +11,7 @@ interface RestAreaInfoContentProps {
   name: string
   routeName: string
   naverMapUrl: string
+  nextRestAreaDistance: number
   hoveredRestSpot: string
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
   clickedRestSpot: string
@@ -26,6 +27,7 @@ const RestAreaInfoContent = ({
   name,
   routeName,
   naverMapUrl,
+  nextRestAreaDistance,
   hoveredRestSpot,
   clickedRestSpot,
   setClickedRestSpot,
@@ -43,6 +45,7 @@ const RestAreaInfoContent = ({
   }
 
   const trackClickRestSpotArea = () => {
+    console.log(``)
     setClickedRestSpot(name)
     gtag('event', 'rest_spot_area_clicked', {
       method: 'single_click',
@@ -53,29 +56,34 @@ const RestAreaInfoContent = ({
   }
 
   return (
-    <div
-      className={`restAreaInfoContent ${hoveredRestSpot === name ? 'hovered' : ''} ${clickedRestSpot === name ? 'clicked' : ''}`}
-      onClick={trackClickRestSpotArea}
-      onDoubleClick={handleUrlClick}
-    >
-      <header
-        className={`mainIcon 
+    <>
+      <div
+        className={`restAreaInfoContent ${hoveredRestSpot === name ? 'hovered' : ''} ${clickedRestSpot === name ? 'clicked' : ''}`}
+        onClick={trackClickRestSpotArea}
+        onDoubleClick={handleUrlClick}
+      >
+        <header
+          className={`mainIcon 
         ${type === '일반휴게소' ? 'normal' : ''} 
         ${type === '간이휴게소' ? 'temporary' : ''}
         ${type === '화물차휴게소' ? 'truck' : ''}`}
-      ></header>
-      <section>
-        <div>
-          {name} - {routeName}
-        </div>
-        <aside>
-          {gasStation && <span className="gasStation" />}
-          {pharmacy && <span className="pharmacy" />}
-          {toilet && <span className="toilet" />}
-          {chargingStation && <span className="chargingStation" />}
-        </aside>
-      </section>
-    </div>
+        ></header>
+        <section>
+          <div>
+            <div>
+              {name} - {routeName}
+            </div>
+            <div className="next-distance">{`다음 휴게소 간 거리: ${nextRestAreaDistance} km`}</div>
+          </div>
+          <aside>
+            {gasStation && <span className="gasStation" />}
+            {pharmacy && <span className="pharmacy" />}
+            {toilet && <span className="toilet" />}
+            {chargingStation && <span className="chargingStation" />}
+          </aside>
+        </section>
+      </div>
+    </>
   )
 }
 

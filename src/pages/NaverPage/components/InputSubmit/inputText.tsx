@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { useDebounce } from '@/hooks'
 import { Place } from '@/types'
-import { useGetSearchSpot, useGetSearchSportsByAdress } from '@/apis/hooks'
+import { useGetSearchSpot, useGetSearchSportsByAddress } from '@/apis/hooks'
 import './inputText.css'
 
 interface InputProps {
@@ -56,7 +56,7 @@ const InputText = ({
   const { refetch: refetchByKeyword } = useGetSearchSpot({
     searchTerm: debouncedPlace,
   })
-  const { refetch: refetchByAddress } = useGetSearchSportsByAdress({
+  const { refetch: refetchByAddress } = useGetSearchSportsByAddress({
     addressSearchTerm: debouncedPlace,
   })
 

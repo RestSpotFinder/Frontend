@@ -28,7 +28,7 @@ const RestAreaInfo = ({
   clickedRestSpot,
   setClickedRestSpot,
   clickedRouteIndex,
-  isActive
+  isActive,
 }: RestAreaInfoProps) => {
   const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
 
@@ -55,7 +55,10 @@ const RestAreaInfo = ({
   return (
     <div className={`restAreaInfo`}>
       {route && <PathInfoContent ranking={clickedRouteIndex} route={route} />}
-      <div className={classNames("slideBtn", isActive && 'active')} onClick={() => setRestSpotModalOpen(false)} />
+      <div
+        className={classNames('slideBtn', isActive && 'active')}
+        onClick={() => setRestSpotModalOpen(false)}
+      />
       <p>
         <span>더블 클릭시 </span> 휴게소 정보 페이지로 이동합니다.
       </p>
@@ -82,6 +85,7 @@ const RestAreaInfo = ({
                     name={value.name}
                     routeName={value.routeName}
                     naverMapUrl={value.naverMapUrl}
+                    nextRestAreaDistance={value.nextRestAreaDistance}
                     hoveredRestSpot={hoveredRestSpot}
                     setHoveredRestSpot={setHoveredRestSpot}
                     clickedRestSpot={clickedRestSpot}
