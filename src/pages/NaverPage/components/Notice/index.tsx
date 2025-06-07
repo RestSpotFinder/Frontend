@@ -15,8 +15,8 @@ const Notice = () => {
         <AlertTitle className="font-bold text-[#0475F5]">
           {recentAnnounce?.title}
         </AlertTitle>
-        <AlertDescription className="text-[#2b85ec]">
-          {recentAnnounce?.content}
+        <AlertDescription className="whitespace-pre-line text-[#2b85ec]">
+          {recentAnnounce?.content.replace(/\. /g, '.\n')}
         </AlertDescription>
       </Alert>
     </div>
