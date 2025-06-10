@@ -10,13 +10,13 @@ const useGetSearchSportsByAdress = ({ addressSearchTerm }: Request) => {
   const getSearch = async () => {
     const response = await apiClient.get(
       //todo 임시 api 작성
-      `/place/naver?searchTermByAddress=${addressSearchTerm}`,
+      `/place/naver/address?address=${addressSearchTerm}`,
     )
     return response.data.data
   }
 
   return useQuery<Place[], Error>({
-    queryKey: ['search'],
+    queryKey: ['searchAddress'],
     queryFn: getSearch,
     enabled: !!addressSearchTerm,
   })
