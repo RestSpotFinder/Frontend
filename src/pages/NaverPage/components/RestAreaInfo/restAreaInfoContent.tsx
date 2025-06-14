@@ -1,5 +1,7 @@
 import './restAreaInfoContent.css'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useGetDetailRestSpots } from '@/apis/hooks'
+import { DetailRestSpot } from '@/types'
 
 interface RestAreaInfoContentProps {
   type: string
@@ -16,6 +18,7 @@ interface RestAreaInfoContentProps {
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
   clickedRestSpot: string
   setClickedRestSpot: Dispatch<SetStateAction<string>>
+  restAreaId: number
 }
 
 const RestAreaInfoContent = ({
@@ -31,9 +34,16 @@ const RestAreaInfoContent = ({
   hoveredRestSpot,
   clickedRestSpot,
   setClickedRestSpot,
+  restAreaId,
 }: RestAreaInfoContentProps) => {
+  const [showDetail, setShowDetail] = useState(false)
+  const [detailRestSpots, setDetailRestSpots] = useState<
+    DetailRestSpot | undefined
+  >()
+
   const handleUrlClick = () => {
-    window.open(naverMapUrl, '_blank')
+    //window.open(naverMapUrl, '_blank')
+    setShowDetail(true)
     trackNaverMapDetail()
   }
 
@@ -43,6 +53,20 @@ const RestAreaInfoContent = ({
       page_location: window.location.href,
     })
   }
+
+  const {
+    data: detailRestSpotsData,
+    isFetching: detailRestSpotsFetching,
+    isLoading: detailRestSpotsLoading,
+  } = useGetDetailRestSpots({
+    restAreaId: restAreaId,
+  })
+
+  useEffect(() => {
+    if (!detailRestSpotsLoading) {
+      setDetailRestSpots(detailRestSpotsData)
+    }
+  }, [detailRestSpotsData, detailRestSpotsLoading])
 
   const trackClickRestSpotArea = () => {
     console.log(``)
@@ -83,6 +107,63 @@ const RestAreaInfoContent = ({
           </aside>
         </section>
       </div>
+
+      {detailRestSpots && (
+        <div className="infoOverlay">
+          <div className="infoContainer">
+            <button className="closeBtn" onClick={() => setShowDetail(false)}>
+              X
+            </button>
+            <div className="infoList">
+              <div className="restAreaImg">
+                <img src={detailRestSpotsData?.mainImage}></img>
+              </div>
+              <div className="restAreaName">
+                <div>{detailRestSpotsData?.name}</div>
+              </div>
+              <div className="restAreaType">
+                <div>{detailRestSpotsData?.category}</div>
+              </div>
+              <div className="restAreaAddress">
+                <p>{detailRestSpotsData?.address}</p>
+              </div>
+              <div className="restAreaPhoneNumber">
+                <p>{detailRestSpotsData?.phoneNumber}</p>
+              </div>
+              <div className="infoItem">
+                <strong>주유소, 충전소</strong>
+                <table className="fuelPriceTable">
+                  <thead>
+                    <tr>
+                      <th>유종</th>
+                      <th>가격 (원)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>휘발유</td>
+                      <td>{detailRestSpotsData?.gasolinePrice}</td>
+                    </tr>
+                    <tr>
+                      <td>경유</td>
+                      <td>{detailRestSpotsData?.dieselPrice}</td>
+                    </tr>
+                    <tr>
+                      <td>LPG</td>
+                      <td>{detailRestSpotsData?.lpgPrice}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="moreInfo">
+                <a href={naverMapUrl} target="_blank" rel="noopener noreferrer">
+                  <p>정보 더 보기</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

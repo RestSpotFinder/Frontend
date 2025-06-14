@@ -58,8 +58,6 @@ const PathInfo = ({
     })
   }
 
-  console.log(``)
-
   return (
     <div className={`pathInfo`}>
       <p className="noticeText">
