@@ -147,6 +147,155 @@
 .chargingStation:before {
   content: '\f5e7';
 }
-.nextRestAreaDistance:before {
-  content: '\f5e7';
+
+.infoOverlay {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 50%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoContainer {
+  background: #fff;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 18px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.infoItem {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoItem strong {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.infoImage {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.restAreaImg {
+  padding: 1rem;
+}
+
+.restAreaImg img {
+  border-radius: 8px;
+}
+
+.restAreaName {
+  font-weight: bold;
+  margin-left: 1rem;
+  font-size: 26px;
+}
+
+.restAreaType {
+  text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.1);
+  margin-left: 1rem;
+  color: #888; /* 연한 회색 */
+}
+
+.restAreaAddress p::before {
+  content: '\f3c5';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 600;
+  color: rgba(51, 51, 51, 0.3);
+  font-size: 1em;
+  margin-right: 0.5em;
+}
+
+.restAreaAddress p {
+  color: rgba(51, 51, 51, 0.8);
+}
+
+.restAreaPhoneNumber p::before {
+  content: '\f095';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 600;
+  color: rgba(51, 51, 51, 0.3);
+  font-size: 1em;
+  margin-right: 0.5em;
+}
+
+.restAreaPhoneNumber p {
+  color: rgba(51, 51, 51, 0.8);
+}
+
+.fuelPriceTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.fuelPriceTable th,
+.fuelPriceTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  background-color: #fff;
+  border-right: 1px solid #eee;
+}
+
+.fuelPriceTable th:last-child,
+.fuelPriceTable td:last-child {
+  border-right: none;
+}
+
+.fuelPriceTable thead th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.fuelPriceTable tr:last-child td {
+  border-bottom: none; /* 마지막 줄은 밑줄 제거 */
+}
+
+.moreInfo p::before {
+  content: '\f002';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 600;
+  color: rgba(51, 51, 51, 0.3);
+  font-size: 1em;
+  margin-right: 0.5em;
+}
+
+.moreInfo {
+  color: rgba(51, 51, 51, 0.8);
+  text-align: center;
 }

@@ -90,6 +90,7 @@ const RestAreaInfo = ({
                     setHoveredRestSpot={setHoveredRestSpot}
                     clickedRestSpot={clickedRestSpot}
                     setClickedRestSpot={setClickedRestSpot}
+                    restAreaId={value.restAreaId}
                   />
                 )
               })}

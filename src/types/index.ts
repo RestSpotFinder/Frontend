@@ -64,14 +64,33 @@ export interface RestSpot {
   naverMapUrl: string
   nextRestAreaDistance: number
 }
-
-export interface DetailRestSpot {
-  mainPngUrl: string
+interface RestAreaDetailInfo {
+  id: number
+  mainImage: string
   name: string
-  category: string
-  addresss: string
+  category: string // 예: "고속도로 휴게소" 또는 "졸음쉼터"
+  address: string
   phoneNumber: string
   naverMapUrl: string
+  gasolinePrice: number
+  dieselPrice: number
+  lpgPrice: number
+}
+
+export interface RestAreaDetailInfoList {
+  restAreas: RestAreaDetailInfo[]
+}
+export interface DetailRestSpot {
+  id: number
+  mainImage: string
+  name: string
+  category: string
+  address: string
+  phoneNumber: string
+  naverMapUrl: string
+  gasolinePrice: number
+  dieselPrice: number
+  lpgPrice: number
 }
 
 export type RouteHistory = {
