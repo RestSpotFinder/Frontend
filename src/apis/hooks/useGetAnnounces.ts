@@ -13,7 +13,7 @@ const useGetAnnounces = () => {
   const getAnnounces = async () => {
     const response = await apiClient.get<AxiosResponse<Announce[]>>(`/notice`)
 
-    return response.data.data
+    return response.data
   }
 
   return useQuery({

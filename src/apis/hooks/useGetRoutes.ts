@@ -25,7 +25,7 @@ const useGetRoutes = ({
       ${waypoints ? `&waypoints=${waypoints.join('%7c')}` : ''}`,
     )
 
-    return response.data.data
+    return response.data
   }
 
   const queryKey = ['routes', start, goal, startName, goalName, waypoints, page]
