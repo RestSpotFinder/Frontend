@@ -10,7 +10,7 @@ const useGetRoutesBySearchId = ({ searchId }: Request) => {
   const getRoutes = async () => {
     const response = await apiClient.get(`/route/search?searchId=${searchId}`)
 
-    return response.data.data
+    return response.data
   }
 
   const queryKey = ['routes']

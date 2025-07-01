@@ -9,10 +9,10 @@ interface Request {
 const useGetSearchSpot = ({ searchTerm }: Request) => {
   const getSearch = async () => {
     const response = await apiClient.get(
-      `/place/naver?searchTerm=${searchTerm}`,
+      `/place/naver?searchTerm=${encodeURIComponent(searchTerm!)}`,
     )
 
-    return response.data.data
+    return response.data
   }
 
   return useQuery<Place[], Error>({

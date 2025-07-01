@@ -11,7 +11,7 @@ const useGetDetailRestSpots = ({ restareaId }: Request) => {
     const response = await apiClient.get(
       `/restarea/detail?restareaId=${restareaId}`,
     )
-    return response.data.data
+    return response.data
   }
 
   return useQuery<DetailRestSpot, Error>({

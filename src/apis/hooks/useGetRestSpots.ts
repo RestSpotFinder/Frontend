@@ -10,7 +10,7 @@ const useGetRestSpots = ({ routeId }: Request) => {
   const getRestSpots = async () => {
     const response = await apiClient.get(`/restarea/route?routeId=${routeId}`)
 
-    return response.data.data
+    return response.data
   }
 
   return useQuery<RestSpot[], Error>({

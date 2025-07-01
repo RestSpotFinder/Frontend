@@ -9,10 +9,10 @@ interface Request {
 const useGetSearchSportsByAdress = ({ addressSearchTerm }: Request) => {
   const getSearch = async () => {
     const response = await apiClient.get(
-      //todo 임시 api 작성
       `/place/naver/address?address=${addressSearchTerm}`,
     )
-    return response.data.data
+
+    return response.data
   }
 
   return useQuery<Place[], Error>({
