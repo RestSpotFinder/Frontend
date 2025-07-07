@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState, Dispatch } from 'react'
+import { SetStateAction, useEffect, useState, Dispatch, useRef } from 'react'
 import { Route, Place } from '@/types'
 import InputText from './inputText.tsx'
 import { debounce } from 'lodash'
@@ -58,7 +58,7 @@ const InputSubmit = ({
       {/* {showRouteList && (
         <div className="slideBtn" onClick={() => handleClickReset()} />
       )} */}
-      <div className="inputBox">
+      <div className="inputBox relative">
         <InputText
           place={startPlace}
           setPlace={setStartPlace}
@@ -78,6 +78,31 @@ const InputSubmit = ({
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
         />
+
+        <div
+          className="absolute z-10 flex cursor-pointer items-center justify-center"
+          style={{
+            left: '90%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '33.6px',
+            height: '33.6px',
+            borderRadius: '50%',
+            pointerEvents: 'auto',
+            background: '#fff',
+            boxShadow: 'none',
+            border: '1.5px solid #E3E3E3',
+            padding: '3px',
+          }}
+          onClick={() => alert('회전 아이콘이 클릭되었습니다!')}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: 23, color: 'rgba(4,117,245,0.8)' }}
+          >
+            cached
+          </span>
+        </div>
       </div>
 
       <div className="btnBox">
