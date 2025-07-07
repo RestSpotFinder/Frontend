@@ -53,6 +53,27 @@ const InputSubmit = ({
     handleClickSearchRoutes()
   }
 
+  const startInputRef = useRef<HTMLInputElement>(null)
+  const goalInputRef = useRef<HTMLInputElement>(null)
+
+  const handleSwap = () => {
+    if (!startPlace && !goalPlace) return
+    if (startPlace && goalPlace) {
+      setStartPlace(goalPlace)
+      setGoalPlace(startPlace)
+    } else if (startPlace && !goalPlace) {
+      setGoalPlace(startPlace)
+      setStartPlace(null)
+      // 출발지 input(빈 칸)에 포커스
+      setTimeout(() => startInputRef.current?.focus(), 0)
+    } else if (!startPlace && goalPlace) {
+      setStartPlace(goalPlace)
+      setGoalPlace(null)
+      // 도착지 input(빈 칸)에 포커스
+      setTimeout(() => goalInputRef.current?.focus(), 0)
+    }
+  }
+
   return (
     <div className="inputSubmit">
       {/* {showRouteList && (
@@ -67,6 +88,7 @@ const InputSubmit = ({
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
+          inputRef={startInputRef}
         />
 
         <InputText
@@ -77,6 +99,7 @@ const InputSubmit = ({
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
+          inputRef={goalInputRef}
         />
 
         <div
@@ -94,7 +117,7 @@ const InputSubmit = ({
             border: '1.5px solid #E3E3E3',
             padding: '3px',
           }}
-          onClick={() => alert('회전 아이콘이 클릭되었습니다!')}
+          onClick={handleSwap}
         >
           <span
             className="material-symbols-outlined"

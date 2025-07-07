@@ -19,6 +19,7 @@ interface InputProps {
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   addPlaceHistory: (place: Place) => void
+  inputRef?: React.RefObject<HTMLInputElement>
 }
 
 const isAddress = (input: string): boolean => {
@@ -45,6 +46,7 @@ const InputText = ({
   setShowRouteList,
   setRestSpotModalOpen,
   addPlaceHistory,
+  inputRef,
 }: InputProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
@@ -115,11 +117,19 @@ const InputText = ({
     }
   }, [isReset])
 
+  // place가 null이 될 때 searchKeyword도 초기화
+  useEffect(() => {
+    if (place === null) {
+      setSearchKeyword('')
+    }
+  }, [place])
+
   return (
     <div
       className={`inputText ${type === 'start' ? 'start' : 'goal'} ${place ? 'selected' : ''}`}
     >
       <input
+        ref={inputRef}
         type="text"
         value={place?.name || searchKeyword || ''}
         placeholder={placeholder}
