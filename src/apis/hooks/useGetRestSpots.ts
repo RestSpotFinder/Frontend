@@ -14,9 +14,10 @@ const useGetRestSpots = ({ routeId }: Request) => {
   }
 
   return useQuery<RestSpot[], Error>({
-    queryKey: ['restSpots'],
+    queryKey: ['restSpots', routeId], // routeId를 queryKey에 포함
     queryFn: getRestSpots,
     enabled: !!routeId,
+    staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
   })
 }
 

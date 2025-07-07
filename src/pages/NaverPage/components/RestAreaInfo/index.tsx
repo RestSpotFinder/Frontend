@@ -1,9 +1,8 @@
 import PathInfoContent from '../PathInfo/pathInfoContent'
 import RestAreaInfoContent from './restAreaInfoContent'
 import { RestSpot, PathInfoType } from '@/types'
-import { useGetRestSpots } from '@/apis/hooks'
 import { Loading } from '..'
-import { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import { useEffect, Dispatch, SetStateAction } from 'react'
 import './index.css'
 import classNames from 'classnames'
 
@@ -17,6 +16,9 @@ interface RestAreaInfoProps {
   setClickedRestSpot: Dispatch<SetStateAction<string>>
   clickedRouteIndex: number
   isActive: boolean
+  restSpotList: RestSpot[] | undefined
+  isLoading: boolean
+  isFetching: boolean
 }
 
 const RestAreaInfo = ({
@@ -29,28 +31,15 @@ const RestAreaInfo = ({
   setClickedRestSpot,
   clickedRouteIndex,
   isActive,
+  restSpotList,
+  isLoading,
+  isFetching,
 }: RestAreaInfoProps) => {
-  const [restAreaList, setRestAreaList] = useState<RestSpot[] | undefined>()
-
-  const {
-    data: restAreaListData,
-    isFetching: restSpotsFetching,
-    isLoading: restSpotsLoading,
-    refetch: restSpotsRefetch,
-  } = useGetRestSpots({ routeId: route?.routeId })
-
   useEffect(() => {
-    if (!restSpotsLoading) {
-      setRestAreaList(restAreaListData)
+    if (restSpotModalOpen) {
       setClickedRestSpot('')
-      restSpotsRefetch()
     }
-  }, [restAreaListData, setRestAreaList, restSpotsRefetch, restSpotsLoading])
-
-  // 초기화 시 RestSpotList 초기화
-  useEffect(() => {
-    if (!restSpotModalOpen) setRestAreaList([])
-  }, [restSpotModalOpen])
+  }, [restSpotModalOpen, setClickedRestSpot])
 
   return (
     <div className={`restAreaInfo`}>
@@ -62,17 +51,17 @@ const RestAreaInfo = ({
       <p>
         <span>더블 클릭시 </span> 휴게소 정보 페이지로 이동합니다.
       </p>
-      {restSpotsFetching ? (
+      {isFetching ? (
         <Loading />
       ) : (
         <>
-          {restAreaListData?.length === 0 ? (
+          {restSpotList?.length === 0 ? (
             <p>
               <span>조회 데이터</span>가 없습니다.
             </p>
           ) : (
             <div>
-              {restAreaList?.map(value => {
+              {restSpotList?.map(value => {
                 return (
                   <RestAreaInfoContent
                     key={value.restAreaId}
