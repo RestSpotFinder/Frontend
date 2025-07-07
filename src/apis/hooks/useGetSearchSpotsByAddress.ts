@@ -16,9 +16,11 @@ const useGetSearchSportsByAdress = ({ addressSearchTerm }: Request) => {
   }
 
   return useQuery<Place[], Error>({
-    queryKey: ['searchAddress'],
+    queryKey: ['searchAddress', addressSearchTerm],
     queryFn: getSearch,
     enabled: !!addressSearchTerm,
+    staleTime: 2 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
   })
 }
 

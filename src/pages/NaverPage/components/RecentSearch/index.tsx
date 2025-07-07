@@ -38,8 +38,9 @@ const RecentSearch = ({
           placeHistory
             .slice()
             .reverse()
-            .map(place => (
+            .map((place, index) => (
               <p
+                key={`${place.name}-${place.lat}-${place.lng}-${index}`}
                 onClick={() => {
                   setClickedPlaceHistory(true)
                   if (startPlace == null) setStartPlace(place)

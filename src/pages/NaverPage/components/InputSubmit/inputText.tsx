@@ -24,6 +24,7 @@ interface InputProps {
 
 const isAddress = (input: string): boolean => {
   const roadAddressPattern = /[가-힣]{2,}(로|길|읍|면|동|리|가|구|시)/
+
   return roadAddressPattern.test(input)
 }
 
@@ -55,11 +56,36 @@ const InputText = ({
   const [placeList, setPlaceList] = useState<Place[] | undefined>([])
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const debouncedPlace = useDebounce(searchKeyword || '')
-  const { refetch: refetchByKeyword } = useGetSearchSpot({
-    searchTerm: debouncedPlace,
+
+  // 초성일 때는 refetch 호출 X ex) 'ㄷ', 'ㅁ'
+  const isSingleConsonant = (char: string) => {
+    const koreanConsonantRange = /[\u3131-\u3163]/
+
+    return koreanConsonantRange.test(char)
+  }
+
+  // 검색 조건 판별 함수
+  const getSearchTerm = () => {
+    if (!debouncedPlace || isSingleConsonant(debouncedPlace)) {
+      return undefined
+    }
+
+    return isAddress(debouncedPlace) ? undefined : debouncedPlace
+  }
+
+  const getAddressSearchTerm = () => {
+    if (!debouncedPlace || isSingleConsonant(debouncedPlace)) {
+      return undefined
+    }
+
+    return isAddress(debouncedPlace) ? debouncedPlace : undefined
+  }
+
+  const { data: keywordResults } = useGetSearchSpot({
+    searchTerm: getSearchTerm(),
   })
-  const { refetch: refetchByAddress } = useGetSearchSportsByAddress({
-    addressSearchTerm: debouncedPlace,
+  const { data: addressResults } = useGetSearchSportsByAddress({
+    addressSearchTerm: getAddressSearchTerm(),
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -89,25 +115,15 @@ const InputText = ({
     addPlaceHistory(place)
   }
 
-  // 초성일 때는 refetch 호출 X ex) 'ㄷ', 'ㅁ'
-  const isSingleConsonant = (char: string) => {
-    const koreanConsonantRange = /[\u3131-\u3163]/
-
-    return koreanConsonantRange.test(char)
-  }
-
   useEffect(() => {
-    if (isSingleConsonant(debouncedPlace) || debouncedPlace === '') {
+    if (keywordResults) {
+      setPlaceList(keywordResults)
+    } else if (addressResults) {
+      setPlaceList(addressResults)
+    } else if (debouncedPlace === '' || isSingleConsonant(debouncedPlace)) {
       setPlaceList([])
-      return
     }
-
-    if (isAddress(debouncedPlace)) {
-      refetchByAddress().then(res => setPlaceList(res.data))
-    } else {
-      refetchByKeyword().then(res => setPlaceList(res.data))
-    }
-  }, [debouncedPlace, refetchByAddress, refetchByKeyword])
+  }, [keywordResults, addressResults, debouncedPlace])
 
   useEffect(() => {
     if (isReset) {
