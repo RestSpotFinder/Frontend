@@ -5,6 +5,7 @@ import { RocketIcon } from '@radix-ui/react-icons'
 const Notice = () => {
   const { data: announceList } = useGetAnnounces()
 
+  // @ts-ignore
   const recentAnnounce = announceList && announceList[0]
   if (!announceList) return <div></div>
 

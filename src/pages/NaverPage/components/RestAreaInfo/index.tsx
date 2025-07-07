@@ -32,7 +32,6 @@ const RestAreaInfo = ({
   clickedRouteIndex,
   isActive,
   restSpotList,
-  isLoading,
   isFetching,
 }: RestAreaInfoProps) => {
   useEffect(() => {
