@@ -1,9 +1,9 @@
- import './Title.css' // CSS 파일을 import 합니다.
-
 const Title = () => {
   return (
-    <div className="title">
-      <span>경로상 휴게소 찾기</span>
+    <div className="block px-4 pb-2 pt-6 text-center">
+      <span className="text-2xl font-medium text-green-600/70">
+        경로상 휴게소 찾기
+      </span>
     </div>
   )
 }
