@@ -3,7 +3,7 @@ import RestAreaInfoContent from './restAreaInfoContent'
 import { RestSpot, PathInfoType } from '@/types'
 import { Loading } from '..'
 import { useEffect, Dispatch, SetStateAction } from 'react'
-import './index.css'
+import './RestAreaInfo.css'
 import classNames from 'classnames'
 
 interface RestAreaInfoProps {

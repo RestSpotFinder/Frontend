@@ -10,7 +10,7 @@ import {
 import { useState, useEffect } from 'react'
 import { Place, Route, RouteHistory } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
-import './index.css'
+import './Main.css'
 import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
 import classNames from 'classnames'
 import Notice from '../Notice/Notice'

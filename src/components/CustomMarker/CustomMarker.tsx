@@ -1,5 +1,5 @@
 import { Marker } from 'react-naver-maps'
-import './index.css'
+import './CustomMarker.css'
 
 interface CustomMarkerProps {
   type?: 'start' | 'goal' | 'waypoints'

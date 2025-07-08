@@ -1,5 +1,5 @@
 import { Marker } from 'react-naver-maps'
-import './index.css'
+import './RestSpotMarker.css'
 
 interface RestSpotMarkerProps {
   position: { lat: number; lng: number }

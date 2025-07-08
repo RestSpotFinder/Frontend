@@ -2,7 +2,7 @@ import PathInfoContent from './pathInfoContent'
 import { Dispatch, SetStateAction } from 'react'
 import { Route, Place } from '@/types'
 import { Loading } from '../'
-import './index.css'
+import './PathInfo.css'
 
 interface PathInfoProps {
   routeList: Route[]

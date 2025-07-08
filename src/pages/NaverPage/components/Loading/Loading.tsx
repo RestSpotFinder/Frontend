@@ -1,4 +1,4 @@
-import './index.css'
+import './Loading.css'
 
 interface LoadingProps {
   className?: string

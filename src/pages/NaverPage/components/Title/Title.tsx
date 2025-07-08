@@ -1,4 +1,4 @@
- import './index.css' // CSS 파일을 import 합니다.
+ import './Title.css' // CSS 파일을 import 합니다.
 
 const Title = () => {
   return (

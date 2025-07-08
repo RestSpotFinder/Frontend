@@ -1,4 +1,4 @@
-import './index.css'
+import './RecentSearch.css'
 import { Place, RouteHistory } from '@/types'
 import { Dispatch, SetStateAction } from 'react'
 

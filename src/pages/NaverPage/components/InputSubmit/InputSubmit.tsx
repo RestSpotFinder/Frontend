@@ -2,7 +2,7 @@ import { SetStateAction, useEffect, useState, Dispatch, useRef } from 'react'
 import { Route, Place } from '@/types'
 import InputText from './inputText.tsx'
 import { debounce } from 'lodash'
-import './index.css'
+import './InputSubmit.css'
 
 interface InputSubmitProps {
   startPlace: Place | null

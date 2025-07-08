@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import postSurvey from '@/apis/hooks/postSurvey.ts'
-import './index.css'
+import './Survey.css'
 
 const Survey = () => {
   const [email, setEmail] = useState<string>('')
