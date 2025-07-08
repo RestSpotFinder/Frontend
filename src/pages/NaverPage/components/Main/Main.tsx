@@ -13,7 +13,7 @@ import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import './index.css'
 import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
 import classNames from 'classnames'
-import Notice from '../Notice'
+import Notice from '../Notice/Notice'
 
 const Main = () => {
   const [startPlace, setStartPlace] = useState<Place | null>(null)
