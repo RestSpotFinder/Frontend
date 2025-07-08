@@ -1,8 +1,12 @@
 /* index.css */
 
 .recentSearch {
-    margin-top: -1rem;
-    padding: 0 1.5rem;
+  margin-top: -1rem;
+  padding: 0 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .recentSearch .title {
@@ -34,10 +38,31 @@
 }
 
 .recentSearch .list {
-    margin: 1em 0 3em 0;
-    font-weight: 600;
-    font-size: 0.8em;
-    color: rgba(51, 51, 51);
+  margin: 1em 0;
+  font-weight: 600;
+  font-size: 0.8em;
+  color: rgba(51, 51, 51);
+  overflow-y: auto;
+  max-height: 150px;
+  padding-right: 8px;
+}
+
+.recentSearch .list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.recentSearch .list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.recentSearch .list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.recentSearch .list::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
 
 .recentSearch .list > p {

@@ -177,21 +177,18 @@ const Main = () => {
                   setClickedRestSpot={setClickedRestSpot}
                 />
               ) : (
-                <div>
-                  <RecentSearch
-                    startPlace={startPlace}
-                    goalPlace={goalPlace}
-                    setStartPlace={setStartPlace}
-                    setGoalPlace={setGoalPlace}
-                    routeHistory={routeHistory}
-                    placeHistory={placeHistory}
-                    clearHistory={clearHistory}
-                    setSelectedRouteHistory={setSelectedRouteHistory}
-                    handleClickRecentSearch={handleClickRecentSearch}
-                    setClickedPlaceHistory={setClickedPlaceHistory}
-                  />
-                  {/* <Survey /> */}
-                </div>
+                <RecentSearch
+                  startPlace={startPlace}
+                  goalPlace={goalPlace}
+                  setStartPlace={setStartPlace}
+                  setGoalPlace={setGoalPlace}
+                  routeHistory={routeHistory}
+                  placeHistory={placeHistory}
+                  clearHistory={clearHistory}
+                  setSelectedRouteHistory={setSelectedRouteHistory}
+                  handleClickRecentSearch={handleClickRecentSearch}
+                  setClickedPlaceHistory={setClickedPlaceHistory}
+                />
               )}
             </>
           )}
