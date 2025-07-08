@@ -106,6 +106,24 @@
 
 .notice-content.expanded {
   max-height: 200px;
+  overflow-y: auto;
+  /* 스크롤바 얇게 */
+  scrollbar-width: thin;
+  scrollbar-color: #b3c6e2 #f8fbff;
+}
+
+.notice-content.expanded::-webkit-scrollbar {
+  width: 4px;
+  background: #f8fbff;
+}
+
+.notice-content.expanded::-webkit-scrollbar-thumb {
+  background: #b3c6e2;
+  border-radius: 4px;
+}
+
+.notice-content.expanded::-webkit-scrollbar-track {
+  background: #f8fbff;
 }
 
 /* Alert 컴포넌트 스타일 오버라이드 */
@@ -123,7 +141,8 @@
   color: #2c5aa0 !important;
   font-weight: 400 !important;
   margin: 0 !important;
-  word-break: keep-all;
+  word-break: break-all;
+  overflow-wrap: break-word;
   white-space: pre-line;
 }
 
@@ -167,6 +186,9 @@
   
   .notice-content.expanded {
     max-height: 150px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #b3c6e2 #f8fbff;
   }
   
   .notice-content .bg-transparent {
@@ -177,6 +199,8 @@
   .notice-content .bg-transparent .whitespace-pre-line {
     font-size: 13px !important;
     line-height: 1.5 !important;
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
 }
 
