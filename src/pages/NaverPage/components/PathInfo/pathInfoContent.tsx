@@ -35,10 +35,7 @@ const PathInfoContent = ({
       }`}
     >
       {/* First line: Ranking badge + optionText */}
-      <div
-        className="relative flex items-baseline gap-3 pl-7 text-[0.8em] font-extrabold tracking-tight text-blue-600"
-        style={{ textShadow: '1px 1px 1px rgba(0,0,0,0.1)' }}
-      >
+      <div className="relative flex items-baseline gap-3 pl-7 text-[0.8em] font-extrabold tracking-tight text-blue-600">
         <span className="absolute left-0 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full bg-blue-500 align-baseline text-xs font-semibold text-white shadow-sm">
           {ranking}
         </span>
@@ -69,17 +66,11 @@ const PathInfoContent = ({
       </div>
       {/* Third line: Toll, Fuel */}
       <div className="mt-1 flex items-baseline gap-2">
-        <p
-          className="align-baseline text-[0.9rem] font-medium tracking-tight text-gray-800"
-          style={{ textShadow: '0 0 2px rgba(0,0,0,0.2)' }}
-        >
+        <p className="align-baseline text-[0.9rem] font-medium tracking-tight text-gray-800">
           <span className="align-baseline">통행료 {tollInfo}</span>
         </p>
         <span className="mx-2 h-4 w-px bg-black/10 align-baseline" />
-        <p
-          className="align-baseline text-[0.9rem] font-medium tracking-tight text-gray-800"
-          style={{ textShadow: '0 0 2px rgba(0,0,0,0.2)' }}
-        >
+        <p className="align-baseline text-[0.9rem] font-medium tracking-tight text-gray-800">
           <span className="align-baseline">
             연료비 {parseFloat(fuelPrice).toLocaleString()}원
           </span>
