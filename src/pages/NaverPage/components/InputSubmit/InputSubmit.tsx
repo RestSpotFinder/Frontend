@@ -28,6 +28,7 @@ const InputSubmit = ({
   setRestSpotModalOpen,
   hasStartAndGoal,
   setShowRouteList,
+  showRouteList,
   addPlaceHistory,
 }: InputSubmitProps) => {
   const [isReset, setIsReset] = useState<boolean>(false)
@@ -102,30 +103,33 @@ const InputSubmit = ({
           inputRef={goalInputRef}
         />
 
-        <div
-          className="absolute z-10 flex cursor-pointer items-center justify-center"
-          style={{
-            left: '90%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '33.6px',
-            height: '33.6px',
-            borderRadius: '50%',
-            pointerEvents: 'auto',
-            background: '#fff',
-            boxShadow: 'none',
-            border: '1.5px solid #E3E3E3',
-            padding: '3px',
-          }}
-          onClick={handleSwap}
-        >
-          <span
-            className="material-symbols-outlined"
-            style={{ fontSize: 23, color: 'rgba(4,117,245,0.8)' }}
+        {/* Swap button: 출발지 목적지 회전 버튼, PathInfo 보일 때는 숨김 */}
+        {!showRouteList && (
+          <div
+            className="absolute z-10 flex cursor-pointer items-center justify-center"
+            style={{
+              left: '90%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '33.6px',
+              height: '33.6px',
+              borderRadius: '50%',
+              pointerEvents: 'auto',
+              background: '#fff',
+              boxShadow: 'none',
+              border: '1.5px solid #E3E3E3',
+              padding: '3px',
+            }}
+            onClick={handleSwap}
           >
-            cached
-          </span>
-        </div>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 23, color: 'rgba(4,117,245,0.8)' }}
+            >
+              cached
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="btnBox">

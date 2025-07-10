@@ -155,8 +155,8 @@ const Main = () => {
             showRouteList={showRouteList}
             addPlaceHistory={addPlaceHistory}
           />
-          <Notice />
-          
+          {/* 공지사항은 PathInfo가 아닐 때만 노출 */}
+          {!(routeList && showRouteList) && <Notice />}
           {isGetRoutesLoading ? (
             <Loading />
           ) : (

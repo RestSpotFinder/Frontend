@@ -1,5 +1,4 @@
 import { PathInfoType } from '@/types'
-import './pathInfoContent.css'
 
 interface PathInfoContentProps {
   ranking: number
@@ -19,14 +18,11 @@ const PathInfoContent = ({
 
     return { hours, minutes }
   }
-
   const convertMeterToKilometer = (meters: number) => {
     const kilometers = meters / 1000
-    const kilometersWithoutDecimal = Math.floor(kilometers)
 
-    return kilometersWithoutDecimal
+    return Math.floor(kilometers)
   }
-
   const tollInfo =
     tollFare === '0' ? '무료' : `${parseFloat(tollFare).toLocaleString()}원`
   const formattedTime = convertTimeToHoursMinutes(Number(duration))
@@ -34,29 +30,60 @@ const PathInfoContent = ({
 
   return (
     <div
-      className={`pathInfoContent ${clickedId === ranking ? 'clicked' : ''}`}
+      className={` cursor-pointer px-4 py-4 transition-all duration-150 ${
+        clickedId === ranking ? 'bg-blue-50' : 'bg-white'
+      }`}
     >
-      <div className="firstLine" data-order={ranking}>
-        {optionText}
+      {/* First line: Ranking badge + optionText */}
+      <div
+        className="relative flex items-baseline gap-3 pl-7 text-[0.8em] font-extrabold tracking-tight text-blue-600"
+        style={{ textShadow: '1px 1px 1px rgba(0,0,0,0.1)' }}
+      >
+        <span className="absolute left-0 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full bg-blue-500 align-baseline text-xs font-semibold text-white shadow-sm">
+          {ranking}
+        </span>
+        <span className="align-baseline">{optionText}</span>
       </div>
-      <div className="secondLine">
+      {/* Second line: Time, Distance */}
+      <div className="mt-1 flex items-baseline gap-2">
         {formattedTime.hours !== 0 && (
-          <p>
-            <span>{formattedTime.hours}</span>시간
+          <p className="flex items-baseline gap-1 text-[0.8rem] font-bold tracking-tighter text-gray-800">
+            <span className="align-baseline text-[1.5rem]">
+              {formattedTime.hours}
+            </span>
+            <span className="align-baseline">시간</span>
           </p>
         )}
         {formattedTime.minutes !== 0 && (
-          <p>
-            <span>{formattedTime.minutes}</span>분
+          <p className="flex items-baseline gap-1 text-[0.8rem] font-bold tracking-tighter text-gray-800">
+            <span className="align-baseline text-[1.5rem]">
+              {formattedTime.minutes}
+            </span>
+            <span className="align-baseline">분</span>
           </p>
         )}
-        <div className="separatorLine" />
-        <span>{formattedDistance}km</span>
+        <span className="mx-2 mb-1 h-4 w-px bg-black/10 align-baseline" />
+        <span className="align-baseline text-[0.85rem] font-semibold tracking-tight text-gray-800">
+          {formattedDistance}km
+        </span>
       </div>
-      <div className="thirdLine">
-        <p>{`통행료 ${tollInfo}`}</p>
-        <div className="separatorLine" />
-        <p>{`연료비 ${parseFloat(fuelPrice).toLocaleString()}원`}</p>
+      {/* Third line: Toll, Fuel */}
+      <div className="mt-1 flex items-baseline gap-2">
+        <p
+          className="align-baseline text-[0.9rem] font-medium tracking-tight text-gray-800"
+          style={{ textShadow: '0 0 2px rgba(0,0,0,0.2)' }}
+        >
+          <span className="align-baseline">통행료 {tollInfo}</span>
+        </p>
+        <span className="mx-2 h-4 w-px bg-black/10 align-baseline" />
+        <p
+          className="align-baseline text-[0.9rem] font-medium tracking-tight text-gray-800"
+          style={{ textShadow: '0 0 2px rgba(0,0,0,0.2)' }}
+        >
+          <span className="align-baseline">
+            연료비 {parseFloat(fuelPrice).toLocaleString()}원
+          </span>
+        </p>
       </div>
     </div>
   )
