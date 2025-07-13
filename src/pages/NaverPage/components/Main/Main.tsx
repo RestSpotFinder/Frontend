@@ -7,12 +7,10 @@ import {
   RestAreaInfo,
   Loading,
 } from '../'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Place, Route, RouteHistory } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
-import './Main.css'
 import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
-import classNames from 'classnames'
 import Notice from '../Notice/Notice'
 
 const Main = () => {
@@ -33,7 +31,15 @@ const Main = () => {
   const [routeHistory, setRouteHistory] = useState<RouteHistory[]>([])
   const [placeHistory, setPlaceHistory] = useState<Place[]>([])
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
-  const [isMenuActive, setIsMenuActive] = useState(true)
+
+  // navWidthPx 계산 (px 단위)
+  const navWidthPx = useMemo(() => {
+    if (typeof window === 'undefined') return 0
+    const fontSize =
+      parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+
+    return 25.5 * fontSize
+  }, [])
 
   const {
     data: restSpotList,
@@ -116,10 +122,6 @@ const Main = () => {
     }
   }
 
-  const handleClickSlideButton = () => {
-    setIsMenuActive(!isMenuActive)
-  }
-
   useEffect(() => {
     setPlaceHistory(JSON.parse(localStorage.getItem('place') || '[]'))
     setRouteHistory(JSON.parse(localStorage.getItem('route') || '[]'))
@@ -138,9 +140,9 @@ const Main = () => {
   }, [startPlace, goalPlace, clickedPlaceHistory])
 
   return (
-    <div className="main">
-      <div className={classNames('navContainer', isMenuActive && 'active')}>
-        <div className={classNames('nav', isMenuActive && 'active')}>
+    <div className="box-border flex overflow-x-hidden">
+      <div className="z-10 flex w-[25.5em] min-w-[25.5em] flex-col transition-[width] duration-300">
+        <div className="box-border flex h-screen w-full flex-col overflow-hidden bg-white shadow-[2px_0_15px_rgba(0,0,0,0.2)]">
           <Title />
           <InputSubmit
             startPlace={startPlace}
@@ -193,34 +195,9 @@ const Main = () => {
             </>
           )}
         </div>
-        {selectedRoute && restSpotModalOpen && (
-          <div className="nav">
-            <RestAreaInfo
-              isActive={isMenuActive}
-              route={selectedRoute}
-              restSpotModalOpen={restSpotModalOpen}
-              setRestSpotModalOpen={setRestSpotModalOpen}
-              hoveredRestSpot={hoveredRestSpot}
-              setHoveredRestSpot={setHoveredRestSpot}
-              clickedRestSpot={clickedRestSpot}
-              setClickedRestSpot={setClickedRestSpot}
-              clickedRouteIndex={clickedRouteIndex}
-              restSpotList={restSpotList}
-              isLoading={restSpotsLoading}
-              isFetching={restSpotsFetching}
-            />
-          </div>
-        )}
-        <div className="slideBtnContainer">
-          <div
-            className={classNames('slideBtn', isMenuActive && 'active')}
-            onClick={handleClickSlideButton}
-          >
-          </div>
-        </div>
       </div>
 
-      <div className="map">
+      <div className="box-border h-screen flex-grow overflow-x-hidden">
         <NaverMap
           start={startPlace}
           goal={goalPlace}
@@ -234,6 +211,29 @@ const Main = () => {
           clickedRestSpot={clickedRestSpot}
         />
       </div>
+
+      {/* RestAreaInfo를 map 위에 fixed로 띄움 */}
+      {selectedRoute && restSpotModalOpen && (
+        <div
+          className="fixed z-30 flex h-[100%] w-[28em] scale-90 flex-col backdrop-blur transition-[left,transform] duration-300 max-md:w-[72vw]"
+          style={{ left: navWidthPx }}
+        >
+          <RestAreaInfo
+            isActive={true}
+            route={selectedRoute}
+            restSpotModalOpen={restSpotModalOpen}
+            setRestSpotModalOpen={setRestSpotModalOpen}
+            hoveredRestSpot={hoveredRestSpot}
+            setHoveredRestSpot={setHoveredRestSpot}
+            clickedRestSpot={clickedRestSpot}
+            setClickedRestSpot={setClickedRestSpot}
+            clickedRouteIndex={clickedRouteIndex}
+            restSpotList={restSpotList}
+            isLoading={restSpotsLoading}
+            isFetching={restSpotsFetching}
+          />
+        </div>
+      )}
     </div>
   )
 }
