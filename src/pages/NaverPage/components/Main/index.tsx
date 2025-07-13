@@ -35,21 +35,22 @@ const Main = () => {
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
   const [isMenuActive, setIsMenuActive] = useState(true)
 
+  const {
+    data: restSpotList,
+    isLoading: restSpotsLoading,
+    isFetching: restSpotsFetching,
+  } = useGetRestSpots({
+    routeId: selectedRoute?.routeId,
+  })
+
   const { refetch: routesRefetch, isLoading: isGetRoutesLoading } =
     useGetRoutes({
       start: [startPlace?.lng, startPlace?.lat].join(','),
       goal: [goalPlace?.lng, goalPlace?.lat].join(','),
       startName: startPlace?.name,
       goalName: goalPlace?.name,
-      // waypoints: waypoints.map(waypoint =>
-      //   [waypoint.lng, waypoint.lat].join(','),
-      // ),
       page: '1',
     })
-  const { data: restSpotList, refetch: restSpotsRefetch } = useGetRestSpots({
-    routeId: selectedRoute?.routeId,
-  })
-
   const { refetch: routesBySearchIdRefetch } = useGetRoutesBySearchId({
     searchId: selectedRouteHistory?.searchId,
   })
@@ -66,9 +67,9 @@ const Main = () => {
       const name = startPlace?.name + ' -> ' + goalPlace?.name
       const searchId = routes.data ? routes.data[0].searchId : 0
       addRouteHistory({ name, searchId, startPlace, goalPlace })
-      setHasStartAndGoal(true) // errText
-      setClickedPlaceHistory(false) // 최근 검색 장소 클릭 초기화
-      setClickedRestSpot('') // 휴게소 클릭 초기화
+      setHasStartAndGoal(true)
+      setClickedPlaceHistory(false)
+      setClickedRestSpot('')
     } else {
       setHasStartAndGoal(false)
     }
@@ -118,10 +119,6 @@ const Main = () => {
   const handleClickSlideButton = () => {
     setIsMenuActive(!isMenuActive)
   }
-
-  useEffect(() => {
-    selectedRoute && restSpotsRefetch()
-  }, [selectedRoute, restSpotsRefetch])
 
   useEffect(() => {
     setPlaceHistory(JSON.parse(localStorage.getItem('place') || '[]'))
@@ -180,21 +177,18 @@ const Main = () => {
                   setClickedRestSpot={setClickedRestSpot}
                 />
               ) : (
-                <div>
-                  <RecentSearch
-                    startPlace={startPlace}
-                    goalPlace={goalPlace}
-                    setStartPlace={setStartPlace}
-                    setGoalPlace={setGoalPlace}
-                    routeHistory={routeHistory}
-                    placeHistory={placeHistory}
-                    clearHistory={clearHistory}
-                    setSelectedRouteHistory={setSelectedRouteHistory}
-                    handleClickRecentSearch={handleClickRecentSearch}
-                    setClickedPlaceHistory={setClickedPlaceHistory}
-                  />
-                  {/* <Survey /> */}
-                </div>
+                <RecentSearch
+                  startPlace={startPlace}
+                  goalPlace={goalPlace}
+                  setStartPlace={setStartPlace}
+                  setGoalPlace={setGoalPlace}
+                  routeHistory={routeHistory}
+                  placeHistory={placeHistory}
+                  clearHistory={clearHistory}
+                  setSelectedRouteHistory={setSelectedRouteHistory}
+                  handleClickRecentSearch={handleClickRecentSearch}
+                  setClickedPlaceHistory={setClickedPlaceHistory}
+                />
               )}
             </>
           )}
@@ -211,6 +205,9 @@ const Main = () => {
               clickedRestSpot={clickedRestSpot}
               setClickedRestSpot={setClickedRestSpot}
               clickedRouteIndex={clickedRouteIndex}
+              restSpotList={restSpotList}
+              isLoading={restSpotsLoading}
+              isFetching={restSpotsFetching}
             />
           </div>
         )}
@@ -230,7 +227,7 @@ const Main = () => {
           routeList={routeList}
           selectedRoute={selectedRoute}
           setSelectedRoute={setSelectedRoute}
-          restSpotList={restSpotList}
+          restSpotList={restSpotList} // Main에서 조회한 데이터
           restSpotModalOpen={restSpotModalOpen}
           setHoveredRestSpot={setHoveredRestSpot}
           setClickedRestSpot={setClickedRestSpot}

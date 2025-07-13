@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState, Dispatch } from 'react'
+import { SetStateAction, useEffect, useState, Dispatch, useRef } from 'react'
 import { Route, Place } from '@/types'
 import InputText from './inputText.tsx'
 import { debounce } from 'lodash'
@@ -53,12 +53,33 @@ const InputSubmit = ({
     handleClickSearchRoutes()
   }
 
+  const startInputRef = useRef<HTMLInputElement>(null)
+  const goalInputRef = useRef<HTMLInputElement>(null)
+
+  const handleSwap = () => {
+    if (!startPlace && !goalPlace) return
+    if (startPlace && goalPlace) {
+      setStartPlace(goalPlace)
+      setGoalPlace(startPlace)
+    } else if (startPlace && !goalPlace) {
+      setGoalPlace(startPlace)
+      setStartPlace(null)
+      // 출발지 input(빈 칸)에 포커스
+      setTimeout(() => startInputRef.current?.focus(), 0)
+    } else if (!startPlace && goalPlace) {
+      setStartPlace(goalPlace)
+      setGoalPlace(null)
+      // 도착지 input(빈 칸)에 포커스
+      setTimeout(() => goalInputRef.current?.focus(), 0)
+    }
+  }
+
   return (
     <div className="inputSubmit">
       {/* {showRouteList && (
         <div className="slideBtn" onClick={() => handleClickReset()} />
       )} */}
-      <div className="inputBox">
+      <div className="inputBox relative">
         <InputText
           place={startPlace}
           setPlace={setStartPlace}
@@ -67,6 +88,7 @@ const InputSubmit = ({
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
+          inputRef={startInputRef}
         />
 
         <InputText
@@ -77,7 +99,33 @@ const InputSubmit = ({
           setShowRouteList={setShowRouteList}
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
+          inputRef={goalInputRef}
         />
+
+        <div
+          className="absolute z-10 flex cursor-pointer items-center justify-center"
+          style={{
+            left: '90%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '33.6px',
+            height: '33.6px',
+            borderRadius: '50%',
+            pointerEvents: 'auto',
+            background: '#fff',
+            boxShadow: 'none',
+            border: '1.5px solid #E3E3E3',
+            padding: '3px',
+          }}
+          onClick={handleSwap}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: 23, color: 'rgba(4,117,245,0.8)' }}
+          >
+            cached
+          </span>
+        </div>
       </div>
 
       <div className="btnBox">

@@ -16,9 +16,11 @@ const useGetSearchSpot = ({ searchTerm }: Request) => {
   }
 
   return useQuery<Place[], Error>({
-    queryKey: ['search'],
+    queryKey: ['search', searchTerm],
     queryFn: getSearch,
     enabled: !!searchTerm,
+    staleTime: 2 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
   })
 }
 
