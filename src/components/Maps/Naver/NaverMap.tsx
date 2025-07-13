@@ -4,9 +4,11 @@ import {
   useNavermaps,
   Polyline,
 } from 'react-naver-maps'
-import { useEffect, Dispatch, SetStateAction, useRef } from 'react'
+import { useEffect, Dispatch, SetStateAction, useRef, useState } from 'react'
 import { CustomMarker, RestSpotMarker } from '@/components'
 import { Place, Route, RestSpot } from '@/types'
+import InfoWindow from './InfoWindow'
+import ReactDOMServer from 'react-dom/server'
 
 interface NaverProps {
   start?: Place | null
@@ -30,13 +32,15 @@ const Naver = ({
   selectedRoute,
   setSelectedRoute,
   restSpotList,
-  restSpotModalOpen,
-  setHoveredRestSpot,
   setClickedRestSpot,
   clickedRestSpot,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
+  const [hoveredRestSpot, setHoveredRestSpotState] = useState<string>('')
+  const [infoWindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(
+    null,
+  )
 
   useEffect(() => {
     start &&
@@ -66,12 +70,50 @@ const Naver = ({
   }
 
   const handleEnterRestSpotMarker = (spot: RestSpot) => {
-    setHoveredRestSpot(spot.name)
+    setHoveredRestSpotState(spot.name)
   }
 
   const handleLeaveRestSpotMarker = () => {
-    setHoveredRestSpot('')
+    setHoveredRestSpotState('')
   }
+
+  // InfoWindow 네이티브로 관리
+  useEffect(() => {
+    if (!mapRef.current) return
+    if (!restSpotList) return
+    if (hoveredRestSpot) {
+      const spot = restSpotList.find(s => s.name === hoveredRestSpot)
+      if (spot) {
+        // 기존 InfoWindow 제거
+        if (infoWindow) infoWindow.setMap(null)
+        const iw = new navermaps.InfoWindow({
+          content: ReactDOMServer.renderToString(
+            <InfoWindow name={spot.name} />,
+          ),
+          position: new navermaps.LatLng(spot.lat, spot.lng),
+          pixelOffset: new navermaps.Point(0, -24), // was -40, move closer to marker
+          backgroundColor: 'transparent', // Remove default
+          borderColor: 'transparent',
+          borderWidth: 0,
+          disableAnchor: true,
+        })
+        iw.setMap(mapRef.current)
+        setInfoWindow(iw)
+      }
+    } else {
+      if (infoWindow) {
+        infoWindow.setMap(null)
+        setInfoWindow(null)
+      }
+    }
+
+    return () => {
+      if (infoWindow) {
+        infoWindow.setMap(null)
+        setInfoWindow(null)
+      }
+    }
+  }, [hoveredRestSpot, restSpotList])
 
   return (
     <MapDiv style={{ width: '100%', height: '100dvh' }}>
@@ -113,10 +155,9 @@ const Naver = ({
             )
           })}
         {restSpotList &&
-          restSpotModalOpen &&
           restSpotList.map(spot => {
             return (
-              <div>
+              <div key={spot.restAreaId}>
                 <RestSpotMarker
                   position={{
                     lat: spot.lat,
@@ -126,7 +167,6 @@ const Naver = ({
                   onDoubleClick={() => window.open(spot.naverMapUrl, '_blank')}
                   onMouseEnter={() => handleEnterRestSpotMarker(spot)}
                   onMouseLeave={handleLeaveRestSpotMarker}
-                  key={spot.restAreaId}
                   clicked={clickedRestSpot == spot.name}
                 />
               </div>

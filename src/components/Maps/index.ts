@@ -1,1 +1,1 @@
-export { default as NaverMap } from './Naver'
+export { default as NaverMap } from './Naver/NaverMap'

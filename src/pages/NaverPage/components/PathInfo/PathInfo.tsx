@@ -2,7 +2,6 @@ import PathInfoContent from './pathInfoContent'
 import { Dispatch, SetStateAction } from 'react'
 import { Route, Place } from '@/types'
 import { Loading } from '../'
-import './index.css'
 
 interface PathInfoProps {
   routeList: Route[]
@@ -61,11 +60,14 @@ const PathInfo = ({
   console.log(``)
 
   return (
-    <div className={`pathInfo`}>
-      <p className="noticeText">
-        <span>더블 클릭시</span> 경로상 휴게소 정보가 표시됩니다.
+    <div className="box-border flex h-full flex-col overflow-y-auto">
+      <p className="border-b border-t border-black/10 px-4 py-3 text-[0.775rem] font-semibold tracking-[-0.1em] text-black/80">
+        <span className="text-crimson text-shadow-sm text-[0.83rem]">
+          더블 클릭시
+        </span>{' '}
+        경로상 휴게소 정보가 표시됩니다.
       </p>
-      <div className="routeBox">
+      <div className="box-border flex-grow overflow-y-auto scrollbar-none">
         {routeList?.map((route, index) => {
           return (
             <div
@@ -99,7 +101,7 @@ const PathInfo = ({
           <></>
         )}
       </div>
-      <p className="searchInfo">
+      <p className="border-b border-t border-black/10 px-4 py-3 text-[0.775rem] font-semibold tracking-[-0.1em] text-black/80">
         {startPlace?.name} {`->`} {goalPlace?.name}
       </p>
     </div>
