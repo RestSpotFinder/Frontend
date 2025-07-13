@@ -139,6 +139,15 @@ const Main = () => {
     }
   }, [startPlace, goalPlace, clickedPlaceHistory])
 
+  // PathInfo가 보일 때 항상 첫 번째 경로가 클릭되게
+  useEffect(() => {
+    if (routeList && showRouteList && routeList.length > 0) {
+      setClickedRouteIndex(1)
+      setSelectedRoute(routeList[0])
+      setRestSpotModalOpen(true)
+    }
+  }, [routeList, showRouteList])
+
   return (
     <div className="box-border flex overflow-x-hidden">
       <div className="z-10 flex w-[25.5em] min-w-[25.5em] flex-col transition-[width] duration-300">
@@ -204,7 +213,7 @@ const Main = () => {
           routeList={routeList}
           selectedRoute={selectedRoute}
           setSelectedRoute={setSelectedRoute}
-          restSpotList={restSpotList} // Main에서 조회한 데이터
+          restSpotList={routeList && showRouteList ? restSpotList : undefined}
           restSpotModalOpen={restSpotModalOpen}
           setHoveredRestSpot={setHoveredRestSpot}
           setClickedRestSpot={setClickedRestSpot}
