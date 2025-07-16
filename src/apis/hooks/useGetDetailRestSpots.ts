@@ -1,23 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import apiClient from '../apiClient'
-import { DetailRestSpot } from '@/types'
+import type { RestAreaDetail } from '@/types'
 
 interface Request {
-  restareaId: string | undefined
+  restAreaId: number | string | undefined
 }
 
-const useGetDetailRestSpots = ({ restareaId }: Request) => {
+const useGetDetailRestSpots = ({ restAreaId }: Request) => {
   const getDetailRestSpots = async () => {
-    const response = await apiClient.get(
-      `/restarea/detail?restareaId=${restareaId}`,
-    )
+    const response = await apiClient.get(`/restarea?restAreaId=${restAreaId}`)
+
     return response.data
   }
 
-  return useQuery<DetailRestSpot, Error>({
-    queryKey: ['detailRestSpots'],
+  return useQuery<RestAreaDetail, Error>({
+    queryKey: ['detailRestSpots', restAreaId],
     queryFn: getDetailRestSpots,
-    enabled: !!restareaId,
+    enabled: !!restAreaId,
   })
 }
 

@@ -1,4 +1,5 @@
 export { default as RestAreaInfo } from './RestAreaInfo/RestAreaInfo'
+export { default as RestAreaDetail } from './RestAreaDetail/RestAreaDetail'
 export { default as InputSubmit } from './InputSubmit/InputSubmit'
 export { default as Logos } from './Logos/Logos'
 export { default as PathInfo } from './PathInfo/PathInfo'

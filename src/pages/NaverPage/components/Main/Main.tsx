@@ -6,6 +6,7 @@ import {
   RecentSearch,
   RestAreaInfo,
   Loading,
+  RestAreaDetail,
 } from '../'
 import { useState, useEffect, useMemo } from 'react'
 import { Place, Route, RouteHistory } from '@/types'
@@ -31,6 +32,7 @@ const Main = () => {
   const [routeHistory, setRouteHistory] = useState<RouteHistory[]>([])
   const [placeHistory, setPlaceHistory] = useState<Place[]>([])
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
+  const [selectedRestArea, setSelectedRestArea] = useState<any | null>(null)
 
   // navWidthPx 계산 (px 단위)
   const navWidthPx = useMemo(() => {
@@ -149,7 +151,7 @@ const Main = () => {
   }, [routeList, showRouteList])
 
   return (
-    <div className="box-border flex overflow-x-hidden">
+    <div className="box-border flex h-screen overflow-x-hidden">
       <div className="z-10 flex w-[25.5em] min-w-[25.5em] flex-col transition-[width] duration-300">
         <div className="box-border flex h-screen w-full flex-col overflow-hidden bg-white shadow-[2px_0_15px_rgba(0,0,0,0.2)]">
           <Title />
@@ -220,28 +222,41 @@ const Main = () => {
           clickedRestSpot={clickedRestSpot}
         />
       </div>
-
-      {/* RestAreaInfo를 map 위에 fixed로 띄움 */}
+      {/* RestAreaInfo와 RestAreaDetail을 flex row로 나란히 */}
       {selectedRoute && restSpotModalOpen && (
-        <div
-          className="fixed z-30 flex h-[100%] w-[28em] scale-90 flex-col backdrop-blur transition-[left,transform] duration-300 max-md:w-[72vw]"
-          style={{ left: navWidthPx }}
-        >
-          <RestAreaInfo
-            isActive={true}
-            route={selectedRoute}
-            restSpotModalOpen={restSpotModalOpen}
-            setRestSpotModalOpen={setRestSpotModalOpen}
-            hoveredRestSpot={hoveredRestSpot}
-            setHoveredRestSpot={setHoveredRestSpot}
-            clickedRestSpot={clickedRestSpot}
-            setClickedRestSpot={setClickedRestSpot}
-            clickedRouteIndex={clickedRouteIndex}
-            restSpotList={restSpotList}
-            isLoading={restSpotsLoading}
-            isFetching={restSpotsFetching}
-          />
-        </div>
+        <>
+          <div
+            className="fixed z-30 flex h-[100%] w-[28em] scale-90 flex-col backdrop-blur transition-[left,transform] duration-300 max-md:w-[72vw]"
+            style={{ left: navWidthPx, top: 0 }}
+          >
+            <RestAreaInfo
+              isActive={true}
+              route={selectedRoute}
+              restSpotModalOpen={restSpotModalOpen}
+              setRestSpotModalOpen={setRestSpotModalOpen}
+              hoveredRestSpot={hoveredRestSpot}
+              setHoveredRestSpot={setHoveredRestSpot}
+              clickedRestSpot={clickedRestSpot}
+              setClickedRestSpot={setClickedRestSpot}
+              clickedRouteIndex={clickedRouteIndex}
+              restSpotList={restSpotList}
+              isLoading={restSpotsLoading}
+              isFetching={restSpotsFetching}
+              setSelectedRestArea={setSelectedRestArea}
+            />
+          </div>
+          {selectedRestArea && (
+            <div
+              className="fixed z-40 flex h-[100%] w-[28em] scale-90 flex-col transition-[left,transform] duration-300"
+              style={{ left: `calc(${navWidthPx}px + 27em)`, top: 0 }}
+            >
+              <RestAreaDetail
+                restAreaId={selectedRestArea}
+                onClose={() => setSelectedRestArea(null)}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   )

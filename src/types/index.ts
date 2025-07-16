@@ -74,6 +74,38 @@ export interface DetailRestSpot {
   naverMapUrl: string
 }
 
+export interface RestAreaDetail {
+  restAreaId: number
+  name: string
+  routeName: string
+  routeDirection: string
+  lat: number
+  lng: number
+  type: string
+  operatingStartTime: string
+  operatingEndTime: string
+  parkingSpaceCount: number
+  isMaintenanceAvailable: boolean
+  hasGasStation: boolean
+  hasLpgChargingStation: boolean
+  hasElectricChargingStation: boolean
+  hasRestroom: boolean
+  hasPharmacy: boolean
+  hasNursingRoom: boolean
+  hasStore: boolean
+  hasRestaurant: boolean
+  otherFacilities: string
+  representativeFood: string
+  phoneNumber: string
+  naverMapUrl: string
+  mainImage: string
+  hasFuelData: boolean
+  gasolinePrice: string
+  dieselPrice: string
+  lpgPrice: string
+  fuelUpdatedAt?: string
+}
+
 export type RouteHistory = {
   name: string
   searchId: number

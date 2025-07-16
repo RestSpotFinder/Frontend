@@ -15,6 +15,8 @@ interface RestAreaInfoContentProps {
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
   clickedRestSpot: string
   setClickedRestSpot: Dispatch<SetStateAction<string>>
+  restAreaId: number
+  onDoubleClick?: () => void
 }
 
 const RestAreaInfoContent = ({
@@ -25,24 +27,12 @@ const RestAreaInfoContent = ({
   toilet,
   name,
   routeName,
-  naverMapUrl,
   nextRestAreaDistance,
   hoveredRestSpot,
   clickedRestSpot,
   setClickedRestSpot,
+  onDoubleClick,
 }: RestAreaInfoContentProps) => {
-  const handleUrlClick = () => {
-    window.open(naverMapUrl, '_blank')
-    trackNaverMapDetail()
-  }
-
-  const trackNaverMapDetail = () => {
-    gtag('event', 'naver_map_detail', {
-      method: 'button_click',
-      page_location: window.location.href,
-    })
-  }
-
   const trackClickRestSpotArea = () => {
     setClickedRestSpot(name)
     gtag('event', 'rest_spot_area_clicked', {
@@ -63,7 +53,7 @@ const RestAreaInfoContent = ({
             (hoveredRestSpot === name ? 'bg-black/2' : 'hover:bg-black/5 '))
       }
       onClick={trackClickRestSpotArea}
-      onDoubleClick={handleUrlClick}
+      onDoubleClick={onDoubleClick}
     >
       <header className="relative mr-8 flex h-12 w-12 items-center justify-center pb-4">
         <span className="text-2xl font-bold text-gray-800">
