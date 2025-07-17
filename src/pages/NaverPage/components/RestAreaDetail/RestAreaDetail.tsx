@@ -8,6 +8,7 @@ import {
   FaChevronRight,
 } from 'react-icons/fa'
 import useGetDetailRestSpots from '@/apis/hooks/useGetDetailRestSpots'
+import noRestarea from '@/assets/no-restarea.png'
 
 interface Props {
   restAreaId: number
@@ -49,7 +50,7 @@ const RestAreaDetail = ({ restAreaId, onClose }: Props) => {
     )
 
   return (
-    <div className="relative flex w-full max-w-[420px] flex-col gap-4 overflow-hidden rounded-xl bg-white p-[10px] shadow-lg">
+    <div className="relative flex w-full max-w-[420px] flex-col gap-4 overflow-hidden rounded-xl bg-white p-[10px]">
       {/* X 버튼 */}
       <button
         className="absolute right-4 top-4 z-10 flex h-[30px] w-[30px] items-center justify-center border border-gray-200 bg-white p-1 text-xl text-gray-400 transition-colors hover:text-gray-600"
@@ -63,7 +64,7 @@ const RestAreaDetail = ({ restAreaId, onClose }: Props) => {
       <div className="flex flex-col gap-2 pb-2">
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
           <img
-            src={detail.mainImage}
+            src={detail.mainImage ? detail.mainImage : noRestarea}
             alt="휴게소 이미지 16:9"
             className="h-full w-full rounded-xl object-cover"
           />

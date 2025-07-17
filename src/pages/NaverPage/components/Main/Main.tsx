@@ -150,6 +150,11 @@ const Main = () => {
     }
   }, [routeList, showRouteList])
 
+  // selectedRoute가 바뀌면 상세패널 닫기
+  useEffect(() => {
+    setSelectedRestArea(null)
+  }, [selectedRoute])
+
   return (
     <div className="box-border flex h-screen overflow-x-hidden">
       <div className="z-10 flex w-[25.5em] min-w-[25.5em] flex-col transition-[width] duration-300">
