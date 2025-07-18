@@ -111,7 +111,9 @@ const RestAreaDetail = ({ restAreaId, onClose }: Props) => {
             <FaCarSide /> 주유소/충전소 가격
             <span className="ml-2 text-xs font-normal text-gray-400">
               업데이트:{' '}
-              {detail.fuelUpdatedAt || new Date().toISOString().slice(0, 10)}
+              {detail.lastFuelUpdateDate
+                ? detail.lastFuelUpdateDate.slice(0, 10)
+                : new Date().toISOString().slice(0, 10)}
             </span>
           </div>
           <table className="w-full border-separate border-spacing-0 text-[15px]">

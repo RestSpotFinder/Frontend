@@ -100,10 +100,10 @@ export interface RestAreaDetail {
   naverMapUrl: string
   mainImage: string
   hasFuelData: boolean
+  lastFuelUpdateDate?: string
   gasolinePrice: string
   dieselPrice: string
   lpgPrice: string
-  fuelUpdatedAt?: string
 }
 
 export type RouteHistory = {
