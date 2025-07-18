@@ -22,6 +22,7 @@ interface NaverProps {
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
   setClickedRestSpot: Dispatch<SetStateAction<string>>
   clickedRestSpot: string
+  onMapReady?: (mapRef: React.RefObject<naver.maps.Map>) => void
 }
 
 const Naver = ({
@@ -34,6 +35,7 @@ const Naver = ({
   restSpotList,
   setClickedRestSpot,
   clickedRestSpot,
+  onMapReady,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
@@ -41,6 +43,12 @@ const Naver = ({
   const [infoWindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(
     null,
   )
+
+  useEffect(() => {
+    if (mapRef.current && onMapReady) {
+      onMapReady(mapRef)
+    }
+  }, [mapRef.current, onMapReady])
 
   useEffect(() => {
     start &&

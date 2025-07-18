@@ -33,6 +33,9 @@ const Main = () => {
   const [placeHistory, setPlaceHistory] = useState<Place[]>([])
   const [clickedPlaceHistory, setClickedPlaceHistory] = useState<boolean>(false)
   const [selectedRestArea, setSelectedRestArea] = useState<any | null>(null)
+  const [mapRef, setMapRef] = useState<React.RefObject<naver.maps.Map> | null>(
+    null,
+  )
 
   // navWidthPx 계산 (px 단위)
   const navWidthPx = useMemo(() => {
@@ -42,6 +45,19 @@ const Main = () => {
 
     return 25.5 * fontSize
   }, [])
+
+  // 지도 이동 함수
+  const moveToLocation = (lat: number, lng: number, zoom: number = 16) => {
+    if (mapRef?.current) {
+      mapRef.current.setCenter(new naver.maps.LatLng(lat, lng))
+      mapRef.current.setZoom(zoom)
+    }
+  }
+
+  // 지도 준비 완료 시 mapRef 저장
+  const handleMapReady = (mapRef: React.RefObject<naver.maps.Map>) => {
+    setMapRef(mapRef)
+  }
 
   const {
     data: restSpotList,
@@ -172,6 +188,7 @@ const Main = () => {
             setShowRouteList={setShowRouteList}
             showRouteList={showRouteList}
             addPlaceHistory={addPlaceHistory}
+            moveToLocation={moveToLocation}
           />
           {/* 공지사항은 PathInfo가 아닐 때만 노출 */}
           {!(routeList && showRouteList) && <Notice />}
@@ -225,6 +242,7 @@ const Main = () => {
           setHoveredRestSpot={setHoveredRestSpot}
           setClickedRestSpot={setClickedRestSpot}
           clickedRestSpot={clickedRestSpot}
+          onMapReady={handleMapReady}
         />
       </div>
       {/* RestAreaInfo와 RestAreaDetail을 flex row로 나란히 */}

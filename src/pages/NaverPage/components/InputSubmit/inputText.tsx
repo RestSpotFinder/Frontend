@@ -20,6 +20,7 @@ interface InputProps {
   setRestSpotModalOpen: Dispatch<SetStateAction<boolean>>
   addPlaceHistory: (place: Place) => void
   inputRef?: React.RefObject<HTMLInputElement>
+  moveToLocation?: (lat: number, lng: number, zoom?: number) => void
 }
 
 const isAddress = (input: string): boolean => {
@@ -48,6 +49,7 @@ const InputText = ({
   setRestSpotModalOpen,
   addPlaceHistory,
   inputRef,
+  moveToLocation,
 }: InputProps) => {
   const [placeholder, setPlaceholder] = useState<string>(
     InputType.PLACEHOLDER[type],
@@ -88,6 +90,10 @@ const InputText = ({
     setPlaceList([])
     setModalIsOpen(false)
     addPlaceHistory(place)
+
+    if (moveToLocation) {
+      moveToLocation(parseFloat(place.lat), parseFloat(place.lng), 16)
+    }
   }
 
   // 초성일 때는 refetch 호출 X ex) 'ㄷ', 'ㅁ'

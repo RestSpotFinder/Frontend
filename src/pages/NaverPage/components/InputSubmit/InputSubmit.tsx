@@ -16,6 +16,7 @@ interface InputSubmitProps {
   setShowRouteList: Dispatch<SetStateAction<boolean>>
   showRouteList: boolean
   addPlaceHistory: (place: Place) => void
+  moveToLocation?: (lat: number, lng: number, zoom?: number) => void
 }
 
 const InputSubmit = ({
@@ -30,6 +31,7 @@ const InputSubmit = ({
   setShowRouteList,
   showRouteList,
   addPlaceHistory,
+  moveToLocation,
 }: InputSubmitProps) => {
   const [isReset, setIsReset] = useState<boolean>(false)
   useEffect(() => {
@@ -90,6 +92,7 @@ const InputSubmit = ({
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
           inputRef={startInputRef}
+          moveToLocation={moveToLocation}
         />
 
         <InputText
@@ -101,6 +104,7 @@ const InputSubmit = ({
           setRestSpotModalOpen={setRestSpotModalOpen}
           addPlaceHistory={addPlaceHistory}
           inputRef={goalInputRef}
+          moveToLocation={moveToLocation}
         />
 
         {/* Swap button: 출발지 목적지 회전 버튼, PathInfo 보일 때는 숨김 */}
