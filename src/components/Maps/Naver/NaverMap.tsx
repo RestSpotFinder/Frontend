@@ -22,6 +22,7 @@ interface NaverProps {
   setHoveredRestSpot: Dispatch<SetStateAction<string>>
   setClickedRestSpot: Dispatch<SetStateAction<string>>
   clickedRestSpot: string
+  onMapReady?: (mapRef: React.RefObject<naver.maps.Map>) => void
 }
 
 const Naver = ({
@@ -34,6 +35,7 @@ const Naver = ({
   restSpotList,
   setClickedRestSpot,
   clickedRestSpot,
+  onMapReady,
 }: NaverProps) => {
   const navermaps = useNavermaps()
   const mapRef = useRef<naver.maps.Map>(null)
@@ -41,6 +43,25 @@ const Naver = ({
   const [infoWindow, setInfoWindow] = useState<naver.maps.InfoWindow | null>(
     null,
   )
+  const [isMobile, setIsMobile] = useState<boolean>(false)
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (mapRef.current && onMapReady) {
+      onMapReady(mapRef)
+    }
+  }, [mapRef.current, onMapReady])
 
   useEffect(() => {
     start &&
@@ -75,6 +96,24 @@ const Naver = ({
 
   const handleLeaveRestSpotMarker = () => {
     setHoveredRestSpotState('')
+  }
+
+  // 모바일에서 클릭 시 InfoWindow 표시
+  const handleMarkerClick = (spot: RestSpot) => {
+    if (isMobile) {
+      // 모바일에서는 클릭 시 InfoWindow 토글
+      if (hoveredRestSpot === spot.name) {
+        setHoveredRestSpotState('')
+      } else {
+        setHoveredRestSpotState(spot.name)
+        // 3초 후 자동으로 InfoWindow 닫기
+        setTimeout(() => {
+          setHoveredRestSpotState('')
+        }, 3000)
+      }
+    }
+    // 기존 클릭 이벤트도 실행
+    setClickedRestSpot(spot.name)
   }
 
   // InfoWindow 네이티브로 관리
@@ -163,7 +202,7 @@ const Naver = ({
                     lat: spot.lat,
                     lng: spot.lng,
                   }}
-                  onClick={() => setClickedRestSpot(spot.name)}
+                  onClick={() => handleMarkerClick(spot)}
                   onDoubleClick={() => window.open(spot.naverMapUrl, '_blank')}
                   onMouseEnter={() => handleEnterRestSpotMarker(spot)}
                   onMouseLeave={handleLeaveRestSpotMarker}

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 interface RestAreaInfoContentProps {
   type: string
@@ -33,6 +33,20 @@ const RestAreaInfoContent = ({
   setClickedRestSpot,
   onDoubleClick,
 }: RestAreaInfoContentProps) => {
+  const [isMobile, setIsMobile] = useState<boolean>(false)
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const trackClickRestSpotArea = () => {
     setClickedRestSpot(name)
     gtag('event', 'rest_spot_area_clicked', {
@@ -41,6 +55,15 @@ const RestAreaInfoContent = ({
       route_name: routeName,
       page_location: window.location.href,
     })
+  }
+
+  const handleClick = () => {
+    trackClickRestSpotArea()
+
+    // 모바일에서는 클릭으로 상세페이지 열기
+    if (isMobile && onDoubleClick) {
+      onDoubleClick()
+    }
   }
 
   return (
@@ -52,8 +75,8 @@ const RestAreaInfoContent = ({
           : '' +
             (hoveredRestSpot === name ? 'bg-black/2' : 'hover:bg-black/5 '))
       }
-      onClick={trackClickRestSpotArea}
-      onDoubleClick={onDoubleClick}
+      onClick={handleClick}
+      onDoubleClick={!isMobile ? onDoubleClick : undefined}
     >
       <header className="relative mr-8 flex h-12 w-12 items-center justify-center pb-4">
         <span className="text-2xl font-bold text-gray-800">
