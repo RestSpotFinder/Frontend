@@ -43,11 +43,11 @@
 .notice-title {
   font-size: 15px;
   font-weight: 600;
-  color: #0475F5;
+  color: #0475f5;
 }
 
 .notice-badge {
-  background: #0475F5;
+  background: #0475f5;
   color: white;
   font-size: 11px;
   font-weight: 500;
@@ -69,7 +69,7 @@
 .notice-arrow {
   font-size: 20px;
   font-weight: bold;
-  color: #0475F5;
+  color: #0475f5;
   opacity: 0.8;
   transition: all 0.2s ease;
   width: 24px;
@@ -138,8 +138,8 @@
 .notice-content .bg-transparent .whitespace-pre-line {
   font-size: 14px !important;
   line-height: 1.6 !important;
-  color: #2c5aa0 !important;
-  font-weight: 400 !important;
+  color: #1a1a1a !important;
+  font-weight: 500 !important;
   margin: 0 !important;
   word-break: break-all;
   overflow-wrap: break-word;
@@ -158,47 +158,49 @@
   .notice-container {
     margin: 12px 2rem 16px 2rem;
   }
-  
+
   .notice-header {
     padding: 14px 16px;
   }
-  
+
   .notice-title {
     font-size: 14px;
   }
-  
+
   .notice-badge {
     font-size: 10px;
     padding: 1px 6px;
     margin-left: 6px;
   }
-  
+
   .notice-date {
     font-size: 11px;
     margin-left: 4px;
   }
-  
+
   .notice-arrow {
     font-size: 18px;
     width: 22px;
     height: 22px;
   }
-  
+
   .notice-content.expanded {
     max-height: 150px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #b3c6e2 #f8fbff;
   }
-  
+
   .notice-content .bg-transparent {
     padding: 16px 16px;
   }
-  
+
   /* 모바일에서 텍스트 크기 조정 */
   .notice-content .bg-transparent .whitespace-pre-line {
     font-size: 13px !important;
     line-height: 1.5 !important;
+    color: #1a1a1a !important;
+    font-weight: 500 !important;
     word-break: break-all;
     overflow-wrap: break-word;
   }
@@ -218,7 +220,7 @@
   .notice-content {
     transition: none;
   }
-  
+
   .notice-arrow {
     transition: none;
   }

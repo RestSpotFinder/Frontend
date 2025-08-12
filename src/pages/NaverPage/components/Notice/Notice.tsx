@@ -6,7 +6,7 @@ import './Notice.css'
 
 const Notice = () => {
   const { data: announceList, isLoading, error, refetch } = useGetAnnounces()
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
 
   const recentAnnounce = announceList && announceList[0]
 
@@ -54,7 +54,7 @@ const Notice = () => {
 
       {/* 콘텐츠 영역 */}
       <div className={`notice-content ${isExpanded ? 'expanded' : ''}`}>
-        <Alert className="border-none bg-transparent m-0">
+        <Alert className="m-0 border-none bg-transparent">
           <AlertDescription className="whitespace-pre-line">
             {recentAnnounce?.content.replace(/\. /g, '.\n')}
           </AlertDescription>

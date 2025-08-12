@@ -13,7 +13,7 @@ import { Place, Route, RouteHistory } from '@/types'
 import { useGetRoutes, useGetRestSpots } from '@/apis/hooks'
 import useGetRoutesBySearchId from '@/apis/hooks/useGetRoutesBySearchId.ts'
 import Notice from '../Notice/Notice'
-import { HiMenu, HiX } from 'react-icons/hi'
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi'
 
 const Main = () => {
   const [startPlace, setStartPlace] = useState<Place | null>(null)
@@ -38,7 +38,7 @@ const Main = () => {
     null,
   )
   const [isMobile, setIsMobile] = useState<boolean>(false)
-  const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(true)
 
   // navWidthPx 계산 (px 단위)
   const navWidthPx = useMemo(() => {
@@ -204,12 +204,16 @@ const Main = () => {
       {isMobile && (
         <button
           onClick={toggleNav}
-          className="fixed left-4 top-4 z-50 flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-lg"
+          className="animate-shadow-pulse fixed left-4 top-4 z-50 flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110 hover:animate-none"
+          style={{
+            boxShadow:
+              '0 4px 20px rgba(0,0,0,0.3), 0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.3)',
+          }}
         >
           {isNavOpen ? (
-            <HiX className="text-xl text-gray-700" />
+            <HiChevronLeft className="text-2xl font-bold text-blue-600" />
           ) : (
-            <HiMenu className="text-xl text-gray-700" />
+            <HiChevronRight className="text-2xl font-bold text-blue-600" />
           )}
         </button>
       )}
@@ -260,26 +264,30 @@ const Main = () => {
                 isMobile && restSpotModalOpen ? (
                   <>
                     {selectedRestArea ? (
-                      <RestAreaDetail
-                        restAreaId={selectedRestArea}
-                        onClose={() => setSelectedRestArea(null)}
-                      />
+                      <div className="fixed inset-0 z-50 bg-white">
+                        <RestAreaDetail
+                          restAreaId={selectedRestArea}
+                          onClose={() => setSelectedRestArea(null)}
+                        />
+                      </div>
                     ) : (
-                      <RestAreaInfo
-                        isActive={true}
-                        route={selectedRoute}
-                        restSpotModalOpen={restSpotModalOpen}
-                        setRestSpotModalOpen={setRestSpotModalOpen}
-                        hoveredRestSpot={hoveredRestSpot}
-                        setHoveredRestSpot={setHoveredRestSpot}
-                        clickedRestSpot={clickedRestSpot}
-                        setClickedRestSpot={setClickedRestSpot}
-                        clickedRouteIndex={clickedRouteIndex}
-                        restSpotList={restSpotList}
-                        isLoading={restSpotsLoading}
-                        isFetching={restSpotsFetching}
-                        setSelectedRestArea={setSelectedRestArea}
-                      />
+                      <div className="fixed inset-0 z-50 bg-white">
+                        <RestAreaInfo
+                          isActive={true}
+                          route={selectedRoute}
+                          restSpotModalOpen={restSpotModalOpen}
+                          setRestSpotModalOpen={setRestSpotModalOpen}
+                          hoveredRestSpot={hoveredRestSpot}
+                          setHoveredRestSpot={setHoveredRestSpot}
+                          clickedRestSpot={clickedRestSpot}
+                          setClickedRestSpot={setClickedRestSpot}
+                          clickedRouteIndex={clickedRouteIndex}
+                          restSpotList={restSpotList}
+                          isLoading={restSpotsLoading}
+                          isFetching={restSpotsFetching}
+                          setSelectedRestArea={setSelectedRestArea}
+                        />
+                      </div>
                     )}
                   </>
                 ) : (

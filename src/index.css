@@ -125,3 +125,43 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* 그림자만 펄스 애니메이션 - 1초에 한 번 깜빡임 */
+@keyframes shadow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(59, 130, 246, 0.5),
+      0 0 40px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(59, 130, 246, 0.8),
+      0 0 60px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.animate-shadow-pulse {
+  animation: shadow-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* RestAreaInfo 스크롤바 스타일 */
+.rest-area-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rest-area-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.rest-area-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.rest-area-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

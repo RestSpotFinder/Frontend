@@ -84,6 +84,33 @@
   text-shadow: 0 0 1px rgb(0, 0, 0, 0.1);
 }
 
+/* 모바일에서만 스크롤 적용 */
+@media (max-width: 768px) {
+  .resultBox {
+    max-height: 200px; /* 최대 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+  }
+
+  /* 스크롤바 스타일링 */
+  .resultBox::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .resultBox::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .resultBox::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+
+  .resultBox::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+}
+
 .resultBox > div {
   position: relative;
   letter-spacing: -0.05em;
